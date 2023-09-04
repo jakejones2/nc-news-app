@@ -218,6 +218,7 @@ a:hover {
 #article-body {
     margin: 20px;
     margin-left: 0;
+    max-width: calc(100% - 550px);
 }
 
 #article-image {
