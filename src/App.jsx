@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Feed } from "./app/Feed";
 import { Nav } from "./app/Nav";
+import { Article } from "./app/Article";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,6 +14,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Feed />} />
+        <Route path="/articles/:id" element={<Article />} />
       </Routes>
     </div>
   );

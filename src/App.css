@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap');
 
+:root {
+    --dark-text: rgb(39, 39, 39);
+    --faint-text: rgb(99, 99, 99);
+    --background2: rgb(231, 231, 231);
+    --button-highlight: navy;
+    --accent: green;
+    --pale-accent: rgb(206, 250, 206);
+    --accent2: orangered;
+}
+
 body, html {
     margin: 0;
     padding: 0;
@@ -7,37 +17,45 @@ body, html {
     box-sizing: border-box;
 }
 
+a {
+    color: var(--dark-text);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--button-highlight);
+}
+
 /* App */
 
 #app-title {
-    margin: 5%;
-    width: fit-content;
+    margin: 20px;
+    width: 43%;
+    font-weight: 800;
+    font-size: calc(1.2em + 2vw);
+    border-bottom: solid 3px var(--accent);
 }
 
 #nav-main {
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
-    background-color: rgb(231, 231, 231);
-    padding-top: 3%;
-    padding-bottom: 3%;
+    justify-content: flex-start;
+    background-color: var(--background2);
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin-bottom: 2.5%;
     box-sizing: border-box;
+    font-weight: 600;
+    font-size: calc(1em + 0.5vw)
 }
 
 .nav-link {
     text-decoration: none;
-    color: green;
+    color: var(--accent);
     min-width: none;
-}
-
-.nav-link:hover {
-    color: black;
-}
-
-.nav-link:visited {
-    color: green;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /* Feed */
@@ -57,7 +75,7 @@ body, html {
 
 .article-preview {
     position: relative;
-    background-color: rgb(197, 255, 197);
+    background-color: var(--pale-accent);
     border-radius: 12px;
     margin: 5%;
     margin-top: 2.5%;
@@ -77,7 +95,7 @@ body, html {
     margin-left: 20px;
     padding-bottom: 5px;
     font-weight: 300;
-    color: rgb(99, 99, 99);
+    color: var(--faint-text);
 }
 
 .article-preview-body {
@@ -96,11 +114,15 @@ body, html {
     padding-top: 0;
 }
 
+.article-preview-img {
+    margin-right: 0;
+}
+
 .article-preview-topic {
     margin: 0;
     padding: 0;
     font-weight: 500;
-    color: orangered;
+    color: var(--accent-2);
 }
 
 .article-preview-stats {
@@ -130,22 +152,7 @@ body, html {
     right: 0;
     padding: 5px;
     font-weight: 300;
-    color: grey;
-}
-
-/* Loaders */
-
-.loader {
-    width: 30px;
-    height: 30px;
-    border: 6px solid green;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: block;
-    animation: rotation 1s linear infinite;
-    margin: auto;
-    margin-top: 30vh;
-
+    color: var(--faint-text);
 }
 
 @media (min-width: 600px) {
@@ -157,6 +164,113 @@ body, html {
         height: 300px;
     }
 }
+
+/* Article */
+
+#article {
+    margin: 20px;
+}
+
+#article-info {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: solid 1px var(--dark-text);
+}
+
+#article-title {
+    color: var(--dark-text);
+    margin-bottom: 0;
+    display: inline;
+}
+
+#article-topic {
+    display: inline;
+    margin-left: 20px;
+    border-radius: 20px;
+    background-color: var(--accent2);
+    padding: 6px;
+    color: var(--background2);
+}
+
+#article-author,
+#article-created-at {
+    color: var(--faint-text);
+    font-weight: 400;
+    font-size: 1em;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+#article-created-at {
+    display: flex;
+    align-items: flex-end;
+    font-size: 0.8em;
+}
+
+#article-content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+#article-body {
+    margin: 20px;
+    margin-left: 0;
+    max-width: calc(100% - 550px);
+}
+
+#article-image {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    margin-left: 0;
+}
+
+#article-stats {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    background-color: var(--pale-accent);
+    border-radius: 12px;
+}
+
+.article-stat {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.article-logo {
+    width: 40px;
+    height: fit-content;
+    margin: 20px;
+    margin-right: 5px;
+}
+
+.article-stat-text {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+
+
+/* Loaders */
+
+.loader {
+    width: 30px;
+    height: 30px;
+    border: 6px solid var(--accent);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: block;
+    animation: rotation 1s linear infinite;
+    margin: auto;
+    margin-top: 30vh;
+
+}
+
 
 @keyframes rotation {
     0% {

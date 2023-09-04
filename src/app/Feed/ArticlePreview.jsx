@@ -1,7 +1,9 @@
 export function ArticlePreview({ article }) {
   return (
     <>
-      <h2 className="article-preview-title">{article.title}</h2>
+      <a href={`/articles/${article.article_id}`} className="article-link">
+        <h2 className="article-preview-title">{article.title}</h2>
+      </a>
       <div className="article-preview-profile">
         <h4 className="article-preview-author">{article.author}</h4>
       </div>
