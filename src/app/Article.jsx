@@ -1,20 +1,29 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getArticle } from "../api";
+import { getArticle, patchArticle } from "../api";
 import { Comments } from "./Article/Comments";
 
 export function Article() {
   const { id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
+  const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
   const [dropDown, setDropDown] = useState("drop-up");
+  const [starred, setStarred] = useState("");
+  const [errorVoting, setErrorVoting] = useState(false);
 
   useEffect(() => {
     setIsLoadingArticle(true);
-    getArticle(id).then((article) => {
-      setArticle(article);
-      setIsLoadingArticle(false);
-    });
+    setErrorLoadingArticle(false);
+    getArticle(id)
+      .then((article) => {
+        setArticle(article);
+        setIsLoadingArticle(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorLoadingArticle(true);
+      });
   }, []);
 
   function toggleDropDownButton() {
@@ -23,6 +32,51 @@ export function Article() {
         return "drop-up";
       } else return "drop-down";
     });
+  }
+
+  function handlePatchError(err, num) {
+    console.log(err);
+    setErrorVoting(true);
+    increaseVoteInState(num);
+    if (num > 0) {
+      setStarred("star");
+    } else {
+      setStarred("");
+    }
+  }
+
+  function increaseVoteInState(num) {
+    setArticle((article) => {
+      const newArticle = { ...article };
+      newArticle.votes += num;
+      setArticle(newArticle);
+      return newArticle;
+    });
+  }
+
+  function increaseVote() {
+    setErrorVoting(false);
+    if (starred) {
+      setStarred("");
+      increaseVoteInState(-1);
+      patchArticle(id, -1).catch((err) => {
+        handlePatchError(err, 1);
+      });
+    } else {
+      setStarred("star");
+      increaseVoteInState(1);
+      patchArticle(id, 1).catch((err) => {
+        handlePatchError(err, -1);
+      });
+    }
+  }
+
+  if (errorLoadingArticle) {
+    return (
+      <div className="articles-error">
+        Can't fetch this article right now - sorry!
+      </div>
+    );
   }
 
   if (isLoadingArticle) {
@@ -48,8 +102,11 @@ export function Article() {
         ></img>
       </div>
       <div id="article-stats">
-        <div className="article-stat">
-          <img className="article-logo" src="../../../public/star.png"></img>
+        <div className="article-stat" onClick={increaseVote}>
+          <img
+            className={"article-logo " + starred}
+            src="../../../public/star-gold.png"
+          ></img>
           <p className="article-stat-text">{article.votes}</p>
         </div>
         <div className="article-stat">
@@ -60,8 +117,13 @@ export function Article() {
           <p className="article-stat-text">{article.comment_count}</p>
         </div>
         <button id="drop-down-comments" onClick={toggleDropDownButton}>
-          <div class={dropDown}></div>
+          <div className={dropDown}></div>
         </button>
+        {errorVoting && (
+          <span className="vote-error">
+            Your last star didn't go through! Try again later.
+          </span>
+        )}
       </div>
       {dropDown === "drop-down" && <Comments articleId={id} />}
     </article>

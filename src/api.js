@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://articles-api-zepx.onrender.com/api",
+  baseURL: "https://nc-news-tm72.onrender.com/api",
 });
 
 export function getArticles() {
@@ -19,5 +19,11 @@ export function getArticle(id) {
 export function getCommentsByArticle(id) {
   return api.get(`/articles/${id}/comments`).then((response) => {
     return response.data.comments;
+  });
+}
+
+export function patchArticle(id, num) {
+  return api.patch(`/articles/${id}`, { inc_votes: num }).then((response) => {
+    return response.data;
   });
 }
