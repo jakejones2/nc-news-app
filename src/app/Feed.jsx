@@ -20,19 +20,21 @@ export function Feed() {
         setErrorLoadingArticles(true);
         setIsLoadingArticles(false);
       });
-  });
+  }, []);
+
+  if (isLoadingArticles) {
+    return <span className="loader"></span>;
+  }
 
   return (
-    <div id="articles-preview">
-      <ul className="cards" id="articles-list">
-        {articles.articles.map((article) => {
-          return (
-            <li key={article.article_id}>
-              <ArticlePreview article={article}></ArticlePreview>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <ul className="cards">
+      {articles.articles.map((article) => {
+        return (
+          <li className="article-preview" key={article.article_id}>
+            <ArticlePreview article={article}></ArticlePreview>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
