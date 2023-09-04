@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getArticle } from "../api";
+import { Comments } from "./Article/Comments";
 
 export function Article() {
   const { id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
+  const [dropDown, setDropDown] = useState("drop-up");
 
   useEffect(() => {
     setIsLoadingArticle(true);
@@ -14,6 +16,14 @@ export function Article() {
       setIsLoadingArticle(false);
     });
   }, []);
+
+  function toggleDropDownButton() {
+    setDropDown((className) => {
+      if (className === "drop-down") {
+        return "drop-up";
+      } else return "drop-down";
+    });
+  }
 
   if (isLoadingArticle) {
     return <span className="loader"></span>;
@@ -39,17 +49,21 @@ export function Article() {
       </div>
       <div id="article-stats">
         <div className="article-stat">
+          <img className="article-logo" src="../../../public/star.png"></img>
+          <p className="article-stat-text">{article.votes}</p>
+        </div>
+        <div className="article-stat">
           <img
             className="article-logo"
             src="../../../public/comments.png"
           ></img>
           <p className="article-stat-text">{article.comment_count}</p>
         </div>
-        <div className="article-stat">
-          <img className="article-logo" src="../../../public/star.png"></img>
-          <p className="article-stat-text">{article.votes}</p>
-        </div>
+        <button id="drop-down-comments" onClick={toggleDropDownButton}>
+          <div class={dropDown}></div>
+        </button>
       </div>
+      {dropDown === "drop-down" && <Comments articleId={id} />}
     </article>
   );
 }
