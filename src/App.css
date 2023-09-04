@@ -26,6 +26,11 @@ a:hover {
     color: var(--button-highlight);
 }
 
+button {
+    border: none;
+    background-color: transparent;
+}
+
 /* App */
 
 #app-title {
@@ -234,26 +239,120 @@ a:hover {
     justify-content: flex-start;
     background-color: var(--pale-accent);
     border-radius: 12px;
+    align-items: center;
 }
 
 .article-stat {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .article-logo {
-    width: 40px;
+    width: 30px;
     height: fit-content;
     margin: 20px;
     margin-right: 5px;
 }
 
 .article-stat-text {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 600;
 }
 
+.drop-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid var(--dark-text);
+    margin-left: 10px;
+  }
+
+.drop-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid var(--dark-text);
+    margin-left: 10px;
+}
+
+
+@media (min-width: 600px) {
+   
+    .article-logo {
+        width: 40px;
+        height: fit-content;
+        margin: 20px;
+        margin-right: 5px;
+    }
+
+    .article-stat-text {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin: 18px;
+    }
+}
+
+/* Comments */
+.comment-list {
+    padding-left: 0;
+}
+
+
+/* Comment */
+
+.comment {
+    border-bottom: solid 2px var(--faint-text);
+    position: relative;
+}
+
+.comment-info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.comment-author,
+.comment-datetime {
+    font-size: 0.8em;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.comment-stat {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+}
+
+.comment-stat-text {
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-top: 5px;
+    margin-top: 0;
+}
+
+.comment-logo {
+    width: 20px;
+    margin: 0;
+    margin-right: 2px;
+    padding: 0;
+}
+
+.comment-body {
+    margin-bottom: 30px;
+}
 
 
 /* Loaders */
@@ -268,7 +367,11 @@ a:hover {
     animation: rotation 1s linear infinite;
     margin: auto;
     margin-top: 30vh;
+}
 
+.comment-loader {
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 
