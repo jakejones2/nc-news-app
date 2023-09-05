@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { FilterOptions } from "./FilterOptions";
+import { getTopics } from "../../api";
 
 export function Filters({ queries, setQueries, articles }) {
   const totalPages = Math.ceil(articles.totalCount / queries.limit);
   const [isChoosingFilters, setIsChoosingFilters] = useState(false);
+  const [topics, setTopics] = useState([]);
 
   function changePage(num) {
     setQueries((queries) => {
@@ -12,6 +14,12 @@ export function Filters({ queries, setQueries, articles }) {
       return newQueries;
     });
   }
+
+  useEffect(() => {
+    getTopics().then((topics) => {
+      setTopics(topics);
+    });
+  }, []);
 
   function setFilters() {
     setIsChoosingFilters((bool) => !bool);
@@ -45,7 +53,11 @@ export function Filters({ queries, setQueries, articles }) {
         </button>
       </nav>
       {isChoosingFilters && (
-        <FilterOptions queries={queries} setQueries={setQueries} />
+        <FilterOptions
+          topics={topics}
+          queries={queries}
+          setQueries={setQueries}
+        />
       )}
     </>
   );

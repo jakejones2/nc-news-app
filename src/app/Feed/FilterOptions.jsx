@@ -1,10 +1,6 @@
-import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getTopics } from "../../api";
 
-export function FilterOptions({ queries, setQueries }) {
-  const [topics, setTopics] = useState([]);
-  const [isLoadingTopics, setIsLoadingTopics] = useState(false);
+export function FilterOptions({ topics, queries, setQueries }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleTopic(event) {
@@ -36,16 +32,6 @@ export function FilterOptions({ queries, setQueries }) {
     window.history.replaceState(null, `Feed`, `/`);
     setSearchParams(queries);
   }
-
-  useEffect(() => {
-    setIsLoadingTopics(true);
-    getTopics().then((topics) => {
-      setTopics(topics);
-      setIsLoadingTopics(false);
-    });
-  }, []);
-
-  if (isLoadingTopics) return <span className="loader comment-loader"></span>;
 
   return (
     <form onChange={updateUrl} id="filter-form">

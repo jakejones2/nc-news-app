@@ -385,7 +385,7 @@ button {
 .comment-stat {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
     position: absolute;
     margin-top: 10px;
@@ -398,7 +398,6 @@ button {
 .comment-stat-text {
     font-weight: 600;
     margin-bottom: 0;
-    padding-top: 5px;
     margin-top: 0;
 }
 
@@ -407,10 +406,23 @@ button {
     margin: 0;
     margin-right: 2px;
     padding: 0;
+    height: 20px
 }
 
 .comment-body {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+}
+
+.bin {
+    width: 15px;
+    height: 19px;
+    margin-left: 5px;
+    margin-bottom: 1px;
+    filter: brightness(70%);
+}
+
+.bin:hover {
+    filter: none;
 }
 
 /* NewComment */
@@ -422,7 +434,6 @@ button {
     justify-content: flex-start;
     margin-top: 10px;
 }
-
 
 .input-body {
     border-radius: 8px;

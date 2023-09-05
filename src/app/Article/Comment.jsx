@@ -1,4 +1,18 @@
-export function Comment({ comment }) {
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts";
+
+export function Comment({ setComments, comment, removeComment }) {
+  const { user } = useContext(UserContext);
+
+  function handleCommentDelete() {
+    setComments((comments) => {
+      return comments.filter((item) => {
+        return item.comment_id !== comment.comment_id;
+      });
+    });
+    removeComment(comment.comment_id);
+  }
+
   return (
     <article className="comment">
       <div className="comment-info">
@@ -8,10 +22,19 @@ export function Comment({ comment }) {
         </p>
       </div>
       <p className="comment-body">{comment.body}</p>
+      {user === comment.author && (
+        <img
+          onClick={handleCommentDelete}
+          src="../../../public/bin.png"
+          className="comment-logo bin"
+          alt="bin"
+        ></img>
+      )}
       <div className="comment-stat">
         <img
           className="comment-logo"
           src="../../../public/star-cropped.png"
+          alt="star"
         ></img>
         <p className="comment-stat-text">{comment.votes}</p>
       </div>
