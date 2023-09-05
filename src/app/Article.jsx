@@ -9,7 +9,7 @@ export function Article() {
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
   const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
   const [dropDown, setDropDown] = useState("drop-up");
-  const [starred, setStarred] = useState("");
+  const [starred, setStarred] = useState(false);
   const [errorVoting, setErrorVoting] = useState(false);
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export function Article() {
     setErrorVoting(true);
     increaseVoteInState(num);
     if (num > 0) {
-      setStarred("star");
+      setStarred(true);
     } else {
-      setStarred("");
+      setStarred(false);
     }
   }
 
@@ -57,13 +57,13 @@ export function Article() {
   function increaseVote() {
     setErrorVoting(false);
     if (starred) {
-      setStarred("");
+      setStarred(false);
       increaseVoteInState(-1);
       patchArticle(id, -1).catch((err) => {
         handlePatchError(err, 1);
       });
     } else {
-      setStarred("star");
+      setStarred(true);
       increaseVoteInState(1);
       patchArticle(id, 1).catch((err) => {
         handlePatchError(err, -1);
@@ -104,7 +104,7 @@ export function Article() {
       <div id="article-stats">
         <div className="article-stat" onClick={increaseVote}>
           <img
-            className={"article-logo " + starred}
+            className={starred ? "article-logo star" : "article-logo"}
             src="../../../public/star-gold.png"
           ></img>
           <p className="article-stat-text">{article.votes}</p>
