@@ -14,6 +14,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Feed />} />
+        <Route path="/:topic" element={<Feed />} />
         <Route path="/articles/:id" element={<Article />} />
       </Routes>
     </div>
