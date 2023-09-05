@@ -4,7 +4,7 @@ import { postComment } from "../../api";
 
 export function NewComment({ setComments, articleId }) {
   const [commentBody, setCommentBody] = useState("");
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [errorPostingComment, setErrorPostingComments] = useState(false);
 
   function handleCommentBody(event) {

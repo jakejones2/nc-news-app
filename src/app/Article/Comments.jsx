@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getCommentsByArticle } from "../../api";
+import { deleteComment, getCommentsByArticle } from "../../api";
 import { Comment } from "./Comment";
 import { NewComment } from "./NewComment";
 
@@ -22,6 +22,14 @@ export function Comments({ articleId }) {
       });
   }, []);
 
+  function removeComment(id) {
+    setErrorLoadingComments(false);
+    deleteComment(id).catch((err) => {
+      console.log(err);
+      setErrorLoadingComments(true);
+    });
+  }
+
   if (errorLoadingComments) {
     return (
       <div className="articles-error">
@@ -39,7 +47,14 @@ export function Comments({ articleId }) {
       <NewComment setComments={setComments} articleId={articleId} />
       <ul className="comment-list">
         {comments.map((comment) => {
-          return <Comment key={comment.comment_id} comment={comment} />;
+          return (
+            <Comment
+              key={comment.comment_id}
+              comment={comment}
+              removeComment={removeComment}
+              setComments={setComments}
+            />
+          );
         })}
       </ul>
     </>
