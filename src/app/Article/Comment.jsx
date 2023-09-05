@@ -25,7 +25,7 @@ export function Comment({ setComments, comment, removeComment }) {
       {user === comment.author && (
         <img
           onClick={handleCommentDelete}
-          src="../../../public/bin.png"
+          src="../../../bin.png"
           className="comment-logo bin"
           alt="bin"
         ></img>
@@ -33,7 +33,7 @@ export function Comment({ setComments, comment, removeComment }) {
       <div className="comment-stat">
         <img
           className="comment-logo"
-          src="../../../public/star-cropped.png"
+          src="../../../star-cropped.png"
           alt="star"
         ></img>
         <p className="comment-stat-text">{comment.votes}</p>

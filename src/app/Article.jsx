@@ -107,15 +107,12 @@ export function Article() {
         <div className="article-stat" onClick={increaseVote}>
           <img
             className={starred ? "article-logo star" : "article-logo"}
-            src="../../../public/star-gold.png"
+            src="../../../star-gold.png"
           ></img>
           <p className="article-stat-text">{article.votes}</p>
         </div>
         <div className="article-stat" onClick={toggleDropDownButton}>
-          <img
-            className="article-logo"
-            src="../../../public/comments.png"
-          ></img>
+          <img className="article-logo" src="../../../comments.png"></img>
           <p className="article-stat-text">{article.comment_count}</p>
         </div>
         <button id="drop-down-comments" onClick={toggleDropDownButton}>
