@@ -12,7 +12,7 @@ export function ArticlePreview({ article }) {
         </div>
         <h3 className="article-topic preview-topic">{article.topic}</h3>
       </div>
-      <div className="image-wrapper">
+      <div className="image-container">
         <img
           className="article-preview-img"
           src={article.article_img_url}
