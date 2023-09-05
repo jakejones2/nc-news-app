@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { getCommentsByArticle } from "../../api";
 import { Comment } from "./Comment";
+import { NewComment } from "./NewComment";
 
 export function Comments({ articleId }) {
   const [comments, setComments] = useState([]);
@@ -34,10 +35,13 @@ export function Comments({ articleId }) {
   }
 
   return (
-    <ul className="comment-list">
-      {comments.map((comment) => {
-        return <Comment key={comment.comment_id} comment={comment} />;
-      })}
-    </ul>
+    <>
+      <NewComment setComments={setComments} articleId={articleId} />
+      <ul className="comment-list">
+        {comments.map((comment) => {
+          return <Comment key={comment.comment_id} comment={comment} />;
+        })}
+      </ul>
+    </>
   );
 }

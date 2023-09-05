@@ -27,3 +27,9 @@ export function patchArticle(id, num) {
     return response.data;
   });
 }
+
+export function postComment(id, body) {
+  return api.post(`articles/${id}/comments`, body).then((response) => {
+    return response.data;
+  });
+}
