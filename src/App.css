@@ -414,6 +414,12 @@ button {
     color: var(--dark-text);
 }
 
+.post-comment-error {
+    margin: 10px;
+    margin-left: 0;
+    font-size: 0.8em;
+}
+
 /* Loaders */
 
 .loader {

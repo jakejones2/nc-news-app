@@ -50,7 +50,9 @@ export function NewComment({ setComments, articleId }) {
       ></textarea>
       <button className="submit-button">Post Comment</button>
       {errorPostingComment && (
-        <p className="articles-error">Can't post comments right now!</p>
+        <p className="articles-error post-comment-error">
+          Can't post comments right now - sorry!
+        </p>
       )}
     </form>
   );
