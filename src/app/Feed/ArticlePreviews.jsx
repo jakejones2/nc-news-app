@@ -34,14 +34,23 @@ export function ArticlePreviews({ articles, setArticles, queries }) {
   }
 
   return (
-    <ul className="cards">
-      {articles.articles.map((article) => {
-        return (
-          <li className="article-preview" key={article.article_id}>
-            <ArticlePreview article={article}></ArticlePreview>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <p id="total-articles">
+        Showing {1 + (queries.page - 1) * queries.limit}-
+        {articles.totalCount < queries.page * queries.limit
+          ? articles.totalCount
+          : queries.page * queries.limit}{" "}
+        of {articles.totalCount}
+      </p>
+      <ul className="cards">
+        {articles.articles.map((article) => {
+          return (
+            <li className="article-preview" key={article.article_id}>
+              <ArticlePreview article={article}></ArticlePreview>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }

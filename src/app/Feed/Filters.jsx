@@ -15,28 +15,28 @@ export function Filters({ queries, setQueries, articles }) {
 
   function setFilters() {
     setIsChoosingFilters((bool) => !bool);
-    // have this state determine the popup of a modal
-    // the modal then changes other filter settings, but only once closed!
-    // need to render modal depending on query state so it remembers filters.
   }
+
   return (
     <>
       <nav id="filters">
-        <p id="page-num">
-          Page {queries.page} of {totalPages}
-        </p>
-        {queries.page > 1 && (
-          <button className="page-nav" onClick={() => changePage(-1)}>
-            previous
-          </button>
-        )}
-        {queries.page < totalPages && (
-          <button className="page-nav" onClick={() => changePage(1)}>
-            next
-          </button>
-        )}
+        <div className="pages">
+          <p id="page-num">
+            Page {queries.page} of {totalPages}
+          </p>
+          {queries.page > 1 && (
+            <button className="page-nav" onClick={() => changePage(-1)}>
+              previous
+            </button>
+          )}
+          {queries.page < totalPages && (
+            <button className="page-nav" onClick={() => changePage(1)}>
+              next
+            </button>
+          )}
+        </div>
         <button className="page-nav" onClick={setFilters}>
-          filters{" "}
+          filters
           <span
             className={
               isChoosingFilters ? "drop-down-filter" : "drop-up-filter"

@@ -79,6 +79,14 @@ button {
 
 /* ArticlePreview */
 
+#total-articles {
+    margin-left: 20px;
+    font-size: 0.9em;
+    color: var(--faint-text);
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
 .article-preview {
     position: relative;
     background-color: var(--pale-accent);
@@ -88,12 +96,22 @@ button {
     margin-bottom: 2.5%;
     width: 90%;
     min-width: none;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.article-preview-top {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: top;
 }
 
 .article-preview-title {
     margin: 0;
     padding: 20px;
     padding-bottom: 5px;
+    padding-right: 0;
 }
 
 .article-preview-author {
@@ -104,32 +122,32 @@ button {
     color: var(--faint-text);
 }
 
-.article-preview-body {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: left;
-    min-width: none;
-}
-
-.article-preview-img,
-.article-preview-info {
-    width: 50%;
-    border-radius: 8px;
-    margin: 20px;
-    padding-top: 0;
-}
-
-.article-preview-img {
-    margin-right: 0;
-}
-
 .article-preview-topic {
     margin: 0;
     padding: 0;
     font-weight: 500;
     color: var(--accent-2);
 }
+
+.image-wrapper {
+    position: static;
+    height: 100%;
+    width: 70%;
+    min-height: 0;
+    min-width: 0;
+}
+
+.article-preview-img {
+    width: 60%;
+    min-width: 0;
+    min-height: 0;
+    padding-top: 0;
+    margin: 20px;
+    margin-right: 0;
+    margin-top: 5px;
+    border-radius: 8px;
+}
+
 
 .article-preview-stats {
     display: flex;
@@ -175,6 +193,10 @@ button {
         margin-bottom: 3%;
         height: 300px;
     }
+
+    #total-articles {
+        margin-bottom: 10px;
+    }
 }
 
 /* Article */
@@ -203,12 +225,19 @@ button {
     margin-bottom: 0;
 }
 
-#article-topic {
+.article-topic {
     margin: 10px;
     border-radius: 20px;
     background-color: var(--accent2);
     padding: 6px;
     color: var(--background2);
+    height: 1.5em;
+}
+
+.preview-topic {
+    margin-top: 20px;
+    margin-right: 20px;
+    font-size: 1em;
 }
 
 #article-author,
@@ -432,8 +461,15 @@ button {
     border-radius: 12px;
     margin: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-flow: row nowrap;
+    align-items: center;
+}
+
+.pages {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -487,6 +523,11 @@ button {
 
 #filter-form {
     margin-bottom: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .filter-label {
@@ -506,6 +547,9 @@ button {
     color: var(--accent);
 }
 
+.filter {
+    margin-bottom: 10px;
+}
 
 /* Loaders */
 
