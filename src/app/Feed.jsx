@@ -22,6 +22,14 @@ export function Feed() {
       });
   }, []);
 
+  if (errorLoadingArticles) {
+    return (
+      <div className="articles-error">
+        Can't fetch articles right now - sorry!
+      </div>
+    );
+  }
+
   if (isLoadingArticles) {
     return <span className="loader"></span>;
   }

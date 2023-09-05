@@ -160,6 +160,12 @@ button {
     color: var(--faint-text);
 }
 
+.articles-error {
+    color: red;
+    margin: 20px;
+    font-weight: 600;
+}
+
 @media (min-width: 600px) {
 
     .article-preview {
@@ -254,11 +260,16 @@ button {
     height: fit-content;
     margin: 20px;
     margin-right: 5px;
+    filter: brightness(0%);
 }
 
 .article-stat-text {
     font-size: 1em;
     font-weight: 600;
+}
+
+.star {
+    filter: none;
 }
 
 .drop-down {
@@ -277,6 +288,12 @@ button {
     border-right: 10px solid transparent;
     border-bottom: 15px solid var(--dark-text);
     margin-left: 10px;
+}
+
+.vote-error {
+    color: red;
+    margin-left: 20px;
+    font-weight: 600;
 }
 
 
