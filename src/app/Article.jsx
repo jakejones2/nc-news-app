@@ -85,8 +85,10 @@ export function Article() {
 
   return (
     <article id="article">
-      <h2 id="article-title">{article.title}</h2>
-      <h4 id="article-topic">{article.topic}</h4>
+      <div id="title-topic">
+        <h2 id="article-title">{article.title}</h2>
+        <h4 id="article-topic">{article.topic}</h4>
+      </div>
       <div id="article-info">
         <h3 id="article-author">{article.author}</h3>
         <p id="article-created-at">
@@ -109,7 +111,7 @@ export function Article() {
           ></img>
           <p className="article-stat-text">{article.votes}</p>
         </div>
-        <div className="article-stat">
+        <div className="article-stat" onClick={toggleDropDownButton}>
           <img
             className="article-logo"
             src="../../../public/comments.png"
