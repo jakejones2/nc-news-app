@@ -10,7 +10,7 @@ export function Feed() {
     limit: 10,
     page: 1,
     author: "",
-    sort_by: "created_at",
+    sortBy: "created_at",
     topic: topic,
     order: "desc",
   });

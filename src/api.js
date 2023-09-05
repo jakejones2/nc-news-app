@@ -4,8 +4,8 @@ const api = axios.create({
   baseURL: "https://nc-news-tm72.onrender.com/api",
 });
 
-export function getArticles({ limit, page, author, sort_by, order, topic }) {
-  let url = `/articles?limit=${limit}&p=${page}&sort_by=${sort_by}&order=${order}`;
+export function getArticles({ limit, page, author, sortBy, order, topic }) {
+  let url = `/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
   if (author) url += `&author=${author}`;
   if (topic) url += `&topic=${topic}`;
   return api.get(url).then((response) => {

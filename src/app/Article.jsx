@@ -87,7 +87,7 @@ export function Article() {
     <article id="article">
       <div id="title-topic">
         <h2 id="article-title">{article.title}</h2>
-        <h4 id="article-topic">{article.topic}</h4>
+        <h4 className="article-topic">{article.topic}</h4>
       </div>
       <div id="article-info">
         <h3 id="article-author">{article.author}</h3>
