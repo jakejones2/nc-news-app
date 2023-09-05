@@ -1,48 +1,28 @@
 import { useContext, useEffect, useState } from "react";
-import { getArticles } from "../api";
-import { ArticlePreview } from "./Feed/ArticlePreview";
+import { useParams } from "react-router-dom";
+import { Filters } from "./Feed/Filters";
+import { ArticlePreviews } from "./Feed/ArticlePreviews";
 
 export function Feed() {
+  const { topic } = useParams();
   const [articles, setArticles] = useState({ totalCount: 0, articles: [] });
-  const [isLoadingArticles, setIsLoadingArticles] = useState(false);
-  const [errorLoadingArticles, setErrorLoadingArticles] = useState(false);
-
-  useEffect(() => {
-    setIsLoadingArticles(true);
-    setErrorLoadingArticles(false);
-    getArticles()
-      .then((articles) => {
-        setArticles(articles);
-        setIsLoadingArticles(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorLoadingArticles(true);
-        setIsLoadingArticles(false);
-      });
-  }, []);
-
-  if (errorLoadingArticles) {
-    return (
-      <div className="articles-error">
-        Can't fetch articles right now - sorry!
-      </div>
-    );
-  }
-
-  if (isLoadingArticles) {
-    return <span className="loader"></span>;
-  }
+  const [queries, setQueries] = useState({
+    limit: 10,
+    page: 1,
+    author: "",
+    sort_by: "created_at",
+    topic: topic,
+    order: "desc",
+  });
 
   return (
-    <ul className="cards">
-      {articles.articles.map((article) => {
-        return (
-          <li className="article-preview" key={article.article_id}>
-            <ArticlePreview article={article}></ArticlePreview>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <Filters queries={queries} setQueries={setQueries} articles={articles} />
+      <ArticlePreviews
+        articles={articles}
+        setArticles={setArticles}
+        queries={queries}
+      />
+    </>
   );
 }
