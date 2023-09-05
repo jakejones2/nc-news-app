@@ -9,11 +9,14 @@ export function Nav() {
       <Link to="/post" className="nav-link" id="post">
         Post
       </Link>
-      <Link to="/orders" className="nav-link" id="profile">
+      <Link to="/profile" className="nav-link" id="profile">
         Profile
       </Link>
-      <Link to="/listings" className="nav-link" id="login">
+      <Link to="/login" className="nav-link" id="login">
         Login
+      </Link>
+      <Link to="/signup" className="nav-link" id="login">
+        Sign Up
       </Link>
     </nav>
   );

@@ -1,10 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://nc-news-tm72.onrender.com/api",
+  baseURL: "https://articles-api-zepx.onrender.com/api",
 });
 
-export function getArticles({ limit, page, author, sortBy, order, topic }) {
+export function getArticles({
+  limit = 10,
+  page = 1,
+  author,
+  sortBy = "created_at",
+  order = "asc",
+  topic,
+}) {
   let url = `/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
   if (author) url += `&author=${author}`;
   if (topic) url += `&topic=${topic}`;
@@ -46,5 +53,11 @@ export function getTopics() {
 export function deleteComment(id) {
   return api.delete(`/comments/${id}`).then((response) => {
     return;
+  });
+}
+
+export function postUser(body) {
+  return api.post(`/users`, body).then((response) => {
+    return response.data;
   });
 }
