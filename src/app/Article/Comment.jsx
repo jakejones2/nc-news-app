@@ -11,6 +11,8 @@ export function Comment({ setComments, comment, removeComment }) {
       });
     });
     removeComment(comment.comment_id);
+    // need to do this properly - what if delete fails?
+    // need an error message state etc.
   }
 
   return (
@@ -22,13 +24,15 @@ export function Comment({ setComments, comment, removeComment }) {
         </p>
       </div>
       <p className="comment-body">{comment.body}</p>
-      {user === comment.author && (
+      {user === comment.author ? (
         <img
           onClick={handleCommentDelete}
           src="../../../bin.png"
           className="comment-logo bin"
           alt="bin"
         ></img>
+      ) : (
+        <div className="space"></div>
       )}
       <div className="comment-stat">
         <img

@@ -1,0 +1,16 @@
+Do ticket 12 error handling
+Assign colours to topics
+Fix desktop view of feed - different sized articles?
+Add voting for comments
+Add post an article (also creates category if needed - with random colour - convert string to num to hex colour?)
+
+Build many to many tables in back end for voting
+Redo votes
+
+Add colour to star on feed?
+Have almost everything as a link on the feed
+Link to profile pages with their activity?
+
+currently access token isn't stored as secure or http only (on react side)
+
+Add filtering and pagination for comments
