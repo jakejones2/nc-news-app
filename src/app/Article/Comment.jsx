@@ -11,6 +11,8 @@ export function Comment({ setComments, comment, removeComment }) {
       });
     });
     removeComment(comment.comment_id);
+    // need to do this properly - what if delete fails?
+    // need an error message state etc.
   }
 
   return (
