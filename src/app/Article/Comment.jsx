@@ -22,13 +22,15 @@ export function Comment({ setComments, comment, removeComment }) {
         </p>
       </div>
       <p className="comment-body">{comment.body}</p>
-      {user === comment.author && (
+      {user === comment.author ? (
         <img
           onClick={handleCommentDelete}
           src="../../../bin.png"
           className="comment-logo bin"
           alt="bin"
         ></img>
+      ) : (
+        <div className="space"></div>
       )}
       <div className="comment-stat">
         <img

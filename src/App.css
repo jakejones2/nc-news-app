@@ -7,7 +7,7 @@
     --background2: rgb(231, 231, 231);
     --button-highlight: navy;
     --accent: green;
-    --pale-accent: rgb(206, 250, 206);
+    --pale-accent: rgb(226, 247, 226);
     --accent2: orangered;
 }
 
@@ -42,18 +42,21 @@ button {
     border-bottom: solid 3px var(--accent);
 }
 
+/* Nav */
+
 #nav-main {
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     background-color: var(--background2);
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-bottom: 2.5%;
+    margin-bottom: 10px;
     box-sizing: border-box;
     font-weight: 600;
-    font-size: calc(1em + 0.3vw)
+    font-size: calc(1em + 0.3vw);
+    align-items: center;
 }
 
 .nav-link {
@@ -61,6 +64,40 @@ button {
     color: var(--accent);
     min-width: none;
     padding-left: 20px;
+}
+
+.end {
+    margin-right: 20px
+}
+
+#logout {
+    font-weight: 600;
+    font-size: 1em;
+    font-size: calc(1em + 0.3vw);
+    padding-top: 2px;
+    padding-bottom: 0;
+    height: fit-content
+}
+
+.logged-in-nav-items,
+.guest-nav-items {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#welcome-user{
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--faint-text);
+    font-weight: 500;
+    margin: 0;
+}
+
+#user {
+    color: var(--dark-text);
+    font-weight: 600;
 }
 
 /* Feed */
@@ -435,6 +472,10 @@ button {
     filter: none;
 }
 
+.space {
+    height: 20px;
+}
+
 /* NewComment */
 
 #new-comment-form {
@@ -475,12 +516,22 @@ button {
     font-size: 0.8em;
 }
 
+.comments-link {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.comments-header {
+    color: var(--faint-text);
+}
+
 /* Filters */
 
 #filters {
     border: solid 2px var(--accent);
     border-radius: 12px;
     margin: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     flex-flow: row nowrap;
@@ -640,6 +691,15 @@ button {
 .comment-loader {
     margin-top: 20px;
     margin-bottom: 50px;
+}
+
+.logout-loader {
+    height: 15px;
+    width: 15px;
+    border-width: 4px;
+    margin: 47px;
+    margin-bottom: 0;
+    margin-top: 2px;
 }
 
 

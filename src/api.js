@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://articles-api-zepx.onrender.com/api",
+  baseURL: "https://articles-api-zepx.onrender.com/",
 });
 
 export function getArticles({
@@ -12,7 +12,7 @@ export function getArticles({
   order = "asc",
   topic,
 }) {
-  let url = `/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
+  let url = `api/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
   if (author) url += `&author=${author}`;
   if (topic) url += `&topic=${topic}`;
   return api.get(url).then((response) => {
@@ -21,43 +21,55 @@ export function getArticles({
 }
 
 export function getArticle(id) {
-  return api.get(`/articles/${id}`).then((response) => {
+  return api.get(`api/articles/${id}`).then((response) => {
     return response.data.article;
   });
 }
 
 export function getCommentsByArticle(id) {
-  return api.get(`/articles/${id}/comments`).then((response) => {
+  return api.get(`api/articles/${id}/comments?limit=1000`).then((response) => {
     return response.data.comments;
   });
 }
 
 export function patchArticle(id, num) {
-  return api.patch(`/articles/${id}`, { inc_votes: num }).then((response) => {
-    return response.data;
-  });
+  return api
+    .patch(`api/articles/${id}`, { inc_votes: num })
+    .then((response) => {
+      return response.data;
+    });
 }
 
-export function postComment(id, body) {
-  return api.post(`/articles/${id}/comments`, body).then((response) => {
-    return response.data;
-  });
+export function postComment(id, body, options) {
+  return api
+    .post(`api/articles/${id}/comments`, body, options)
+    .then((response) => {
+      return response.data;
+    });
 }
 
 export function getTopics() {
-  return api.get("/topics").then((response) => {
+  return api.get("api/topics").then((response) => {
     return response.data.topics;
   });
 }
 
 export function deleteComment(id) {
-  return api.delete(`/comments/${id}`).then((response) => {
-    return;
-  });
+  return api.delete(`api/comments/${id}`);
 }
 
 export function postUser(body) {
-  return api.post(`/users`, body).then((response) => {
+  return api.post(`api/users`, body).then((response) => {
     return response.data;
   });
+}
+
+export function postAuth(body) {
+  return api.post(`auth`, body).then((response) => {
+    return response.data.accessToken;
+  });
+}
+
+export function getLogout() {
+  return api.get(`logout`);
 }

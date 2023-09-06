@@ -106,10 +106,6 @@ export function SignUp() {
     setSubmitDeactivated(true);
     postUser(signInData)
       .then(() => {
-        // do the login process
-        // nav bar should have user context
-        // and change login/signup to Logout
-        // also build a welcome message
         setRedirect(true);
       })
       .catch((err) => {
