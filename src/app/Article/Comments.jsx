@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { Link } from "react-router-dom";
-import { deleteComment, getCommentsByArticle } from "../../api";
+import {
+  deleteComment,
+  getCommentsByArticle,
+  getUserCommentVotes,
+} from "../../api";
 import { Comment } from "./Comment";
 import { NewComment } from "./NewComment";
 
@@ -10,13 +14,23 @@ export function Comments({ articleId }) {
   const [comments, setComments] = useState([]);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
+  const [commentVotes, setCommentVotes] = useState({});
 
   useEffect(() => {
     setIsLoadingComments(true);
     setErrorLoadingComments(false);
+    let incomingComments;
     getCommentsByArticle(articleId)
       .then((comments) => {
         setComments(comments);
+        return getUserCommentVotes(user.username);
+      })
+      .then((commentVotes) => {
+        const votes = {};
+        commentVotes.forEach((comment) => {
+          votes[comment.comment_id] = comment.votes;
+        });
+        setCommentVotes(votes);
         setIsLoadingComments(false);
       })
       .catch((err) => {
@@ -69,6 +83,7 @@ export function Comments({ articleId }) {
               comment={comment}
               removeComment={removeComment}
               setComments={setComments}
+              userVotes={commentVotes[comment.comment_id]}
             />
           );
         })}

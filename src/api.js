@@ -4,6 +4,16 @@ const api = axios.create({
   baseURL: "https://articles-api-zepx.onrender.com/",
 });
 
+export function tryAgainWithRefresh(func, setUser, ...args) {
+  api.get("refresh").then(({ data: { accessToken } }) => {
+    setUser({ username: user.username, token: accessToken });
+    const options = {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    };
+    return func(...args, options);
+  });
+}
+
 export function getArticles({
   limit = 10,
   page = 1,
@@ -32,9 +42,9 @@ export function getCommentsByArticle(id) {
   });
 }
 
-export function patchArticle(id, num) {
+export function patchArticle(id, num, options) {
   return api
-    .patch(`api/articles/${id}`, { inc_votes: num })
+    .patch(`api/articles/${id}`, { inc_votes: num }, options)
     .then((response) => {
       return response.data;
     });
@@ -43,6 +53,14 @@ export function patchArticle(id, num) {
 export function postComment(id, body, options) {
   return api
     .post(`api/articles/${id}/comments`, body, options)
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export function patchComment(id, num, options) {
+  return api
+    .patch(`api/comments/${id}`, { inc_votes: num }, options)
     .then((response) => {
       return response.data;
     });
@@ -72,4 +90,16 @@ export function postAuth(body) {
 
 export function getLogout() {
   return api.get(`logout`);
+}
+
+export function getUserArticleVotes(username) {
+  return api.get(`api/users/${username}/votes/articles`).then((response) => {
+    return response.data.articleVotes;
+  });
+}
+
+export function getUserCommentVotes(username) {
+  return api.get(`api/users/${username}/votes/comments`).then((response) => {
+    return response.data.commentVotes;
+  });
 }

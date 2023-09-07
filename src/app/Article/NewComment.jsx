@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts";
-import { postComment } from "../../api";
-import Cookies from "js-cookie";
+import { UserContext, logoutUser } from "../../contexts";
+import { postComment, tryAgainWithRefresh } from "../../api";
 
 export function NewComment({ setComments, articleId }) {
   const [commentBody, setCommentBody] = useState("");
@@ -40,32 +39,28 @@ export function NewComment({ setComments, articleId }) {
     };
     const options = { headers: { Authorization: `Bearer ${user.token}` } };
     postComment(articleId, newComment, options).catch((err) => {
-      console.log(err);
-      if (err.response.status === 403) {
-        // get a new accessToken
-        getRefresh()
-          .then(({ data: { accessToken } }) => {
-            setUser({ username: user.username, token: accessToken });
-            const options = {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            };
-            return postComment(articleId, newComment, options);
-          })
-          .catch((err) => {
+      if (err.response.status === "403 once refresh tokens are working") {
+        tryAgainWithRefresh(postComment, setUser, articleId, newComment).catch(
+          (err) => {
             if (err.response.status === 403) {
-              console.log(err);
-              setUser({ username: "guest", token: "" });
-              Cookies.remove("username");
-              Cookies.remove("jwt");
+              logoutUser();
               removeLastComment();
             } else {
+              console.log(err);
               setErrorPostingComments(true);
               removeLastComment();
             }
-          });
+          }
+        );
       } else {
-        setErrorPostingComments(true);
-        removeLastComment();
+        if (err.response.status === 403) {
+          logoutUser(setUser);
+          removeLastComment();
+        } else {
+          console.log(err);
+          setErrorPostingComments(true);
+          removeLastComment();
+        }
       }
     });
   }

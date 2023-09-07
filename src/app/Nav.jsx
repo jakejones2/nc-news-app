@@ -1,8 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../contexts";
+import { UserContext, logoutUser } from "../contexts";
 import { getLogout } from "../api";
-import Cookies from "js-cookie";
 
 export function Nav() {
   const { setUser, user } = useContext(UserContext);
@@ -11,9 +10,7 @@ export function Nav() {
     setLoggingOut(true);
     getLogout()
       .then(() => {
-        setUser({ username: "guest", token: "" });
-        Cookies.remove("username");
-        Cookies.remove("jwt");
+        logoutUser(setUser);
         setLoggingOut(false);
       })
       .catch((err) => {

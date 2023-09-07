@@ -9,12 +9,16 @@ export const UserProvider = ({ children }) => {
     const token = Cookies.get("jwt") || "";
     return { username, token };
   }
-
   const [user, setUser] = useState(findCookie());
-
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+export function logoutUser(setUser) {
+  setUser({ username: "guest", token: "" });
+  Cookies.remove("username");
+  Cookies.remove("jwt");
+}

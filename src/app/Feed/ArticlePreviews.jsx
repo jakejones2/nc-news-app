@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { getArticles } from "../../api";
+import { UserContext, logoutUser } from "../../contexts";
+import { getArticles, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 
 export function ArticlePreviews({ articles, setArticles, queries }) {
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
+  const { setUser, user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState(false);
+  const [articleVotes, setArticleVotes] = useState({});
 
   useEffect(() => {
     setIsLoadingArticles(true);
@@ -12,6 +15,14 @@ export function ArticlePreviews({ articles, setArticles, queries }) {
     getArticles(queries)
       .then((articles) => {
         setArticles(articles);
+        return getUserArticleVotes(user.username);
+      })
+      .then((articleVotes) => {
+        const votes = {};
+        articleVotes.forEach((vote) => {
+          votes[vote.article_id] = vote.votes;
+        });
+        setArticleVotes(votes);
         setIsLoadingArticles(false);
       })
       .catch((err) => {
@@ -46,7 +57,10 @@ export function ArticlePreviews({ articles, setArticles, queries }) {
         {articles.articles.map((article) => {
           return (
             <li className="article-preview" key={article.article_id}>
-              <ArticlePreview article={article}></ArticlePreview>
+              <ArticlePreview
+                userVotes={articleVotes[article.article_id]}
+                article={article}
+              ></ArticlePreview>
             </li>
           );
         })}

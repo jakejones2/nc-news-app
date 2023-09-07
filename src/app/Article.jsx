@@ -1,23 +1,43 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getArticle, patchArticle } from "../api";
+import { UserContext, logoutUser } from "../contexts";
+import { useParams, Navigate, useSearchParams } from "react-router-dom";
+import {
+  getArticle,
+  getUserArticleVotes,
+  patchArticle,
+  tryAgainWithRefresh,
+} from "../api";
 import { Comments } from "./Article/Comments";
+import { Star } from "./Feed/Star";
 
 export function Article() {
   const { id } = useParams();
+  const { setUser, user } = useContext(UserContext);
   const [article, setArticle] = useState({});
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
   const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
-  const [dropDown, setDropDown] = useState("drop-up");
   const [starred, setStarred] = useState(false);
-  const [errorVoting, setErrorVoting] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [showComments, setShowComments] = useSearchParams();
+  const commentsQuery = new URLSearchParams(window.location.search).get(
+    "comments"
+  );
 
   useEffect(() => {
+    let incomingArticle;
     setIsLoadingArticle(true);
     setErrorLoadingArticle(false);
     getArticle(id)
       .then((article) => {
+        incomingArticle = article;
         setArticle(article);
+        return getUserArticleVotes(user.username);
+      })
+      .then((articleVotes) => {
+        const currentVote = articleVotes.find((vote) => {
+          return vote.article_id === incomingArticle.article_id;
+        });
+        if (currentVote?.votes) setStarred(true);
         setIsLoadingArticle(false);
       })
       .catch((err) => {
@@ -26,49 +46,16 @@ export function Article() {
       });
   }, []);
 
-  function toggleDropDownButton() {
-    setDropDown((className) => {
-      if (className === "drop-down") {
-        return "drop-up";
-      } else return "drop-down";
-    });
-  }
-
-  function handlePatchError(err, num) {
-    console.log(err);
-    setErrorVoting(true);
-    increaseVoteInState(num);
-    if (num > 0) {
-      setStarred(true);
+  function toggleCommentsView() {
+    if (commentsQuery === "hide") {
+      setShowComments({ comments: "show" });
     } else {
-      setStarred(false);
+      setShowComments({ comments: "hide" });
     }
   }
 
-  function increaseVoteInState(num) {
-    setArticle((article) => {
-      const newArticle = { ...article };
-      newArticle.votes += num;
-      setArticle(newArticle);
-      return newArticle;
-    });
-  }
-
-  function increaseVote() {
-    setErrorVoting(false);
-    if (starred) {
-      setStarred(false);
-      increaseVoteInState(-1);
-      patchArticle(id, -1).catch((err) => {
-        handlePatchError(err, 1);
-      });
-    } else {
-      setStarred(true);
-      increaseVoteInState(1);
-      patchArticle(id, 1).catch((err) => {
-        handlePatchError(err, -1);
-      });
-    }
+  if (redirect) {
+    return <Navigate to="/login" />;
   }
 
   if (errorLoadingArticle) {
@@ -97,34 +84,35 @@ export function Article() {
       </div>
       <div id="article-content">
         <p id="article-body">{article.body}</p>
-        <img
-          id="article-image"
-          src={article.article_img_url}
-          alt="article image"
-        ></img>
+        {commentsQuery === "hide" && (
+          <img
+            id="article-image"
+            src={article.article_img_url}
+            alt="article image"
+          ></img>
+        )}
       </div>
       <div id="article-stats">
-        <div className="article-stat" onClick={increaseVote}>
-          <img
-            className={starred ? "article-logo star" : "article-logo"}
-            src="../../../star-gold.png"
-          ></img>
-          <p className="article-stat-text">{article.votes}</p>
-        </div>
-        <div className="article-stat" onClick={toggleDropDownButton}>
+        {user.username !== "guest" && (
+          <Star
+            type="article"
+            patchFunction={patchArticle}
+            id={article.article_id}
+            votes={article.votes}
+            userVotes={starred}
+          />
+        )}
+        <div className="article-stat" onClick={toggleCommentsView}>
           <img className="article-logo" src="../../../comments.png"></img>
           <p className="article-stat-text">{article.comment_count}</p>
         </div>
-        <button id="drop-down-comments" onClick={toggleDropDownButton}>
-          <div className={dropDown}></div>
+        <button id="drop-down-comments" onClick={toggleCommentsView}>
+          <div
+            className={commentsQuery === "show" ? "drop-down" : "drop-up"}
+          ></div>
         </button>
-        {errorVoting && (
-          <span className="vote-error">
-            Your last star didn't go through! Try again later.
-          </span>
-        )}
       </div>
-      {dropDown === "drop-down" && <Comments articleId={id} />}
+      {commentsQuery === "show" && <Comments articleId={id} />}
     </article>
   );
 }

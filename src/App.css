@@ -202,6 +202,8 @@ button {
     justify-content: space-between;
     padding-right: 3%;
     align-items: baseline;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .article-preview-stat-text {
@@ -213,6 +215,8 @@ button {
     padding: 2%;
     width: 30px;
     height: fit-content;
+    filter: brightness(0%);
+    cursor: pointer;
 }
 
 .article-preview-datetime {
@@ -342,15 +346,12 @@ button {
     margin: 20px;
     margin-right: 5px;
     filter: brightness(0%);
+    cursor: pointer;
 }
 
 .article-stat-text {
     font-size: 1em;
     font-weight: 600;
-}
-
-.star {
-    filter: none;
 }
 
 .drop-down {
@@ -360,6 +361,7 @@ button {
     border-right: 10px solid transparent;
     border-top: 15px solid var(--dark-text);
     margin-left: 10px;
+    cursor: pointer;
   }
 
 .drop-up {
@@ -369,12 +371,19 @@ button {
     border-right: 10px solid transparent;
     border-bottom: 15px solid var(--dark-text);
     margin-left: 10px;
+    cursor: pointer;
 }
 
-.vote-error {
+.article-vote-error {
     color: red;
     margin-left: 20px;
     font-weight: 600;
+}
+
+.article-preview-vote-error {
+    color: red;
+    font-weight: 600;
+    font-size: 0.8em;
 }
 
 
@@ -391,6 +400,7 @@ button {
         font-size: 1.2em;
         font-weight: 600;
         margin: 18px;
+        margin-left: 5px;
     }
 
     #article-body {
@@ -453,7 +463,19 @@ button {
     margin: 0;
     margin-right: 2px;
     padding: 0;
-    height: 20px
+    height: 20px;
+    filter: brightness(0%);
+    cursor: pointer;
+}
+
+.comment-vote-error {
+    color: red;
+    font-weight: 600;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 3px;
 }
 
 .comment-body {
@@ -672,6 +694,11 @@ button {
 .login-button:hover {
     background-color: var(--accent);
     color: var(--background2);
+}
+/* Effects */
+
+.star {
+    filter: none;
 }
 
 /* Loaders */

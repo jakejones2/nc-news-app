@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
+import { patchComment } from "../../api";
+import { Star } from "../Feed/Star";
 
-export function Comment({ setComments, comment, removeComment }) {
+export function Comment({ setComments, comment, removeComment, userVotes }) {
   const { user } = useContext(UserContext);
 
   function handleCommentDelete() {
@@ -34,14 +36,13 @@ export function Comment({ setComments, comment, removeComment }) {
       ) : (
         <div className="space"></div>
       )}
-      <div className="comment-stat">
-        <img
-          className="comment-logo"
-          src="../../../star-cropped.png"
-          alt="star"
-        ></img>
-        <p className="comment-stat-text">{comment.votes}</p>
-      </div>
+      <Star
+        type="comment"
+        patchFunction={patchComment}
+        userVotes={userVotes}
+        id={comment.comment_id}
+        votes={comment.votes}
+      />
     </article>
   );
 }

@@ -1,11 +1,18 @@
-export function ArticlePreview({ article }) {
+import { Link } from "react-router-dom";
+import { Star } from "./Star";
+import { patchArticle } from "../../api";
+
+export function ArticlePreview({ article, userVotes }) {
   return (
     <>
       <div className="article-preview-top">
         <div className="article-preview-header">
-          <a href={`/articles/${article.article_id}`} className="article-link">
+          <Link
+            to={`/articles/${article.article_id}?comments=hide`}
+            className="article-link"
+          >
             <h2 className="article-preview-title">{article.title}</h2>
-          </a>
+          </Link>
           <div className="article-preview-profile">
             <h4 className="article-preview-author">{article.author}</h4>
           </div>
@@ -20,22 +27,23 @@ export function ArticlePreview({ article }) {
         ></img>
       </div>
       <div className="article-preview-stats">
-        <div className="article-preview-stat">
-          <img
-            className="article-preview-logo"
-            src="../../../comments.png"
-            alt="number of comments"
-          ></img>
-          <p className="article-preview-stat-text">{article.comment_count}</p>
-        </div>
-        <div className="article-preview-stat">
-          <img
-            className="article-preview-logo"
-            src="../../../star.png"
-            alt="number of stars"
-          ></img>
-          <p className="article-preview-stat-text">{article.votes}</p>
-        </div>
+        <Link to={`/articles/${article.article_id}?comments=show`}>
+          <div className="article-preview-stat">
+            <img
+              className="article-preview-logo"
+              src="../../../comments.png"
+              alt="number of comments"
+            ></img>
+            <p className="article-preview-stat-text">{article.comment_count}</p>
+          </div>
+        </Link>
+        <Star
+          patchFunction={patchArticle}
+          type="article-preview"
+          userVotes={userVotes}
+          id={article.article_id}
+          votes={article.votes}
+        />
       </div>
       <h5 className="article-preview-datetime">
         {new Date(article.created_at).toDateString()}&nbsp;
