@@ -23,3 +23,5 @@ upon loading feed and article, call GET /api/users/:username/votes/articles/comm
 add hover effect to comment and star logo - cahnge hue and then hue rotate.
 
 make stars into a reusable component?
+
+are you sure? modal on logout

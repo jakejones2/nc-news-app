@@ -6,6 +6,8 @@ import { Nav } from "./app/Nav";
 import { Article } from "./app/Article";
 import { SignUp } from "./app/SignUp";
 import { Login } from "./app/Login";
+import { Post } from "./app/Post";
+import { Profile } from "./app/Profile";
 
 function App() {
   useEffect(() => {}, []);
@@ -19,6 +21,8 @@ function App() {
         <Route path="/articles/:id" element={<Article />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/post" element={<Post />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
     </div>
   );

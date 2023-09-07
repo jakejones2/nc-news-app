@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts";
 import { patchComment } from "../../api";
 import { Star } from "../Feed/Star";
@@ -20,7 +21,9 @@ export function Comment({ setComments, comment, removeComment, userVotes }) {
   return (
     <article className="comment">
       <div className="comment-info">
-        <h6 className="comment-author">{comment.author}</h6>
+        <Link to={`/profile/${comment.author}`} className="article-link">
+          <h6 className="comment-author">{comment.author}</h6>
+        </Link>
         <p className="comment-datetime">
           {new Date(comment.created_at).toDateString()}
         </p>

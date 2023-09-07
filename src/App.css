@@ -73,10 +73,12 @@ button {
 #logout {
     font-weight: 600;
     font-size: 1em;
-    font-size: calc(1em + 0.3vw);
     padding-top: 2px;
     padding-bottom: 0;
     height: fit-content
+}
+#logout:hover {
+    color: var(--button-highlight);
 }
 
 .logged-in-nav-items,
@@ -670,11 +672,27 @@ button {
     color: var(--accent);
 }
 
+.form-text-input {
+    height: 10em;
+    width: 95%;
+    border-radius: 8px;
+    border: solid 2px var(--background2);
+    padding: 5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+}
+
 .form-help {
     display: block;
     font-size: 0.8em;
     font-weight: 300;
     color: var(--faint-text);
+}
+
+.login-help {
+    margin-bottom: 10px;
+    margin-top: 0;
 }
 
 .form-validator {
@@ -694,6 +712,12 @@ button {
 .login-button:hover {
     background-color: var(--accent);
     color: var(--background2);
+}
+
+@media(min-width: 1000px) {
+    .form-text-input {
+        width: 60%;
+    }
 }
 /* Effects */
 
@@ -729,6 +753,53 @@ button {
     margin-top: 2px;
 }
 
+/* Post */
+
+#post-article-form {
+    margin: 20px;
+}
+
+/* Profile */
+
+#user-data {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+#user-title {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin: 20px;
+    margin-bottom: 5px;
+    color: var(--dark-text);
+}
+
+#user-name {
+    font-weight: 500;
+    color: var(--faint-text);
+    margin: 10px;
+    margin-top: 0;
+}
+
+.user-content-bar {
+    margin: 20px;
+}
+
+.history-text {
+    margin: 20px;
+    margin-right: 0;
+    font-weight: 600;
+    color: var(--dark-text);
+
+}
+
+#profile-pic {
+    border-radius: 50%;
+    width: 50%;
+    max-width: 300px;
+    border: solid 4px var(--accent);
+}
 
 @keyframes rotation {
     0% {

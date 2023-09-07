@@ -30,7 +30,11 @@ export function Nav() {
             <Link to="/post" className="nav-link" id="post">
               Post
             </Link>
-            <Link to="/profile" className="nav-link" id="profile">
+            <Link
+              to={`/profile/${user.username}`}
+              className="nav-link"
+              id="profile"
+            >
               Profile
             </Link>
             {loggingOut ? (

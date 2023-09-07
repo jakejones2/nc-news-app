@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 
 export function Login() {
   const { setUser } = useContext(UserContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("tickle122");
+  const [password, setPassword] = useState("#pKhMcl&");
   const [loggingIn, setLoggingIn] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [errorLoggingIn, setErrorLoggingIn] = useState(false);
@@ -54,6 +54,9 @@ export function Login() {
       <label className="form-label" htmlFor="username">
         Username
       </label>
+      <p className="form-help login-help">
+        Mr tickle122 is our guest profile for exploring the site.
+      </p>
       <input
         value={username}
         onChange={handleUsername}

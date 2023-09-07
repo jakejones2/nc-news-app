@@ -13,9 +13,11 @@ export function ArticlePreview({ article, userVotes }) {
           >
             <h2 className="article-preview-title">{article.title}</h2>
           </Link>
-          <div className="article-preview-profile">
-            <h4 className="article-preview-author">{article.author}</h4>
-          </div>
+          <Link to={`/profile/${article.author}`} className="article-link">
+            <div className="article-preview-profile">
+              <h4 className="article-preview-author">{article.author}</h4>
+            </div>
+          </Link>
         </div>
         <h3 className="article-topic preview-topic">{article.topic}</h3>
       </div>

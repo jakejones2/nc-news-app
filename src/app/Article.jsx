@@ -9,6 +9,7 @@ import {
 } from "../api";
 import { Comments } from "./Article/Comments";
 import { Star } from "./Feed/Star";
+import { ArticleComments } from "./Article/ArticleComments";
 
 export function Article() {
   const { id } = useParams();
@@ -112,7 +113,7 @@ export function Article() {
           ></div>
         </button>
       </div>
-      {commentsQuery === "show" && <Comments articleId={id} />}
+      {commentsQuery === "show" && <ArticleComments articleId={id} />}
     </article>
   );
 }

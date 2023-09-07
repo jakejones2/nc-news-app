@@ -74,7 +74,7 @@ export function NewComment({ setComments, articleId }) {
         placeholder="Have your say!"
         onChange={handleCommentBody}
       ></textarea>
-      <button className="submit-button">Post Comment</button>
+      {commentBody && <button className="submit-button">Post Comment</button>}
       {errorPostingComment && (
         <p className="articles-error post-comment-error">
           Can't post comments right now - sorry!

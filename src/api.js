@@ -103,3 +103,23 @@ export function getUserCommentVotes(username) {
     return response.data.commentVotes;
   });
 }
+
+export function postArticle(body, options) {
+  return api.post(`api/articles`, body, options);
+}
+
+export function postTopic(topic) {
+  return api.post("api/topics", topic);
+}
+
+export function getUser(username) {
+  return api.get(`api/users/${username}`).then((response) => {
+    return response.data.user;
+  });
+}
+
+export function getCommentsByUser(username) {
+  return api.get(`api/users/${username}/comments`).then((response) => {
+    return response.data.comments;
+  });
+}

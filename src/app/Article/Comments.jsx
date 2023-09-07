@@ -1,17 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
-import { Link } from "react-router-dom";
-import {
-  deleteComment,
-  getCommentsByArticle,
-  getUserCommentVotes,
-} from "../../api";
+import { deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
-import { NewComment } from "./NewComment";
 
-export function Comments({ articleId }) {
+export function Comments({ getFunction, getKey, comments, setComments }) {
   const { user } = useContext(UserContext);
-  const [comments, setComments] = useState([]);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
   const [commentVotes, setCommentVotes] = useState({});
@@ -19,10 +12,9 @@ export function Comments({ articleId }) {
   useEffect(() => {
     setIsLoadingComments(true);
     setErrorLoadingComments(false);
-    let incomingComments;
-    getCommentsByArticle(articleId)
-      .then((comments) => {
-        setComments(comments);
+    getFunction(getKey)
+      .then((commentData) => {
+        setComments(commentData);
         return getUserCommentVotes(user.username);
       })
       .then((commentVotes) => {
@@ -61,20 +53,6 @@ export function Comments({ articleId }) {
 
   return (
     <>
-      {user.username !== "guest" ? (
-        <NewComment setComments={setComments} articleId={articleId} />
-      ) : (
-        <p className="comments-header">
-          <Link to="/login" className="comments-link" id="login">
-            Log In
-          </Link>{" "}
-          or{" "}
-          <Link to="/signup" className="comments-link" id="signup">
-            Sign Up
-          </Link>{" "}
-          to post comments
-        </p>
-      )}
       <ul className="comment-list">
         {comments.map((comment) => {
           return (
