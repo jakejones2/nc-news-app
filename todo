@@ -1,27 +1,13 @@
 Do ticket 12 error handling
-Assign colours to topics
+
 Fix desktop view of feed - different sized articles?
-Add voting for comments
-Add post an article (also creates category if needed - with random colour - convert string to num to hex colour?)
-Create profile page which shows user info and articles/comments for deletion
-
-make comments on feed link to new comment
-
-Add colour to star on feed?
-How to vote more than one point? Rate out of 5 stars?
-Have almost everything as a link on the feed
-Link to profile pages with their activity?
 
 currently access token isn't stored as secure or http only (on react side)
 
-Add filtering and pagination for comments
+Add filtering and pagination for comments and profile stuff
 
 when logging in, you go to your previous page or feed
 
-upon loading feed and article, call GET /api/users/:username/votes/articles/comments, use this to show stars correctly.
+add hover effect to comment and star logo - change hue of png and then hue rotate.
 
-add hover effect to comment and star logo - cahnge hue and then hue rotate.
-
-make stars into a reusable component?
-
-are you sure? modal on logout
+are you sure? modal on logout and delete, should make a reusable component for this

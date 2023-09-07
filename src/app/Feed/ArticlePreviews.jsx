@@ -60,6 +60,8 @@ export function ArticlePreviews({ articles, setArticles, queries }) {
               <ArticlePreview
                 userVotes={articleVotes[article.article_id]}
                 article={article}
+                articles={articles}
+                setArticles={setArticles}
               ></ArticlePreview>
             </li>
           );

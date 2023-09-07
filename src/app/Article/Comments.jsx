@@ -7,6 +7,7 @@ export function Comments({ getFunction, getKey, comments, setComments }) {
   const { user } = useContext(UserContext);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
+  const [noComments, setNoComments] = useState(false);
   const [commentVotes, setCommentVotes] = useState({});
 
   useEffect(() => {
@@ -27,16 +28,29 @@ export function Comments({ getFunction, getKey, comments, setComments }) {
       })
       .catch((err) => {
         console.log(err);
-        setErrorLoadingComments(true);
+        if (err.response.status === 404) {
+          setNoComments(true);
+        } else {
+          setErrorLoadingComments(true);
+        }
       });
   }, []);
 
   function removeComment(id) {
     setErrorLoadingComments(false);
-    deleteComment(id).catch((err) => {
+    const options = { headers: { Authorization: `Bearer ${user.token}` } };
+    deleteComment(id, options).catch((err) => {
       console.log(err);
       setErrorLoadingComments(true);
     });
+  }
+
+  if (noComments) {
+    return (
+      <div className="articles-error no-comments">
+        Be the first to comment on this post!
+      </div>
+    );
   }
 
   if (errorLoadingComments) {

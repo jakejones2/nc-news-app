@@ -72,8 +72,12 @@ export function getTopics() {
   });
 }
 
-export function deleteComment(id) {
-  return api.delete(`api/comments/${id}`);
+export function deleteComment(id, options) {
+  return api.delete(`api/comments/${id}`, options);
+}
+
+export function deleteArticle(id, options) {
+  return api.delete(`api/articles/${id}`, options);
 }
 
 export function postUser(body) {

@@ -205,7 +205,7 @@ button {
     padding-right: 3%;
     align-items: baseline;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 5px
 }
 
 .article-preview-stat-text {
@@ -221,6 +221,20 @@ button {
     cursor: pointer;
 }
 
+.article-bin {
+    width: 19px;
+    height: 24px;
+    margin-left: 0;
+    margin-bottom: 5px;
+    filter: brightness(70%);
+    padding: 0;
+    padding-top: 5px;
+}
+
+.article-bin:hover {
+    filter: none;
+}
+
 .article-preview-datetime {
     margin: 0;
     display: block;
@@ -234,8 +248,12 @@ button {
 
 .articles-error {
     color: red;
-    margin: 20px;
+    margin-top: 20px;
     font-weight: 600;
+}
+
+.no-comments {
+    color: var(--faint-text);
 }
 
 @media (orientation: landscape) {
@@ -736,11 +754,11 @@ button {
     display: block;
     animation: rotation 1s linear infinite;
     margin: auto;
-    margin-top: 30vh;
+    margin-top: 30px;
 }
 
 .comment-loader {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 50px;
 }
 

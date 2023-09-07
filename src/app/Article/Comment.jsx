@@ -29,7 +29,7 @@ export function Comment({ setComments, comment, removeComment, userVotes }) {
         </p>
       </div>
       <p className="comment-body">{comment.body}</p>
-      {user === comment.author ? (
+      {user.username === comment.author ? (
         <img
           onClick={handleCommentDelete}
           src="../../../bin.png"

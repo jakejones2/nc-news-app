@@ -1,8 +1,27 @@
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts";
 import { Link } from "react-router-dom";
 import { Star } from "./Star";
-import { patchArticle } from "../../api";
+import { deleteArticle, patchArticle } from "../../api";
+import { Topic } from "../Article/Topic";
 
-export function ArticlePreview({ article, userVotes }) {
+export function ArticlePreview({ article, userVotes, articles, setArticles }) {
+  const { user } = useContext(UserContext);
+
+  function handleArticleDelete() {
+    setArticles(({ articles, totalCount }) => {
+      const filteredArticles = articles.filter((item) => {
+        return item.article_id !== article.article_id;
+      });
+      return { totalCount: totalCount, articles: filteredArticles };
+    });
+    const options = { headers: { Authorization: `Bearer ${user.token}` } };
+    deleteArticle(article.article_id, options).catch((err) => {
+      console.log(err);
+    });
+    // these errors need handling properly
+  }
+
   return (
     <>
       <div className="article-preview-top">
@@ -19,7 +38,7 @@ export function ArticlePreview({ article, userVotes }) {
             </div>
           </Link>
         </div>
-        <h3 className="article-topic preview-topic">{article.topic}</h3>
+        <Topic topic={article.topic} type="article-top preview-topic" />
       </div>
       <div className="image-container">
         <img
@@ -46,6 +65,16 @@ export function ArticlePreview({ article, userVotes }) {
           id={article.article_id}
           votes={article.votes}
         />
+        {user.username === article.author ? (
+          <img
+            onClick={handleArticleDelete}
+            src="../../../bin.png"
+            className="article-preview-logo article-bin"
+            alt="bin"
+          ></img>
+        ) : (
+          <div className="space"></div>
+        )}
       </div>
       <h5 className="article-preview-datetime">
         {new Date(article.created_at).toDateString()}&nbsp;

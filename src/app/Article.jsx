@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../contexts";
-import { useParams, Navigate, useSearchParams } from "react-router-dom";
+import { Link, useParams, Navigate, useSearchParams } from "react-router-dom";
 import {
   getArticle,
   getUserArticleVotes,
@@ -78,7 +78,9 @@ export function Article() {
         <h4 className="article-topic">{article.topic}</h4>
       </div>
       <div id="article-info">
-        <h3 id="article-author">{article.author}</h3>
+        <Link to={`/profile/${article.author}`} className="article-link">
+          <h3 id="article-author">{article.author}</h3>
+        </Link>
         <p id="article-created-at">
           {new Date(article.created_at).toDateString()}
         </p>
