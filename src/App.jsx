@@ -10,17 +10,11 @@ import { Profile } from "./app/Profile";
 import { NotFound } from "./app/NotFound";
 
 function App() {
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
   return (
     <div id="app">
-      <Link to="/">
-        <h1 onClick={refreshPage} id="app-title">
-          NC-NEWS
-        </h1>
-      </Link>
+      <a href="/">
+        <h1 id="app-title">NC-NEWS</h1>
+      </a>
       <Nav />
       <Routes>
         <Route path="/" element={<Feed />} />

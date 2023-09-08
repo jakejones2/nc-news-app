@@ -97,12 +97,18 @@ export function getLogout() {
 }
 
 export function getUserArticleVotes(username) {
+  if (username === "guest") {
+    return [];
+  }
   return api.get(`api/users/${username}/votes/articles`).then((response) => {
     return response.data.articleVotes;
   });
 }
 
 export function getUserCommentVotes(username) {
+  if (username === "guest") {
+    return [];
+  }
   return api.get(`api/users/${username}/votes/comments`).then((response) => {
     return response.data.commentVotes;
   });

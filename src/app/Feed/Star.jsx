@@ -4,7 +4,7 @@ import { UserContext } from "../../contexts";
 export function Star({ patchFunction, type, userVotes, id, votes }) {
   const { user } = useContext(UserContext);
   const [starred, setStarred] = useState(userVotes);
-  const [errorVoting, setErrorVoting] = useState(false);
+  const [errorVoting, setErrorVoting] = useState("");
   const [newTotal, setNewTotal] = useState(votes);
 
   function handlePatchError(err, num) {
@@ -20,25 +20,29 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
       logoutUser(setUser);
       setRedirect(true);
     } else {
-      setErrorVoting(true);
+      setErrorVoting("Voting offline - sorry!");
     }
   }
 
   function handleVote() {
-    setErrorVoting(false);
-    const options = { headers: { Authorization: `Bearer ${user.token}` } };
-    if (starred) {
-      setStarred(false);
-      increaseVoteInState(-1);
-      patchFunction(id, 0, options).catch((err) => {
-        handlePatchError(err, 1);
-      });
+    if (user.username === "guest") {
+      setErrorVoting("Log in to vote!");
     } else {
-      setStarred(true);
-      increaseVoteInState(1);
-      patchFunction(id, 1, options).catch((err) => {
-        handlePatchError(err, 0);
-      });
+      setErrorVoting(false);
+      const options = { headers: { Authorization: `Bearer ${user.token}` } };
+      if (starred) {
+        setStarred(false);
+        increaseVoteInState(-1);
+        patchFunction(id, 0, options).catch((err) => {
+          handlePatchError(err, 1);
+        });
+      } else {
+        setStarred(true);
+        increaseVoteInState(1);
+        patchFunction(id, 1, options).catch((err) => {
+          handlePatchError(err, 0);
+        });
+      }
     }
   }
 
@@ -49,7 +53,7 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
   }
 
   if (errorVoting) {
-    return <p className={`${type}-vote-error`}>Voting offline - sorry!</p>;
+    return <p className={`${type}-vote-error`}>{errorVoting}</p>;
   }
 
   return (
