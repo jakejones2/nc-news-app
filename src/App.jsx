@@ -1,5 +1,4 @@
 import { Routes, Route, Link } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
 import "./App.css";
 import { Feed } from "./app/Feed";
 import { Nav } from "./app/Nav";
@@ -11,12 +10,17 @@ import { Profile } from "./app/Profile";
 import { NotFound } from "./app/NotFound";
 
 function App() {
-  useEffect(() => {}, []);
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   return (
     <div id="app">
-      <a href="/">
-        <h1 id="app-title">NC-NEWS</h1>
-      </a>
+      <Link to="/">
+        <h1 onClick={refreshPage} id="app-title">
+          NC-NEWS
+        </h1>
+      </Link>
       <Nav />
       <Routes>
         <Route path="/" element={<Feed />} />

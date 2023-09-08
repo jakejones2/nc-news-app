@@ -21,12 +21,16 @@ export function Nav() {
       });
   }
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   return (
     <>
       <nav id="nav-main">
-        <a href="/" className="nav-link">
+        <Link to="/" onClick={refreshPage} className="nav-link">
           Feed
-        </a>
+        </Link>
         {user.username !== "guest" && (
           <div className="logged-in-nav-items">
             <Link to="/post" className="nav-link" id="post">
