@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
 import { getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
-import { Filters } from "./Filters";
+import { Filters } from "../Reuse/Filters";
 
 export function ArticlePreviews({
   articles,

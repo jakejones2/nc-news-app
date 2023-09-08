@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserContext, logoutUser } from "../contexts";
 import { getLogout } from "../api";
-import { ConfirmationModal } from "./Components/ConfirmationModal";
+import { ConfirmationModal } from "./Reuse/ConfirmationModal";
 
 export function Nav() {
   const { setUser, user } = useContext(UserContext);

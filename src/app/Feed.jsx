@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Filters } from "./Feed/Filters";
+import { Filters } from "./Reuse/Filters";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 
 export function Feed() {

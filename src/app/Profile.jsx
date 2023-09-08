@@ -5,7 +5,7 @@ import { UserData } from "./Profile/UserData";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 import { Comments } from "./Article/Comments";
 import { ItemDropDown } from "./Profile/ItemDropDown";
-import { Filters } from "./Feed/Filters";
+import { Filters } from "./Reuse/Filters";
 
 export function Profile() {
   const { username } = useParams();

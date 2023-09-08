@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts";
 import { patchComment } from "../../api";
-import { Star } from "../Feed/Star";
-import { ConfirmationModal } from "../Components/ConfirmationModal";
+import { Star } from "../Reuse/Star";
+import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 
 export function Comment({
   setComments,

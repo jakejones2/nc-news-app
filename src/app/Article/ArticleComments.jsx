@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Comments } from "./Comments";
 import { NewComment } from "./NewComment";
 import { getCommentsByArticle } from "../../api";
-import { Filters } from "../Feed/Filters";
+import { Filters } from "../Reuse/Filters";
 
 export function ArticleComments({ articleId }) {
   const { user } = useContext(UserContext);

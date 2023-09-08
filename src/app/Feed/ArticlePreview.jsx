@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { Link } from "react-router-dom";
-import { Star } from "./Star";
+import { Star } from "../Reuse/Star";
 import { deleteArticle, patchArticle } from "../../api";
 import { Topic } from "../Article/Topic";
-import { ConfirmationModal } from "../Components/ConfirmationModal";
+import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 
 export function ArticlePreview({
   article,

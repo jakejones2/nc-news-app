@@ -8,7 +8,7 @@ import {
   tryAgainWithRefresh,
 } from "../api";
 import { Comments } from "./Article/Comments";
-import { Star } from "./Feed/Star";
+import { Star } from "./Reuse/Star";
 import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 

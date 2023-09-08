@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
-import { Filters } from "../Feed/Filters";
+import { Filters } from "../Reuse/Filters";
 
 export function Comments({
   getFunction,
