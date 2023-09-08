@@ -2,11 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
+import { Filters } from "../Feed/Filters";
 
 export function Comments({
   getFunction,
   getKey,
-  comments,
+  getQueries,
+  setQueries,
+  commentData,
   setComments,
   showArticleLinks,
 }) {
@@ -19,7 +22,7 @@ export function Comments({
   useEffect(() => {
     setIsLoadingComments(true);
     setErrorLoadingComments(false);
-    getFunction(getKey)
+    getFunction(getKey, getQueries)
       .then((commentData) => {
         setComments(commentData);
         return getUserCommentVotes(user.username);
@@ -40,7 +43,7 @@ export function Comments({
           setErrorLoadingComments(true);
         }
       });
-  }, []);
+  }, [getQueries]);
 
   function removeComment(id) {
     setErrorLoadingComments(false);
@@ -74,7 +77,7 @@ export function Comments({
   return (
     <>
       <ul className="comment-list">
-        {comments.map((comment) => {
+        {commentData.comments.map((comment) => {
           return (
             <Comment
               key={comment.comment_id}
@@ -87,6 +90,14 @@ export function Comments({
           );
         })}
       </ul>
+      {getQueries && commentData.comments.length > 10 && (
+        <Filters
+          queries={getQueries}
+          setQueries={setQueries}
+          totalCount={commentData.totalCount}
+          type="comments"
+        />
+      )}
     </>
   );
 }

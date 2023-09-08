@@ -1,11 +1,9 @@
 Improve desktop view of feed - different sized articles? ensure pics don't squash?
 
-currently access token isn't stored as secure or http only (on react side)?
+Currently access token isn't stored as secure or http only (on react side)?
 
-Add filtering and pagination for comments and profile stuff
+Add more filtering to comments on the backend. Also pagination for users comments.
 
-add hover effect to comment and star logo - change hue of png and then hue rotate.
+Add likes to profile page
 
-add asc and desc to filters
-
-add likes to profile page
+Add random article

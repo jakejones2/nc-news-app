@@ -107,7 +107,10 @@ export function Article() {
           />
         )}
         <div className="article-stat" onClick={toggleCommentsView}>
-          <img className="article-logo" src="../../../comments.png"></img>
+          <img
+            className="article-logo comments-logo"
+            src="../../../comments.png"
+          ></img>
           <p className="article-stat-text">{article.comment_count}</p>
         </div>
         <button id="drop-down-comments" onClick={toggleCommentsView}>

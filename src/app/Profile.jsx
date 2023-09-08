@@ -5,13 +5,14 @@ import { UserData } from "./Profile/UserData";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 import { Comments } from "./Article/Comments";
 import { ItemDropDown } from "./Profile/ItemDropDown";
+import { Filters } from "./Feed/Filters";
 
 export function Profile() {
   const { username } = useParams();
   const [articles, setArticles] = useState({ totalCount: 0, articles: [] });
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState({ comments: [] });
   const [queries, setQueries] = useState({
-    limit: 1000,
+    limit: 10,
     page: 1,
     author: username,
     sortBy: "created_at",
@@ -23,18 +24,27 @@ export function Profile() {
     <Comments
       getFunction={getCommentsByUser}
       getKey={username}
-      comments={comments}
+      commentData={comments}
       setComments={setComments}
       showArticleLinks={true}
     />
   );
 
   const articlesComponent = (
-    <ArticlePreviews
-      articles={articles}
-      setArticles={setArticles}
-      queries={queries}
-    />
+    <>
+      <Filters
+        queries={queries}
+        setQueries={setQueries}
+        totalCount={articles.totalCount}
+        type="user-articles"
+      />
+      <ArticlePreviews
+        articles={articles}
+        setArticles={setArticles}
+        queries={queries}
+        type="user-articles"
+      />
+    </>
   );
 
   return (

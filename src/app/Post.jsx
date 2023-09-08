@@ -25,28 +25,10 @@ export function Post() {
     }
   }
 
-  function handleTitle(event) {
+  function handleInput(event, input) {
     setPostForm((form) => {
       const newForm = { ...form };
-      newForm.title = event.target.value;
-      return newForm;
-    });
-    checkIfFormReady();
-  }
-
-  function handleTopic(event) {
-    setPostForm((form) => {
-      const newForm = { ...form };
-      newForm.topic = event.target.value;
-      return newForm;
-    });
-    checkIfFormReady();
-  }
-
-  function handleBody(event) {
-    setPostForm((form) => {
-      const newForm = { ...form };
-      newForm.body = event.target.value;
+      newForm[input] = event.target.value;
       return newForm;
     });
     checkIfFormReady();
@@ -124,57 +106,60 @@ export function Post() {
   }
 
   return (
-    <form id="post-article-form" onSubmit={handlePost}>
-      <label className="form-label" htmlFor="title">
-        Article Title
-      </label>
-      <input
-        className="form-input"
-        id="title"
-        value={postForm.title}
-        onChange={handleTitle}
-      />
-      <label className="form-label" htmlFor="topic">
-        Article Topic
-      </label>
-      <p className="form-help">
-        If you are proposing a new topic, add a description below! Otherwise
-        this will be ignored.
-      </p>
-      <input
-        className="form-input"
-        id="topic"
-        value={postForm.topic}
-        onChange={handleTopic}
-      />
-      <label className="form-label" htmlFor="topicDescription">
-        Topic Description (optional)
-      </label>
-      <input
-        className="form-input"
-        id="topicDescription"
-        value={topicDescription}
-        onChange={handleTopicDescription}
-      />
-      <label className="form-label" htmlFor="body">
-        Article Body
-      </label>
-      <textarea
-        className="form-text-input"
-        id="body"
-        value={postForm.body}
-        onChange={handleBody}
-      />
-      <label className="form-label" htmlFor="url">
-        Image URL (optional)
-      </label>
-      <input
-        className="form-input"
-        id="url"
-        value={postForm.article_img_url}
-        onChange={handleUrl}
-      />
-      {formReady && <button className="login-button">Post Article</button>}
-    </form>
+    <>
+      <h2 id="post-title">Post a new article!</h2>
+      <form id="post-article-form" onSubmit={handlePost}>
+        <label className="form-label" htmlFor="title">
+          Article Title
+        </label>
+        <input
+          className="form-input"
+          id="title"
+          value={postForm.title}
+          onChange={(event) => handleInput(event, "title")}
+        />
+        <label className="form-label" htmlFor="topic">
+          Article Topic
+        </label>
+        <input
+          className="form-input"
+          id="topic"
+          value={postForm.topic}
+          onChange={(event) => handleInput(event, "topic")}
+        />
+        <label className="form-label" htmlFor="topicDescription">
+          Topic Description (optional)
+        </label>
+        <p className="form-help new-topic-help">
+          If you are proposing a new topic, add a description here. Otherwise,
+          this box will be ignored.
+        </p>
+        <input
+          className="form-input"
+          id="topicDescription"
+          value={topicDescription}
+          onChange={handleTopicDescription}
+        />
+        <label className="form-label" htmlFor="body">
+          Article Body
+        </label>
+        <textarea
+          className="form-text-input"
+          id="body"
+          value={postForm.body}
+          onChange={(event) => handleInput(event, "body")}
+        />
+        <label className="form-label" htmlFor="url">
+          Image URL (optional)
+        </label>
+        <input
+          className="form-input"
+          id="url"
+          value={postForm.article_img_url}
+          onChange={handleUrl}
+        />
+        {formReady && <button className="login-button">Post Article</button>}
+      </form>
+    </>
   );
 }

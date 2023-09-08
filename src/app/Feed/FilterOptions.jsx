@@ -1,16 +1,9 @@
-export function FilterOptions({ topics, queries, setQueries }) {
-  function handleTopic(event) {
-    setQueries((queries) => {
-      const newQueries = { ...queries };
-      newQueries.topic = event.target.value;
-      return newQueries;
-    });
-  }
-
-  function handleSortBy(event) {
-    setQueries((queries) => {
-      const newQueries = { ...queries };
-      newQueries.sortBy = event.target.value;
+export function FilterOptions({ topics, queries, setQueries, type }) {
+  function handleQuery(event, query) {
+    setQueries((oldQueries) => {
+      const newQueries = { ...oldQueries };
+      newQueries[query] = event.target.value;
+      console.log(newQueries);
       return newQueries;
     });
   }
@@ -24,30 +17,34 @@ export function FilterOptions({ topics, queries, setQueries }) {
     return capitalised.join(" ");
   }
 
+  const showTopics = Boolean(topics.length);
+
   return (
     <form id="filter-form">
-      <div id="topic-filter" className="filter">
-        <label className="filter-label" htmlFor="topic">
-          Topic
-        </label>
-        <select
-          className="filter-dropdown"
-          id="topic"
-          value={queries.topic}
-          onChange={handleTopic}
-        >
-          {topics.map((topic) => {
-            return (
-              <option key={topic.slug} value={topic.slug}>
-                {capitalise(topic.slug)}
-              </option>
-            );
-          })}
-          <option key="any" value="">
-            Any
-          </option>
-        </select>
-      </div>
+      {showTopics && (
+        <div id="topic-filter" className="filter">
+          <label className="filter-label" htmlFor="topic">
+            Topic
+          </label>
+          <select
+            className="filter-dropdown"
+            id="topic"
+            value={queries.topic}
+            onChange={(event) => handleQuery(event, "topic")}
+          >
+            {topics.map((topic) => {
+              return (
+                <option key={topic.slug} value={topic.slug}>
+                  {capitalise(topic.slug)}
+                </option>
+              );
+            })}
+            <option key="any" value="">
+              Any
+            </option>
+          </select>
+        </div>
+      )}
       <div id="sort-by-filter" className="filter">
         <label className="filter-label" htmlFor="sort-by">
           Sort By
@@ -56,25 +53,33 @@ export function FilterOptions({ topics, queries, setQueries }) {
           className="filter-dropdown"
           id="sort-by"
           value={queries.sortBy}
-          onChange={handleSortBy}
+          onChange={(event) => handleQuery(event, "sortBy")}
         >
-          <option key="author" value="author">
-            Author
-          </option>
-          <option key="title" value="title">
-            Title
-          </option>
-          <option key="topic" value="topic">
-            Topic
-          </option>
-          <option key="created_at" value="created_at">
-            Date Published
-          </option>
+          {showTopics && type === "articles" && (
+            <option key="author" value="author">
+              Author
+            </option>
+          )}
+
+          {showTopics && (
+            <option key="title" value="title">
+              Title
+            </option>
+          )}
+
+          {showTopics && (
+            <option key="created_at" value="created_at">
+              Date Published
+            </option>
+          )}
+          {showTopics && (
+            <option key="commentCount" value="comment_count">
+              Number Of Comments
+            </option>
+          )}
+
           <option key="votes" value="votes">
             Votes
-          </option>
-          <option key="commentCount" value="comment_count">
-            Number Of Comments
           </option>
         </select>
       </div>

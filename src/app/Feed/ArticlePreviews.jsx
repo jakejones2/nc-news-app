@@ -9,6 +9,7 @@ export function ArticlePreviews({
   setArticles,
   queries,
   setQueries,
+  type,
 }) {
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const { setUser, user } = useContext(UserContext);
@@ -90,13 +91,14 @@ export function ArticlePreviews({
         })}
       </ul>
       {!articles.articles.length && (
-        <p className="articles-error">Nothing to see here :(</p>
+        <p className="articles-error no-articles">Nothing to see here :(</p>
       )}
       {articles.articles.length >= queries.limit && (
         <Filters
           queries={queries}
           setQueries={setQueries}
-          articles={articles}
+          totalCount={articles.totalCount}
+          type={type}
         />
       )}
     </>

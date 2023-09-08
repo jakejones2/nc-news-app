@@ -60,8 +60,8 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
     <div className={`${type}-stat`}>
       <img
         onClick={handleVote}
-        className={`${type}-logo ` + (starred ? "star" : "")}
-        src="../../../star-gold.png"
+        className={`${type}-logo star-logo ` + (starred ? "star" : "")}
+        src="../../../star.png"
       ></img>
       <p className={`${type}-stat-text`}>{newTotal}</p>{" "}
     </div>

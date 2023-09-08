@@ -226,10 +226,13 @@ button {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    padding-right: 3%;
     align-items: baseline;
     cursor: pointer;
     margin-right: 5px
+}
+
+.article-preview-stat:hover {
+    border-bottom: solid 3px var(--accent);
 }
 
 .article-preview-stat-text {
@@ -238,22 +241,34 @@ button {
 }
 
 .article-preview-logo {
-    padding: 2%;
+    padding: 5px;
     width: 30px;
     height: fit-content;
     filter: brightness(0%);
     cursor: pointer;
 }
 
+.article-preview-stat-text:hover {
+    color: var(--dark-text);
+}
+
+.comments-logo:hover {
+    filter: brightness(100%) hue-rotate(200deg);
+}
+
+.star-logo:hover {
+    filter: brightness(100%) 
+}
 
 .article-bin {
     width: 19px;
-    height: 24px;
-    margin-left: 0;
+    height: 26px;
+    margin-left: 10px;
     margin-bottom: 5px;
-    filter: brightness(70%);
+    filter: brightness(0%);
     padding: 0;
-    padding-top: 5px;
+    padding-right: 10px;
+    padding-top: 7px;
 }
 
 .article-bin:hover {
@@ -278,6 +293,7 @@ button {
     margin-left: 20px;
 }
 
+.no-articles,
 .no-comments {
     color: var(--faint-text);
 }
@@ -288,7 +304,17 @@ button {
         width: 30%;
         margin: 0;
         margin-bottom: 3%;
+        height: 400px;
+    }
+
+    .image-container {
         height: 300px;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    
+    .article-preview-img {
+        width: 100%;
     }
 
     #total-articles {
@@ -394,6 +420,10 @@ button {
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
+}
+
+.article-stat:hover {
+    border-bottom: solid 3px var(--accent);
 }
 
 .article-logo {
@@ -583,6 +613,7 @@ button {
     margin: 10px;
     margin-bottom: 0;
     padding: 5px;
+    cursor: pointer;
 }
 
 .submit-button:hover {
@@ -605,9 +636,58 @@ button {
     color: var(--faint-text);
 }
 
+#post-comment-title {
+    color: var(--dark-text);
+    margin-left: 2px;
+}
+
+.submit-button:disabled {
+    background-color: var(--faint-text);
+    cursor: default;
+    pointer-events: none;
+}
+
+@media (min-width: 1000px) {
+    #article-comments {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: auto;
+    }
+
+    #article-existing-comments {
+        grid-column-start: 0;
+    }
+    #new-comment-form {
+        grid-column-start: 1
+    }
+
+    #body {
+        width: 95%;
+        max-width: 95%;
+        height: 200px;
+        max-height: 200px;
+        margin-right: 20px;
+    }
+
+    #new-comment-form {
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-flow: column nowrap;
+    }
+    
+    #post-comment-title {
+        margin-bottom: 10px;
+    }
+
+    .submit-button {
+        margin-left: 0;
+        font-size: 1em;
+    }
+}
+
 /* Filters */
 
-#filters {
+.filters {
     border: solid 2px var(--accent);
     border-radius: 12px;
     margin: 20px;
@@ -618,7 +698,20 @@ button {
     align-items: center;
 }
 
+.comments-filters {
+    margin: 0;
+    margin-top: 20px;
+}
+
+
 .pages {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.order {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -642,7 +735,6 @@ button {
     border-radius: 8px;
     color: var(--accent);
     font-weight: 600;
-    margin-left: 5px;
     margin-right: 5px;
     display: flex;
     align-items: flow nowrap;
@@ -701,6 +793,20 @@ button {
 
 .filter {
     margin-bottom: 10px;
+}
+
+@media (min-width: 1000px) {
+    .filters {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #filter-form {
+        justify-content: center;
+    }
+
 }
 
 /* SignUp */
@@ -811,6 +917,15 @@ button {
 
 /* Post */
 
+#post-title {
+    margin-left: 20px
+}
+
+.new-topic-help {
+    margin-top: 0;
+    margin-right: 20px;
+}
+
 #post-article-form {
     margin: 20px;
 }
@@ -889,6 +1004,7 @@ button {
     margin-top: 0;
     text-align: center;
     margin-bottom: 10px;
+    font-weight: 400;
 }
 
 #modal-button-container {
@@ -902,6 +1018,7 @@ button {
     font-size: 1em;
     padding-left: 20px;
     padding-right: 20px;
+    font-weight: 600;
 }
 
 #modal-yes-button {

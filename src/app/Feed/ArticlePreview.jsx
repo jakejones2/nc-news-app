@@ -63,7 +63,7 @@ export function ArticlePreview({
         <Link to={`/article/${article.article_id}?comments=show`}>
           <div className="article-preview-stat">
             <img
-              className="article-preview-logo"
+              className="article-preview-logo comments-logo"
               src="../../../comments.png"
               alt="number of comments"
             ></img>
@@ -78,14 +78,16 @@ export function ArticlePreview({
           votes={article.votes}
         />
         {user.username === article.author ? (
-          <img
-            onClick={() => {
-              setShowDeleteModal(true);
-            }}
-            src="../../../bin.png"
-            className="article-preview-logo article-bin"
-            alt="bin"
-          ></img>
+          <div className="article-preview-stat">
+            <img
+              onClick={() => {
+                setShowDeleteModal(true);
+              }}
+              src="../../../bin.png"
+              className="article-preview-logo article-bin"
+              alt="bin"
+            ></img>
+          </div>
         ) : (
           <div className="space"></div>
         )}

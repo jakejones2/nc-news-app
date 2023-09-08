@@ -66,20 +66,25 @@ export function NewComment({ setComments, articleId }) {
   }
 
   return (
-    <form id="new-comment-form" onSubmit={handleCommentForm}>
-      <textarea
-        id="body"
-        className="input-body"
-        value={commentBody}
-        placeholder="Have your say!"
-        onChange={handleCommentBody}
-      ></textarea>
-      {commentBody && <button className="submit-button">Post Comment</button>}
-      {errorPostingComment && (
-        <p className="articles-error post-comment-error">
-          Can't post comments right now - sorry!
-        </p>
-      )}
-    </form>
+    <div>
+      <h3 id="post-comment-title">Have your say!</h3>
+      <form id="new-comment-form" onSubmit={handleCommentForm}>
+        <textarea
+          id="body"
+          className="input-body"
+          value={commentBody}
+          placeholder="What do you think of this article?"
+          onChange={handleCommentBody}
+        ></textarea>
+        <button disabled={!commentBody} className="submit-button">
+          Post Comment
+        </button>
+        {errorPostingComment && (
+          <p className="articles-error post-comment-error">
+            Can't post comments right now - sorry!
+          </p>
+        )}
+      </form>
+    </div>
   );
 }

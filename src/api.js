@@ -15,7 +15,7 @@ export function tryAgainWithRefresh(func, setUser, ...args) {
 }
 
 export function getArticles({
-  limit = 10,
+  limit = 9,
   page = 1,
   author,
   sortBy = "created_at",
@@ -36,10 +36,17 @@ export function getArticle(id) {
   });
 }
 
-export function getCommentsByArticle(id) {
-  return api.get(`api/articles/${id}/comments?limit=1000`).then((response) => {
-    return response.data.comments;
-  });
+export function getCommentsByArticle(id, queries) {
+  const page = queries.page || 1;
+  const limit = queries.limit || 100;
+  const sortBy = queries.sortBy || "votes";
+  return api
+    .get(
+      `api/articles/${id}/comments?limit=${limit}&p=${page}&sort_by=${sortBy}`
+    )
+    .then((response) => {
+      return response.data;
+    });
 }
 
 export function patchArticle(id, num, options) {
@@ -130,7 +137,7 @@ export function getUser(username) {
 
 export function getCommentsByUser(username) {
   return api.get(`api/users/${username}/comments`).then((response) => {
-    return response.data.comments;
+    return response.data;
   });
 }
 

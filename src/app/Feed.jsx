@@ -6,7 +6,7 @@ import { ArticlePreviews } from "./Feed/ArticlePreviews";
 export function Feed() {
   const url = new URLSearchParams(window.location.search);
   const urlQueries = {
-    limit: url.get("limit") || 10,
+    limit: url.get("limit") || 9,
     page: url.get("page") || 1,
     author: url.get("author") || "",
     sortBy: url.get("sort_by") || "created_at",
@@ -23,12 +23,18 @@ export function Feed() {
 
   return (
     <>
-      <Filters queries={queries} setQueries={setQueries} articles={articles} />
+      <Filters
+        queries={queries}
+        setQueries={setQueries}
+        totalCount={articles.totalCount}
+        type="articles"
+      />
       <ArticlePreviews
         articles={articles}
         setArticles={setArticles}
         queries={queries}
         setQueries={setQueries}
+        type="articles"
       />
     </>
   );
