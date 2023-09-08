@@ -24,9 +24,9 @@ export function Nav() {
   return (
     <>
       <nav id="nav-main">
-        <Link to="/articles" className="nav-link" id="feed">
+        <a href="/" className="nav-link">
           Feed
-        </Link>
+        </a>
         {user.username !== "guest" && (
           <div className="logged-in-nav-items">
             <Link to="/post" className="nav-link" id="post">

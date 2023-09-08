@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Filters } from "./Feed/Filters";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 
 export function Feed() {
   const url = new URLSearchParams(window.location.search);
-  const { topic } = useParams();
   const urlQueries = {
     limit: url.get("limit") || 10,
     page: url.get("page") || 1,
     author: url.get("author") || "",
     sortBy: url.get("sort_by") || "created_at",
-    topic: url.get("topic") || topic || "",
+    topic: url.get("topic") || "",
     order: url.get("order") || "desc",
   };
   const [articles, setArticles] = useState({ totalCount: 0, articles: [] });

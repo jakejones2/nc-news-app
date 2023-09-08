@@ -35,7 +35,7 @@ export function ArticlePreview({
       <div className="article-preview-top">
         <div className="article-preview-header">
           <Link
-            to={`/articles/${article.article_id}?comments=hide`}
+            to={`/article/${article.article_id}?comments=hide`}
             className="article-link"
           >
             <h2 className="article-preview-title">{article.title}</h2>
@@ -60,7 +60,7 @@ export function ArticlePreview({
         ></img>
       </div>
       <div className="article-preview-stats">
-        <Link to={`/articles/${article.article_id}?comments=show`}>
+        <Link to={`/article/${article.article_id}?comments=show`}>
           <div className="article-preview-stat">
             <img
               className="article-preview-logo"

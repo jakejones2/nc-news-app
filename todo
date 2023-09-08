@@ -1,5 +1,3 @@
-Do ticket 12 error handling
-
 Improve desktop view of feed - different sized articles? ensure pics don't squash?
 
 currently access token isn't stored as secure or http only (on react side)?
@@ -8,12 +6,6 @@ Add filtering and pagination for comments and profile stuff
 
 add hover effect to comment and star logo - change hue of png and then hue rotate.
 
-add no articles found message not empty screen on feed
-
 add asc and desc to filters
 
-If you click on title or feed button, it should go back to basic feed with no filters. Can I do this without reloading the page? if not just <a> tag it.
-
-Improve error handling. E.g. if topic doesn't exist, say so. All errors look like 500s at the moment.
-
-How do I catch bad routes with react router?
+add likes to profile page

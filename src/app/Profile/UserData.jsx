@@ -23,7 +23,7 @@ export function UserData({ username }) {
   if (errorLoading) {
     return (
       <div className="articles-error">
-        Can't fetch {username}'s data right now, sorry!'
+        If I can't find {username}'s data, do they even exist?'
       </div>
     );
   }

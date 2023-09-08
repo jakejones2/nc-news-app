@@ -14,14 +14,14 @@ function App() {
   useEffect(() => {}, []);
   return (
     <div id="app">
-      <Link to="/articles?limit=10&page=1&author=&sortBy=created_at&topic=&order=asc">
+      <a href="/">
         <h1 id="app-title">NC-NEWS</h1>
-      </Link>
+      </a>
       <Nav />
       <Routes>
+        <Route path="/" element={<Feed />} />
         <Route path="/articles" element={<Feed />} />
-        <Route path="/articles/:topic" element={<Feed />} />
-        <Route path="/articles/:id" element={<Article />} />
+        <Route path="/article/:id" element={<Article />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/post" element={<Post />} />

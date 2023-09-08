@@ -12,7 +12,7 @@ export function ArticlePreviews({
 }) {
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const { setUser, user } = useContext(UserContext);
-  const [errorLoadingArticles, setErrorLoadingArticles] = useState(false);
+  const [errorLoadingArticles, setErrorLoadingArticles] = useState("");
   const [articleVotes, setArticleVotes] = useState({});
   const [topicDescription, setTopicDescription] = useState("");
 
@@ -40,17 +40,16 @@ export function ArticlePreviews({
       })
       .catch((err) => {
         console.log(err);
-        setErrorLoadingArticles(true);
-        setIsLoadingArticles(false);
+        if (err.response.status === 404) {
+          setErrorLoadingArticles("This article doesn't exist yet...");
+        } else {
+          setErrorLoadingArticles("Can't fetch articles right now - sorry!");
+        }
       });
   }, [queries]);
 
   if (errorLoadingArticles) {
-    return (
-      <div className="articles-error">
-        Can't fetch articles right now - sorry!
-      </div>
-    );
+    return <div className="articles-error">{errorLoadingArticles}</div>;
   }
 
   if (isLoadingArticles) {
@@ -90,6 +89,9 @@ export function ArticlePreviews({
           );
         })}
       </ul>
+      {!articles.articles.length && (
+        <p className="articles-error">Nothing to see here :(</p>
+      )}
       {articles.articles.length >= queries.limit && (
         <Filters
           queries={queries}
