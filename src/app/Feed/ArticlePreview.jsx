@@ -53,11 +53,13 @@ export function ArticlePreview({
         />
       </div>
       <div className="image-container">
-        <img
-          className="article-preview-img"
-          src={article.article_img_url}
-          alt="article-image"
-        ></img>
+        <Link to={`/article/${article.article_id}?comments=hide`}>
+          <img
+            className="article-preview-img"
+            src={article.article_img_url}
+            alt="article-image"
+          ></img>
+        </Link>
       </div>
       <div className="article-preview-stats">
         <Link to={`/article/${article.article_id}?comments=show`}>

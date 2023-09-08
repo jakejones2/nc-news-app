@@ -90,7 +90,7 @@ export function Comments({
           );
         })}
       </ul>
-      {getQueries && commentData.comments.length > 10 && (
+      {getQueries && commentData.comments.length >= 10 && (
         <Filters
           queries={getQueries}
           setQueries={setQueries}

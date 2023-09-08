@@ -12,17 +12,19 @@ export function NewComment({ setComments, articleId }) {
   }
 
   function removeLastComment() {
-    setComments((comments) => {
-      return comments.filter((comment) => {
-        return comment.comment_id < comments.length - 1;
-      });
+    setComments(({ comments }) => {
+      return {
+        comments: comments.filter((comment) => {
+          return comment.comment_id < comments.length - 1;
+        }),
+      };
     });
   }
 
   function handleCommentForm(event) {
     setErrorPostingComments(false);
     event.preventDefault();
-    setComments((comments) => {
+    setComments(({ comments }) => {
       const newComment = {
         comment_id: comments.length + 1,
         body: commentBody,
@@ -31,7 +33,7 @@ export function NewComment({ setComments, articleId }) {
         votes: 0,
         created_at: new Date(),
       };
-      return [newComment, ...comments];
+      return { comments: [newComment, ...comments] };
     });
     const newComment = {
       body: commentBody,

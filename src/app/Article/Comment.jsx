@@ -16,10 +16,12 @@ export function Comment({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleCommentDelete() {
-    setComments((comments) => {
-      return comments.filter((item) => {
-        return item.comment_id !== comment.comment_id;
-      });
+    setComments(({ comments }) => {
+      return {
+        comments: comments.filter((item) => {
+          return item.comment_id !== comment.comment_id;
+        }),
+      };
     });
     removeComment(comment.comment_id);
     // need to do this properly - what if delete fails?
@@ -36,7 +38,7 @@ export function Comment({
           {showArticleLink && (
             <span>
               <Link
-                to={`/articles/${comment.article_id}`}
+                to={`/article/${comment.article_id}`}
                 className="article-link"
               >
                 Go To Article

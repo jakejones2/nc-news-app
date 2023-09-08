@@ -49,9 +49,7 @@ export function Topic({ topic = "abc", type, setQueries }) {
   }, []);
 
   return (
-    <Link
-      to={`http://localhost:5173/articles?limit=10&topic=${topic}&sort_by=created_at&order=desc`}
-    >
+    <Link to={`/?limit=10&topic=${topic}&sort_by=created_at&order=desc`}>
       <h3
         onClick={handleQueryUpdate}
         style={{

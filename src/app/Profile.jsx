@@ -41,6 +41,7 @@ export function Profile() {
       <ArticlePreviews
         articles={articles}
         setArticles={setArticles}
+        setQueries={setQueries}
         queries={queries}
         type="user-articles"
       />

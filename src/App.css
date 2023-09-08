@@ -50,8 +50,8 @@ button {
     flex-flow: row nowrap;
     justify-content: space-between;
     background-color: var(--background2);
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 13px;
+    padding-bottom: 13px;
     margin-bottom: 10px;
     box-sizing: border-box;
     font-weight: 600;
@@ -72,9 +72,10 @@ button {
 
 #logout {
     font-weight: 600;
-    font-size: 1em;
-    padding-top: 2px;
+    font-size: calc(1rem + 0.3vw);
+    font-family: 'Inter', sans-serif;
     padding-bottom: 0;
+    padding-top: 0;
     height: fit-content
 }
 #logout:hover {
