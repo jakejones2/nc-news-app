@@ -3,7 +3,13 @@ import { UserContext } from "../../contexts";
 import { deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
 
-export function Comments({ getFunction, getKey, comments, setComments }) {
+export function Comments({
+  getFunction,
+  getKey,
+  comments,
+  setComments,
+  showArticleLinks,
+}) {
   const { user } = useContext(UserContext);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
@@ -76,6 +82,7 @@ export function Comments({ getFunction, getKey, comments, setComments }) {
               removeComment={removeComment}
               setComments={setComments}
               userVotes={commentVotes[comment.comment_id]}
+              showArticleLink={showArticleLinks}
             />
           );
         })}

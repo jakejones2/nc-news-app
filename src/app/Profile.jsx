@@ -25,6 +25,7 @@ export function Profile() {
       getKey={username}
       comments={comments}
       setComments={setComments}
+      showArticleLinks={true}
     />
   );
 

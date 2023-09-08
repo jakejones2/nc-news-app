@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import { Star } from "./Star";
 import { deleteArticle, patchArticle } from "../../api";
 import { Topic } from "../Article/Topic";
+import { ConfirmationModal } from "../Components/ConfirmationModal";
 
-export function ArticlePreview({ article, userVotes, articles, setArticles }) {
+export function ArticlePreview({
+  article,
+  userVotes,
+  articles,
+  setArticles,
+  setQueries,
+}) {
   const { user } = useContext(UserContext);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleArticleDelete() {
     setArticles(({ articles, totalCount }) => {
@@ -38,7 +46,11 @@ export function ArticlePreview({ article, userVotes, articles, setArticles }) {
             </div>
           </Link>
         </div>
-        <Topic topic={article.topic} type="article-top preview-topic" />
+        <Topic
+          topic={article.topic}
+          type="preview-topic"
+          setQueries={setQueries}
+        />
       </div>
       <div className="image-container">
         <img
@@ -67,7 +79,9 @@ export function ArticlePreview({ article, userVotes, articles, setArticles }) {
         />
         {user.username === article.author ? (
           <img
-            onClick={handleArticleDelete}
+            onClick={() => {
+              setShowDeleteModal(true);
+            }}
             src="../../../bin.png"
             className="article-preview-logo article-bin"
             alt="bin"
@@ -79,6 +93,14 @@ export function ArticlePreview({ article, userVotes, articles, setArticles }) {
       <h5 className="article-preview-datetime">
         {new Date(article.created_at).toDateString()}&nbsp;
       </h5>
+      {showDeleteModal && (
+        <ConfirmationModal
+          message="Are you sure you want to delete this article? There is no going back!"
+          setShowState={setShowDeleteModal}
+          confirmFunction={handleArticleDelete}
+          args={[]}
+        />
+      )}
     </>
   );
 }

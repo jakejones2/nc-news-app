@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts";
 import { patchComment } from "../../api";
 import { Star } from "../Feed/Star";
+import { ConfirmationModal } from "../Components/ConfirmationModal";
 
-export function Comment({ setComments, comment, removeComment, userVotes }) {
+export function Comment({
+  setComments,
+  comment,
+  removeComment,
+  userVotes,
+  showArticleLink,
+}) {
   const { user } = useContext(UserContext);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleCommentDelete() {
     setComments((comments) => {
@@ -22,16 +30,29 @@ export function Comment({ setComments, comment, removeComment, userVotes }) {
     <article className="comment">
       <div className="comment-info">
         <Link to={`/profile/${comment.author}`} className="article-link">
-          <h6 className="comment-author">{comment.author}</h6>
+          <h4 className="comment-author">{comment.author}</h4>
         </Link>
         <p className="comment-datetime">
+          {showArticleLink && (
+            <span>
+              <Link
+                to={`/articles/${comment.article_id}`}
+                className="article-link"
+              >
+                Go To Article
+              </Link>
+              <span> | </span>
+            </span>
+          )}
           {new Date(comment.created_at).toDateString()}
         </p>
       </div>
       <p className="comment-body">{comment.body}</p>
       {user.username === comment.author ? (
         <img
-          onClick={handleCommentDelete}
+          onClick={() => {
+            setShowDeleteModal(true);
+          }}
           src="../../../bin.png"
           className="comment-logo bin"
           alt="bin"
@@ -46,6 +67,14 @@ export function Comment({ setComments, comment, removeComment, userVotes }) {
         id={comment.comment_id}
         votes={comment.votes}
       />
+      {showDeleteModal && (
+        <ConfirmationModal
+          message="Are you sure you want to delete this comment? You cannot get it back!"
+          setShowState={setShowDeleteModal}
+          confirmFunction={handleCommentDelete}
+          args={[]}
+        />
+      )}
     </article>
   );
 }

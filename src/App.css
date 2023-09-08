@@ -167,6 +167,10 @@ button {
     color: var(--faint-text);
 }
 
+.article-preview-author:hover {
+    font-weight: 500;
+}
+
 .article-preview-topic {
     margin: 0;
     padding: 0;
@@ -220,6 +224,7 @@ button {
     filter: brightness(0%);
     cursor: pointer;
 }
+
 
 .article-bin {
     width: 19px;
@@ -296,19 +301,20 @@ button {
     margin-bottom: 0;
 }
 
-.article-topic {
-    margin: 10px;
-    border-radius: 20px;
-    background-color: var(--accent2);
-    padding: 6px;
-    color: var(--background2);
-    height: 1.5em;
-}
 
 .preview-topic {
     margin-top: 20px;
     margin-right: 20px;
     font-size: 1em;
+    color: var(--background2);
+}
+
+.article-topic {
+    margin: 10px;
+    color: var(--background2);
+    height: 1.5em;
+    margin-bottom: 0;
+    margin-right: 0;
 }
 
 #article-author,
@@ -814,9 +820,70 @@ button {
 
 #profile-pic {
     border-radius: 50%;
+    padding: 20px;
     width: 50%;
     max-width: 300px;
     border: solid 4px var(--accent);
+}
+
+/* Modal */
+#darken-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.292);
+    margin: 0;
+    padding: 0;
+    z-index: 99;    
+}
+
+#modal {
+    position: fixed;
+    width: 300px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    z-index: 100;
+}
+
+#modal-title {
+    margin-top: 0
+}
+
+#modal-button-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.modal-buttons {
+    font-size: 0.8em;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#modal-yes-button {
+    background-color: rgba(96, 215, 5, 0.812);
+}
+
+#modal-yes-button:hover {
+    background-color: rgb(61, 139, 1);
+}
+
+#modal-no-button {
+    background-color: rgba(213, 8, 1, 0.807);
+}
+
+#modal-no-button:hover {
+    background-color: rgba(155, 7, 2, 0.807);
 }
 
 @keyframes rotation {

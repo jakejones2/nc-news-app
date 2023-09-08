@@ -1,8 +1,4 @@
-import { useSearchParams } from "react-router-dom";
-
 export function FilterOptions({ topics, queries, setQueries }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   function handleTopic(event) {
     setQueries((queries) => {
       const newQueries = { ...queries };
@@ -28,13 +24,8 @@ export function FilterOptions({ topics, queries, setQueries }) {
     return capitalised.join(" ");
   }
 
-  function updateUrl(event) {
-    window.history.replaceState(null, `Feed`, `/`);
-    setSearchParams(queries);
-  }
-
   return (
-    <form onChange={updateUrl} id="filter-form">
+    <form id="filter-form">
       <div id="topic-filter" className="filter">
         <label className="filter-label" htmlFor="topic">
           Topic

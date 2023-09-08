@@ -2,10 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserContext, logoutUser } from "../contexts";
 import { getLogout } from "../api";
+import { ConfirmationModal } from "./Components/ConfirmationModal";
 
 export function Nav() {
   const { setUser, user } = useContext(UserContext);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   function logout() {
     setLoggingOut(true);
     getLogout()
@@ -40,9 +42,21 @@ export function Nav() {
             {loggingOut ? (
               <span className="loader logout-loader"></span>
             ) : (
-              <button onClick={logout} id="logout" className="nav-link end">
+              <button
+                onClick={() => setShowLogoutModal(true)}
+                id="logout"
+                className="nav-link end"
+              >
                 Log Out
               </button>
+            )}
+            {showLogoutModal && (
+              <ConfirmationModal
+                message="Are you sure you want to log out?"
+                setShowState={setShowLogoutModal}
+                confirmFunction={logout}
+                args={[]}
+              />
             )}
           </div>
         )}

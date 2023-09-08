@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { postAuth } from "../api";
 import { UserContext } from "../contexts";
 import Cookies from "js-cookie";
@@ -9,8 +9,8 @@ export function Login() {
   const [username, setUsername] = useState("tickle122");
   const [password, setPassword] = useState("#pKhMcl&");
   const [loggingIn, setLoggingIn] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [errorLoggingIn, setErrorLoggingIn] = useState(false);
+  const navigate = useNavigate();
 
   function handleUsername(event) {
     setUsername(event.target.value);
@@ -28,17 +28,13 @@ export function Login() {
         setUser({ username: username, token: accessToken });
         Cookies.set("username", username, { expires: 7 });
         Cookies.set("jwt", accessToken, { expires: 1 });
-        setRedirect(true);
+        navigate(-1);
       })
       .catch((err) => {
         console.log(err);
         setLoggingIn(false);
         setErrorLoggingIn(true);
       });
-  }
-
-  if (redirect) {
-    return <Navigate to="/" />;
   }
 
   if (errorLoggingIn) {

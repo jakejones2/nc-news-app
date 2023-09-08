@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Filters } from "./Feed/Filters";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 
@@ -14,6 +14,11 @@ export function Feed() {
     topic: topic,
     order: "desc",
   });
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchParams(queries);
+  }, [queries]);
 
   return (
     <>
@@ -22,6 +27,7 @@ export function Feed() {
         articles={articles}
         setArticles={setArticles}
         queries={queries}
+        setQueries={setQueries}
       />
     </>
   );

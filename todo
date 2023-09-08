@@ -6,8 +6,12 @@ currently access token isn't stored as secure or http only (on react side)
 
 Add filtering and pagination for comments and profile stuff
 
-when logging in, you go to your previous page or feed
+Something weird happening with setSearchParams on feed
 
 add hover effect to comment and star logo - change hue of png and then hue rotate.
 
-are you sure? modal on logout and delete, should make a reusable component for this
+show topic descriptions at top of feed when sorting by topic
+
+got duplicate coding topics? how did this happen...
+
+add no articles found message not empty screen on feed

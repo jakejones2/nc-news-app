@@ -3,7 +3,12 @@ import { UserContext, logoutUser } from "../../contexts";
 import { getArticles, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 
-export function ArticlePreviews({ articles, setArticles, queries }) {
+export function ArticlePreviews({
+  articles,
+  setArticles,
+  queries,
+  setQueries,
+}) {
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const { setUser, user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState(false);
@@ -62,6 +67,7 @@ export function ArticlePreviews({ articles, setArticles, queries }) {
                 article={article}
                 articles={articles}
                 setArticles={setArticles}
+                setQueries={setQueries}
               ></ArticlePreview>
             </li>
           );

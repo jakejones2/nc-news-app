@@ -10,6 +10,7 @@ import {
 import { Comments } from "./Article/Comments";
 import { Star } from "./Feed/Star";
 import { ArticleComments } from "./Article/ArticleComments";
+import { Topic } from "./Article/Topic";
 
 export function Article() {
   const { id } = useParams();
@@ -75,7 +76,7 @@ export function Article() {
     <article id="article">
       <div id="title-topic">
         <h2 id="article-title">{article.title}</h2>
-        <h4 className="article-topic">{article.topic}</h4>
+        <Topic topic={article.topic} type="preview-topic article-topic" />
       </div>
       <div id="article-info">
         <Link to={`/profile/${article.author}`} className="article-link">
