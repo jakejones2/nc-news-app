@@ -257,10 +257,6 @@ button {
     filter: brightness(100%) hue-rotate(200deg);
 }
 
-.star-logo:hover {
-    filter: brightness(100%) 
-}
-
 .article-bin {
     width: 19px;
     height: 26px;
@@ -297,6 +293,12 @@ button {
 .no-articles,
 .no-comments {
     color: var(--faint-text);
+}
+
+@media (hover: hover) {
+    .star-logo:hover {
+        filter: brightness(100%) 
+    }
 }
 
 @media (orientation: landscape) {
