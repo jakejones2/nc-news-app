@@ -102,6 +102,10 @@ button {
     font-weight: 600;
 }
 
+#user:hover {
+    color: var(--accent);
+}
+
 /* Feed */
 
 .cards {
@@ -113,6 +117,29 @@ button {
     margin: 0;
     list-style: none;
     width: 100%;
+}
+
+#community-info {
+    text-align: center;
+    margin: auto;
+    color: var(--dark-text);
+}
+
+#community-header {
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+#community {
+    color: var(--accent2);
+}
+
+#community-description {
+    font-weight: 300;
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 /* ArticlePreview */
@@ -169,13 +196,6 @@ button {
 
 .article-preview-author:hover {
     font-weight: 500;
-}
-
-.article-preview-topic {
-    margin: 0;
-    padding: 0;
-    font-weight: 500;
-    color: var(--accent-2);
 }
 
 .image-container {
@@ -255,6 +275,7 @@ button {
     color: red;
     margin-top: 20px;
     font-weight: 600;
+    margin-left: 20px;
 }
 
 .no-comments {
@@ -317,6 +338,11 @@ button {
     margin-right: 0;
 }
 
+.article-topic:hover,
+.preview-topic:hover {
+    box-shadow: 0px 0px 5px 3px rgb(201, 192, 192);
+}
+
 #article-author,
 #article-created-at {
     color: var(--faint-text);
@@ -324,6 +350,10 @@ button {
     font-size: 1em;
     margin-top: 10px;
     margin-bottom: 0;
+}
+
+#article-author:hover {
+    font-weight: 500;
 }
 
 #article-created-at {
@@ -642,7 +672,7 @@ button {
 }
 
 #filter-form {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-right: 20px;
     display: flex;
     flex-flow: row wrap;

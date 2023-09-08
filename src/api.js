@@ -127,3 +127,11 @@ export function getCommentsByUser(username) {
     return response.data.comments;
   });
 }
+
+export function getTopic(topicTarget) {
+  return api.get("api/topics").then((response) => {
+    return response.data.topics.find((topic) => {
+      return topic.slug === topicTarget;
+    })?.description;
+  });
+}

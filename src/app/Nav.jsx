@@ -24,7 +24,7 @@ export function Nav() {
   return (
     <>
       <nav id="nav-main">
-        <Link to="/" className="nav-link" id="feed">
+        <Link to="/articles" className="nav-link" id="feed">
           Feed
         </Link>
         {user.username !== "guest" && (
@@ -73,7 +73,10 @@ export function Nav() {
       </nav>
       {user.username !== "guest" && (
         <p id="welcome-user">
-          Logged in as <span id="user">{user.username}</span>
+          Logged in as{" "}
+          <Link to={`/profile/${user.username}`}>
+            <span id="user">{user.username}</span>
+          </Link>
         </p>
       )}
     </>

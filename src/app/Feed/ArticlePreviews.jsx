@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
-import { getArticles, getUserArticleVotes } from "../../api";
+import { getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
+import { Filters } from "./Filters";
 
 export function ArticlePreviews({
   articles,
@@ -13,10 +14,17 @@ export function ArticlePreviews({
   const { setUser, user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState(false);
   const [articleVotes, setArticleVotes] = useState({});
+  const [topicDescription, setTopicDescription] = useState("");
 
   useEffect(() => {
     setIsLoadingArticles(true);
     setErrorLoadingArticles(false);
+    setTopicDescription("");
+    if (queries.topic) {
+      getTopic(queries.topic).then((description) => {
+        setTopicDescription(description);
+      });
+    }
     getArticles(queries)
       .then((articles) => {
         setArticles(articles);
@@ -51,6 +59,15 @@ export function ArticlePreviews({
 
   return (
     <>
+      {topicDescription && (
+        <div id="community-info">
+          <span id="community-header">
+            Welcome to the <span id="community">{queries.topic}</span>{" "}
+            community!
+          </span>
+          <p id="community-description">{topicDescription}</p>
+        </div>
+      )}
       <p id="total-articles">
         Showing {1 + (queries.page - 1) * queries.limit}-
         {articles.totalCount < queries.page * queries.limit
@@ -73,6 +90,13 @@ export function ArticlePreviews({
           );
         })}
       </ul>
+      {articles.articles.length >= queries.limit && (
+        <Filters
+          queries={queries}
+          setQueries={setQueries}
+          articles={articles}
+        />
+      )}
     </>
   );
 }

@@ -124,7 +124,7 @@ export function SignUp() {
   }
 
   if (redirect) {
-    return <Navigate to="/" />;
+    return <Navigate to="/articles" />;
   }
 
   return (

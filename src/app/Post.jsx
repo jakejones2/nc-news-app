@@ -74,13 +74,15 @@ export function Post() {
     setPostingForm(true);
     getTopics()
       .then((topics) => {
+        postForm.topic = postForm.topic.toLowerCase();
         const dbTopic = topics.find((topic) => {
           return topic.slug === postForm.topic;
         });
         if (!dbTopic) {
           return postTopic({
             slug: postForm.topic,
-            description: topicDescription || "No Description",
+            description:
+              topicDescription || "This topic needs no introduction!",
           });
         }
       })
@@ -91,7 +93,7 @@ export function Post() {
       })
       .then(() => {
         setPostingForm(false);
-        setRedirectTo("/"); // add query for username so it comes up top?
+        setRedirectTo("/articles");
       })
       .catch((err) => {
         console.log(err);
