@@ -87,7 +87,9 @@ export function Article() {
         </p>
       </div>
       <div id="article-content">
-        <p id="article-body">{article.body}</p>
+        <p className={`article-body article-body-comments-${commentsQuery}`}>
+          {article.body}
+        </p>
         {commentsQuery === "hide" && (
           <img
             id="article-image"

@@ -1,12 +1,33 @@
-export function FilterOptions({ topics, queries, setQueries, type }) {
+import { useEffect, useState } from "react";
+import { getTopics } from "../../api";
+
+export function FilterOptions({ queries, setQueries, type }) {
+  const [topics, setTopics] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   function handleQuery(event, query) {
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
       newQueries[query] = event.target.value;
-      console.log(newQueries);
+      newQueries.page = 1;
       return newQueries;
     });
   }
+
+  useEffect(() => {
+    if (["articles", "user-articles"].includes(type)) {
+      setIsLoading(true);
+      getTopics()
+        .then((topics) => {
+          setTopics(topics);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setTopics([]);
+        });
+    }
+  }, []);
 
   function capitalise(string) {
     const words = string.split(" ");
@@ -18,6 +39,10 @@ export function FilterOptions({ topics, queries, setQueries, type }) {
   }
 
   const showTopics = Boolean(topics.length);
+
+  if (isLoading) {
+    return <span className="loader topic-loader"></span>;
+  }
 
   return (
     <form id="filter-form">
@@ -55,6 +80,14 @@ export function FilterOptions({ topics, queries, setQueries, type }) {
           value={queries.sortBy}
           onChange={(event) => handleQuery(event, "sortBy")}
         >
+          <option key="created_at" value="created_at">
+            Date Published
+          </option>
+
+          <option key="votes" value="votes">
+            Votes
+          </option>
+
           {showTopics && type === "articles" && (
             <option key="author" value="author">
               Author
@@ -68,19 +101,10 @@ export function FilterOptions({ topics, queries, setQueries, type }) {
           )}
 
           {showTopics && (
-            <option key="created_at" value="created_at">
-              Date Published
-            </option>
-          )}
-          {showTopics && (
             <option key="commentCount" value="comment_count">
               Number Of Comments
             </option>
           )}
-
-          <option key="votes" value="votes">
-            Votes
-          </option>
         </select>
       </div>
     </form>

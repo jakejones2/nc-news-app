@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
 import { postComment, tryAgainWithRefresh } from "../../api";
 
-export function NewComment({ setComments, articleId }) {
+export function NewComment({ setCommentData, articleId }) {
   const [commentBody, setCommentBody] = useState("");
   const { setUser, user } = useContext(UserContext);
   const [errorPostingComment, setErrorPostingComments] = useState(false);
@@ -12,7 +12,7 @@ export function NewComment({ setComments, articleId }) {
   }
 
   function removeLastComment() {
-    setComments(({ comments }) => {
+    setCommentData(({ comments }) => {
       return {
         comments: comments.filter((comment) => {
           return comment.comment_id < comments.length - 1;
@@ -24,7 +24,7 @@ export function NewComment({ setComments, articleId }) {
   function handleCommentForm(event) {
     setErrorPostingComments(false);
     event.preventDefault();
-    setComments(({ comments }) => {
+    setCommentData(({ comments }) => {
       const newComment = {
         comment_id: comments.length + 1,
         body: commentBody,

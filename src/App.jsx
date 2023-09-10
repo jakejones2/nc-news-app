@@ -13,7 +13,7 @@ function App() {
   return (
     <div id="app">
       <a href="/">
-        <h1 id="app-title">NC-NEWS</h1>
+        <h1 id="app-title">Daily Express.js</h1>
       </a>
       <Nav />
       <Routes>

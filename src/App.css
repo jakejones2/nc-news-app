@@ -36,7 +36,7 @@ button {
 
 #app-title {
     margin: 20px;
-    width: 43%;
+    width: calc(8em + 10%);
     font-weight: 800;
     font-size: calc(1.2em + 2vw);
     border-bottom: solid 3px var(--accent);
@@ -131,7 +131,7 @@ button {
     margin-top: 20px;
 }
 
-#community {
+community {
     color: var(--accent2);
 }
 
@@ -184,7 +184,7 @@ button {
     margin: 0;
     padding: 20px;
     padding-bottom: 5px;
-    padding-right: 0;
+    padding-right: 2px;
 }
 
 .article-preview-author {
@@ -325,6 +325,13 @@ button {
     }
 }
 
+@media (min-width: 1500px) {
+    .article-preview {
+        width: 23%;
+        margin-bottom: 2%;
+    }
+}
+
 /* Article */
 
 #article {
@@ -353,6 +360,9 @@ button {
 
 
 .preview-topic {
+    padding: "6px";
+    border-radius: "12px";
+    height: "fit-content";
     margin-top: 20px;
     margin-right: 20px;
     font-size: 1em;
@@ -360,6 +370,9 @@ button {
 }
 
 .article-topic {
+    padding: "6px";
+    border-radius: "12px";
+    height: "fit-content";
     margin: 10px;
     color: var(--background2);
     height: 1.5em;
@@ -397,7 +410,7 @@ button {
     justify-content: space-between;
 }
 
-#article-body {
+.article-body {
     margin: 20px;
     margin-left: 0;
 }
@@ -494,10 +507,18 @@ button {
         margin-left: 5px;
     }
 
-    #article-body {
+    #article-content {
+        flex-flow: row nowrap;
+        align-items: flex-start;
+    }
+    
+    .article-body {
         margin: 20px;
         margin-left: 0;
-        max-width: 58%;
+    }
+
+    .article-body-comments-show {
+        max-width: 100%;
     }
 }
 
@@ -651,23 +672,16 @@ button {
 }
 
 @media (min-width: 1000px) {
-    #article-comments {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        grid-template-rows: auto;
-    }
 
-    #article-existing-comments {
-        grid-column-start: 0;
-    }
-    #new-comment-form {
-        grid-column-start: 1
+    #article-comments {
+        max-width: 700px;
+        margin: auto;
     }
 
     #body {
         width: 95%;
         max-width: 95%;
-        height: 200px;
+        height: 100px;
         max-height: 200px;
         margin-right: 20px;
     }
@@ -705,7 +719,6 @@ button {
     margin: 0;
     margin-top: 20px;
 }
-
 
 .pages {
     display: flex;
@@ -808,6 +821,11 @@ button {
 
     #filter-form {
         justify-content: center;
+    }
+
+    .articles-bottom-filters {
+        margin-top: 0;
+        margin-bottom: 40px;
     }
 
 }
@@ -918,6 +936,13 @@ button {
     margin-top: 2px;
 }
 
+.topic-loader {
+    height: 15px;
+    width: 15px;
+    border-width: 4px;
+    margin-top: 15px;
+}
+
 /* Post */
 
 #post-title {
@@ -974,6 +999,20 @@ button {
     width: 50%;
     max-width: 300px;
     border: solid 4px var(--accent);
+}
+
+.infinite-scroll-end {
+    display: block;
+    width: fit-content;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--faint-text);
+}
+
+.liked-articles {
+    margin-top: 20px;
 }
 
 /* Modal */

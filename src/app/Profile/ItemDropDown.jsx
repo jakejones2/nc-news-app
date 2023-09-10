@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Comments } from "../Article/Comments";
 
-export function ItemDropDown({ header, component, image }) {
+export function ItemDropDown({ header, image, children }) {
   const [showItems, setShowItems] = useState(false);
 
   function toggleItemView() {
@@ -19,7 +19,7 @@ export function ItemDropDown({ header, component, image }) {
           <div className={showItems ? "drop-down" : "drop-up"}></div>
         </button>
       </div>
-      {showItems && component}
+      {showItems && children}
     </div>
   );
 }

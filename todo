@@ -1,9 +1,19 @@
-Improve desktop view of feed - different sized articles? ensure pics don't squash?
-
 Currently access token isn't stored as secure or http only (on react side)?
-
-Add more filtering to comments on the backend. Also pagination for users comments.
 
 Add likes to profile page
 
 Add random article
+
+add logo for logged in user by logout? and name? instead of logged in as x?
+
+link comments in profile to the article page and specific comment. Update comment queries URL?
+
+manage 404s better. Delete from the backend to minimise error messages on react
+
+Use infinite scroll on comments.
+
+when article image disappears, make comments full width
+
+add infinite scroll to articles
+
+create starred comments list

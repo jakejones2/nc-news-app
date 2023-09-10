@@ -6,7 +6,7 @@ import { Star } from "../Reuse/Star";
 import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 
 export function Comment({
-  setComments,
+  setCommentData,
   comment,
   removeComment,
   userVotes,
@@ -16,7 +16,7 @@ export function Comment({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleCommentDelete() {
-    setComments(({ comments }) => {
+    setCommentData(({ comments }) => {
       return {
         comments: comments.filter((item) => {
           return item.comment_id !== comment.comment_id;

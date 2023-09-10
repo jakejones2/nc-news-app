@@ -5,20 +5,27 @@ import { Comments } from "./Comments";
 import { NewComment } from "./NewComment";
 import { getCommentsByArticle } from "../../api";
 import { Filters } from "../Reuse/Filters";
+import { FilterOptions } from "../Reuse/FilterOptions";
 
 export function ArticleComments({ articleId }) {
   const { user } = useContext(UserContext);
-  const [comments, setComments] = useState({ comments: [], commentCount: 0 });
+  const [useInfiniteScroll, setUseInfiniteScroll] = useState(false);
+  const [useManualScroll, setUseManualScroll] = useState(false);
+  const [commentData, setCommentData] = useState({
+    comments: [],
+    totalCount: 0,
+  });
   const [commentQueries, setCommentQueries] = useState({
     page: 1,
     limit: 10,
     sort_by: "votes",
+    order: "desc",
   });
 
   return (
     <div id="article-comments">
       {user.username !== "guest" ? (
-        <NewComment setComments={setComments} articleId={articleId} />
+        <NewComment setCommentData={setCommentData} articleId={articleId} />
       ) : (
         <p className="comments-header">
           <Link to="/login" className="comments-link" id="login">
@@ -35,16 +42,27 @@ export function ArticleComments({ articleId }) {
         <Filters
           queries={commentQueries}
           setQueries={setCommentQueries}
-          totalCount={comments.totalCount}
+          totalCount={commentData.totalCount}
           type="comments"
-        />
+          useInfiniteScroll={useInfiniteScroll}
+          setUseManualScroll={setUseManualScroll}
+        >
+          <FilterOptions
+            queries={commentQueries}
+            setQueries={setCommentQueries}
+            type={"comments"}
+          />
+        </Filters>
         <Comments
           getFunction={getCommentsByArticle}
           getKey={articleId}
           getQueries={commentQueries}
           setQueries={setCommentQueries}
-          commentData={comments}
-          setComments={setComments}
+          commentData={commentData}
+          setCommentData={setCommentData}
+          useInfiniteScroll={useInfiniteScroll}
+          setUseInfiniteScroll={setUseInfiniteScroll}
+          useManualScroll={useManualScroll}
         />
       </div>
     </div>
