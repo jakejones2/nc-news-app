@@ -1,10 +1,10 @@
 # Daily Express.js
 
-_Daily Express.js_ a front-end React app that serves information from my [Articles API](https://github.com/jakejones2/articles-api) back end.
+_Daily Express.js_ a front-end React app that serves (currently generic) information from my [Articles API](https://github.com/jakejones2/articles-api) back end. Content kindly provided by the **Northcoders** bootcamp!
 
 ## About
 
-You can browse the main feed (on the top left) without logging in. Filter and scroll through article preview cards, clicking on the title or image to access the full article and its comments. You can also click on users to access their profile, and see what they have been up to!
+You can browse the main feed (on the top left) without logging in. Filter and scroll through article preview cards, clicking on the title or image to access the full article and its comments. You can also click on users to access their profile and see what they have been up to!
 
 To vote for articles, post comments, create articles and more, click **Sign In** on the top left. Here you can use the default profile _Tickle122_. Alternatively, create your own protected account via the **Sign Up** button. Keep your password safe - there is no recovery system in place yet.
 
