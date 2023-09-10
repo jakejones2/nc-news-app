@@ -12,7 +12,11 @@ export function InfiniteScroll({
 }) {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("touchmove", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
+    };
   }, [getQueries, data, isLoading]);
 
   function handleScroll() {
