@@ -31,6 +31,7 @@ In the end I decided on a hybrid **pagination** and **infinite scrolling** syste
 ### Code
 
 - Apply a CSS naming convention
+- Sort order of <h> tags for better accessibility
 - Manage 404s better
 - Improve error handling on the Profile page
 - Built a test suite
