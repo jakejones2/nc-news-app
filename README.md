@@ -2,6 +2,8 @@
 
 _Daily Express.js_ a front-end React app that serves (currently generic) information from my [Articles API](https://github.com/jakejones2/articles-api) back end. Content kindly provided by the **Northcoders** bootcamp!
 
+Try it out [here!](https://nc-news-68e5d5.netlify.app/)
+
 ## About
 
 You can browse the main feed (on the top left) without logging in. Filter and scroll through article preview cards, clicking on the title or image to access the full article and its comments. You can also click on users to access their profile and see what they have been up to!
