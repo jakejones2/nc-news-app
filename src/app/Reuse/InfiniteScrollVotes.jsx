@@ -66,7 +66,7 @@ export function InfiniteScrollVotes({
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight >= scrollHeight) {
+    if (scrollTop + clientHeight + 100 >= scrollHeight) {
       setRenderStart((start) => start + 6);
     }
   }
