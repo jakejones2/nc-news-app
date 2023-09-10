@@ -22,16 +22,17 @@ In the end I decided on a hybrid **pagination** and **infinite scrolling** syste
 
 ### Features
 
-- Implement random article
-- Implement searching
-- Build pagination and querying into viewing a user's liked articles/comments
-- Add a logo for logged in users without squishing nav bar too much
-- Have site remember place within scrolled content for intuitive back button motion
+- Implement random article button
+- Implement searching for articles
+- Build pagination and querying when viewing a user's liked articles/comments
+- Add a logo for logged in users (without squishing the nav bar too much)
+- Have the site remember the user's place within scrolled content for intuitive back button motion
 
 ### Code
 
 - Apply a CSS naming convention
-- Manage 404s better, unneccessary in some places
-- Improve error handling on Profile page
+- Manage 404s better
+- Improve error handling on the Profile page
 - Built a test suite
-- Research custom react hooks and break up some larger components
+- Research custom hooks and break up some larger components
+- Get better at React!
