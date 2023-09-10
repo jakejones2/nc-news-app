@@ -8,7 +8,7 @@ You can browse the main feed (on the top left) without logging in. Filter and sc
 
 To vote for articles, post comments, create articles and more, click **Sign In** on the top left. Here you can use the default profile _Tickle122_. Alternatively, create your own protected account via the **Sign Up** button. Keep your password safe - there is no recovery system in place yet.
 
-To vote, click the star icon. To comment, navigate to the article proper, and click on the comments drop down below the main text. Here there is an input box to post new comments.
+To vote, click the star icon. Articles and comments you have voted for will be gold in colour. To comment, navigate to the article proper, and click on the comments drop down below the main text. Here there is an input box to post new comments.
 
 In the end I decided on a hybrid **pagination** and **infinite scrolling** system. When on the first page, keep scrolling to the bottom to generate new content. However, if you click **next** on the pages and filters bar, you will revert to normal pagination for faster navigation and url parameterization.
 
