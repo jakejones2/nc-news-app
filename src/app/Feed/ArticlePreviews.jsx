@@ -3,34 +3,27 @@ import { UserContext, logoutUser } from "../../contexts";
 import { getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 import { Topic } from "../Article/Topic";
+import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 
 export function ArticlePreviews({
   articleData,
   setArticleData,
-  isLoadingArticles,
   setIsLoadingArticles,
+  isLoadingArticles,
   queries,
   setQueries,
-  useInfiniteScroll,
-  setUseInfiniteScroll,
-  useManualScroll,
+  scrollType,
+  setScrollType,
 }) {
   const { user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState("");
-  const [articleVotes, setArticleVotes] = useState({});
   const [topicDescription, setTopicDescription] = useState("");
-  const [isLoadingAllArticles, setIsLoadingAllArticles] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [queries, articleData, articleVotes]);
+  const [articleVotes, setArticleVotes] = useState({});
 
   useEffect(() => {
     setIsLoadingArticles(true);
     setErrorLoadingArticles(false);
     setTopicDescription("");
-    if (!useInfiniteScroll) setIsLoadingAllArticles(true);
     if (queries.topic) {
       getTopic(queries.topic).then((description) => {
         setTopicDescription(description);
@@ -38,20 +31,14 @@ export function ArticlePreviews({
     }
     getArticles(queries)
       .then((articleData) => {
-        if (useInfiniteScroll) {
+        if (scrollType === "infinite") {
           setArticleData((current) => {
-            return {
-              totalCount: articleData.totalCount,
-              articles: [
-                ...current.articles,
-                ...articleData.articles.filter((newArticle) => {
-                  const match = current.articles.find((currentArticle) => {
-                    return currentArticle.article_id === newArticle.article_id;
-                  });
-                  return !match;
-                }),
-              ],
-            };
+            return appendInfiniteScrollData(
+              current,
+              articleData,
+              "articles",
+              "article_id"
+            );
           });
         } else setArticleData(articleData);
         return getUserArticleVotes(user.username);
@@ -63,7 +50,6 @@ export function ArticlePreviews({
         });
         setArticleVotes(votes);
         setIsLoadingArticles(false);
-        setIsLoadingAllArticles(false);
       })
       .catch((err) => {
         console.log(err);
@@ -79,31 +65,14 @@ export function ArticlePreviews({
     setArticleData(() => {
       return { totalCount: 0, articles: [] };
     });
-    setUseInfiniteScroll(false);
-  }, [queries.order, queries.sortBy]);
-
-  function handleScroll() {
-    if (isLoadingArticles || useManualScroll) return;
-    if (articleData.articles.length === articleData.totalCount) return;
-    const { limit, page } = queries;
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setUseInfiniteScroll(true);
-      setQueries((current) => {
-        const newQueries = { ...current };
-        newQueries.page = Math.floor(articleData.articles.length / limit) + 1;
-        return newQueries;
-      });
-    }
-  }
+    if (scrollType === "infinite") setScrollType("");
+  }, [queries.order, queries.sortBy, queries.topic]);
 
   if (errorLoadingArticles) {
     return <div className="articles-error">{errorLoadingArticles}</div>;
   }
 
-  if (isLoadingAllArticles) {
+  if (isLoadingArticles && scrollType !== "infinite") {
     return <span className="loader"></span>;
   }
 
@@ -119,7 +88,9 @@ export function ArticlePreviews({
         </div>
       )}
       <p id="total-articles">
-        Showing {1 + (queries.page - 1) * queries.limit}-
+        Showing{" "}
+        {scrollType === "infinite" ? 1 : 1 + (queries.page - 1) * queries.limit}
+        -
         {articleData.totalCount < queries.page * queries.limit
           ? articleData.totalCount
           : queries.page * queries.limit}{" "}
@@ -140,11 +111,6 @@ export function ArticlePreviews({
           );
         })}
       </ul>
-      {isLoadingArticles && <span className="loader comment-loader"></span>}
-      {articleData.articles.length >= articleData.totalCount &&
-        !isLoadingArticles && (
-          <p className="infinite-scroll-end">That's all of them!</p>
-        )}
     </>
   );
 }

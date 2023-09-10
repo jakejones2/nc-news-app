@@ -9,7 +9,6 @@ import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 export function ArticlePreview({
   article,
   userVotes,
-  articles,
   setArticles,
   setQueries,
 }) {

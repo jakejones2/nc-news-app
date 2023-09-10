@@ -155,3 +155,9 @@ export function getTopic(topicTarget) {
     })?.description;
   });
 }
+
+export function getComment(id) {
+  return api.get(`api/comments/${id}`).then(({ data }) => {
+    return data.comment;
+  });
+}

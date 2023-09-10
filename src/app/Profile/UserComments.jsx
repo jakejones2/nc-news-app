@@ -1,15 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts";
-import { Link } from "react-router-dom";
-import { Comments } from "./Comments";
-import { NewComment } from "./NewComment";
-import { getCommentsByArticle } from "../../api";
+import { useState } from "react";
+import { ItemDropDown } from "../Reuse/ItemDropDown";
 import { Filters } from "../Reuse/Filters";
 import { FilterOptions } from "../Reuse/FilterOptions";
 import { InfiniteScroll } from "../Reuse/InfiniteScroll";
+import { getCommentsByUser } from "../../api";
+import { Comments } from "../Article/Comments";
 
-export function ArticleComments({ articleId }) {
-  const { user } = useContext(UserContext);
+export function UserComments({ username }) {
   const [commentData, setCommentData] = useState({
     comments: [],
     totalCount: 0,
@@ -21,43 +18,29 @@ export function ArticleComments({ articleId }) {
     order: "desc",
   });
   const [isLoadingComments, setIsLoadingComments] = useState(false);
-  const [scrollType, setScrollType] = useState("");
-  return (
-    <div id="article-comments">
-      {user.username !== "guest" ? (
-        <NewComment setCommentData={setCommentData} articleId={articleId} />
-      ) : (
-        <p className="comments-header">
-          <Link to="/login" className="comments-link" id="login">
-            Log In
-          </Link>{" "}
-          or{" "}
-          <Link to="/signup" className="comments-link" id="signup">
-            Sign Up
-          </Link>{" "}
-          to post comments
-        </p>
-      )}
+  const [scrollType, setScrollType] = useState("infinite");
 
+  return (
+    <ItemDropDown image="../../../comments.png" header="Comments">
       <Filters
         queries={commentQueries}
         setQueries={setCommentQueries}
-        totalCount={commentData.totalCount}
-        type="comments"
         isLoading={isLoadingComments}
+        totalCount={commentData.length}
         scrollType={scrollType}
         setScrollType={setScrollType}
+        type="user-comments"
       >
         <FilterOptions
           queries={commentQueries}
           setQueries={setCommentQueries}
-          type={"comments"}
+          type="user-comments"
         />
       </Filters>
       <InfiniteScroll
         isLoading={isLoadingComments}
         data={commentData}
-        dataKey={"comments"}
+        dataKey="comments"
         getQueries={commentQueries}
         setQueries={setCommentQueries}
         scrollType={scrollType}
@@ -68,13 +51,14 @@ export function ArticleComments({ articleId }) {
           setCommentData={setCommentData}
           isLoadingComments={isLoadingComments}
           setIsLoadingComments={setIsLoadingComments}
-          getFunction={getCommentsByArticle}
-          getKey={articleId}
+          getFunction={getCommentsByUser}
+          getKey={username}
           getQueries={commentQueries}
           scrollType={scrollType}
           setScrollType={setScrollType}
+          showArticleLinks
         />
       </InfiniteScroll>
-    </div>
+    </ItemDropDown>
   );
 }

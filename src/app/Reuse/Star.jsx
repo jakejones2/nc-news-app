@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts";
+import { UserContext, logoutUser } from "../../contexts";
 
 export function Star({ patchFunction, type, userVotes, id, votes }) {
   const { user } = useContext(UserContext);

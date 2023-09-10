@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Filters } from "./Reuse/Filters";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 import { FilterOptions } from "./Reuse/FilterOptions";
+import { InfiniteScroll } from "./Reuse/InfiniteScroll";
 
 export function Feed() {
   const url = new URLSearchParams(window.location.search);
@@ -21,9 +22,8 @@ export function Feed() {
   });
   const [queries, setQueries] = useState(urlQueries);
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
-  const [useInfiniteScroll, setUseInfiniteScroll] = useState(false);
-  const [useManualScroll, setUseManualScroll] = useState(
-    queries.page > 1 ? true : false
+  const [scrollType, setScrollType] = useState(
+    queries.page > 1 ? "paginated" : ""
   );
 
   useEffect(() => {
@@ -36,10 +36,10 @@ export function Feed() {
         queries={queries}
         setQueries={setQueries}
         totalCount={articleData.totalCount}
+        isLoading={isLoadingArticles}
+        scrollType={scrollType}
+        setScrollType={setScrollType}
         type="articles"
-        isLoadingArticles={isLoadingArticles}
-        useInfiniteScroll={useInfiniteScroll}
-        setUseManualScroll={setUseManualScroll}
       >
         <FilterOptions
           queries={queries}
@@ -47,17 +47,26 @@ export function Feed() {
           type="articles"
         />
       </Filters>
-      <ArticlePreviews
-        articleData={articleData}
-        setArticleData={setArticleData}
-        setIsLoadingArticles={setIsLoadingArticles}
-        isLoadingArticles={isLoadingArticles}
-        queries={queries}
+      <InfiniteScroll
+        isLoading={isLoadingArticles}
+        data={articleData}
+        dataKey={"articles"}
+        getQueries={queries}
         setQueries={setQueries}
-        useInfiniteScroll={useInfiniteScroll}
-        setUseInfiniteScroll={setUseInfiniteScroll}
-        useManualScroll={useManualScroll}
-      />
+        scrollType={scrollType}
+        setScrollType={setScrollType}
+      >
+        <ArticlePreviews
+          articleData={articleData}
+          setArticleData={setArticleData}
+          setIsLoadingArticles={setIsLoadingArticles}
+          isLoadingArticles={isLoadingArticles}
+          queries={queries}
+          setQueries={setQueries}
+          scrollType={scrollType}
+          setScrollType={setScrollType}
+        />
+      </InfiniteScroll>
     </>
   );
 }

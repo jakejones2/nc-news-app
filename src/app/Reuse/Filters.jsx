@@ -7,9 +7,9 @@ export function Filters({
   setQueries,
   totalCount,
   type,
-  isLoadingArticles,
-  useInfiniteScroll,
-  setUseManualScroll,
+  isLoading,
+  scrollType,
+  setScrollType,
   children,
 }) {
   const totalPages = Math.ceil(totalCount / queries.limit);
@@ -18,31 +18,32 @@ export function Filters({
   const [latestQuery, setLatestQuery] = useState(queries);
 
   function changePage(num) {
-    setUseManualScroll(true);
+    setScrollType("paginated");
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
       newQueries.page = +newQueries.page + num;
       if (newQueries.page === 1) {
-        setUseManualScroll(false);
+        setScrollType("");
       }
       return newQueries;
     });
   }
 
   useEffect(() => {
-    if (isLoadingArticles && latestQuery.topic !== queries.topic) {
+    if (isLoading && latestQuery.topic !== queries.topic) {
       setShowPagination(false);
     } else {
       setShowPagination(true);
     }
-    setLatestQuery(queries.topic);
-  }, [isLoadingArticles]);
+    setLatestQuery(queries);
+  }, [isLoading]);
 
   function setFilters() {
     setIsChoosingFilters((bool) => !bool);
   }
 
   function changeOrder() {
+    setScrollType("paginated");
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
       if (newQueries.order === "asc") {
@@ -58,7 +59,7 @@ export function Filters({
   return (
     <>
       <nav className={`filters ${type}-filters`}>
-        {useInfiniteScroll ? (
+        {scrollType === "infinite" || type === "user-comments" ? (
           <div className="pages">
             <p id="page-num">Infinite scroll</p>
           </div>

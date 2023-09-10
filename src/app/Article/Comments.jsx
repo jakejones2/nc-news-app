@@ -2,51 +2,38 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
+import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 
 export function Comments({
+  commentData,
+  setCommentData,
+  isLoadingComments,
+  setIsLoadingComments,
   getFunction,
   getKey,
   getQueries,
-  setQueries,
-  commentData,
-  setCommentData,
+  scrollType,
+  setScrollType,
   showArticleLinks,
-  setUseInfiniteScroll,
-  useInfiniteScroll,
-  useManualScroll,
 }) {
   const { user } = useContext(UserContext);
-  const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
   const [noComments, setNoComments] = useState(false);
   const [commentVotes, setCommentVotes] = useState({});
-  const [isLoadingAllComments, setIsLoadingAllComments] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [getQueries, commentData, commentVotes]);
 
   useEffect(() => {
     setIsLoadingComments(true);
     setErrorLoadingComments(false);
-    if (!useInfiniteScroll) setIsLoadingAllComments(true);
     getFunction(getKey, getQueries)
       .then((commentData) => {
-        if (useInfiniteScroll) {
+        if (scrollType === "infinite") {
           setCommentData((current) => {
-            return {
-              totalCount: commentData.totalCount,
-              comments: [
-                ...current.comments,
-                ...commentData.comments.filter((newComment) => {
-                  const match = current.comments.find((currentComment) => {
-                    return currentComment.comment_id === newComment.comment_id;
-                  });
-                  return !match;
-                }),
-              ],
-            };
+            return appendInfiniteScrollData(
+              current,
+              commentData,
+              "comments",
+              "comment_id"
+            );
           });
         } else setCommentData(commentData);
         return getUserCommentVotes(user.username);
@@ -58,7 +45,6 @@ export function Comments({
         });
         setCommentVotes(votes);
         setIsLoadingComments(false);
-        setIsLoadingAllComments(false);
       })
       .catch((err) => {
         console.log(err);
@@ -75,7 +61,7 @@ export function Comments({
     setCommentData(() => {
       return { totalCount: 0, comments: [] };
     });
-    setUseInfiniteScroll(false);
+    if (scrollType === "infinite") setScrollType("");
   }, [getQueries.order, getQueries.sortBy]);
 
   function removeComment(id) {
@@ -85,23 +71,6 @@ export function Comments({
       console.log(err);
       setErrorLoadingComments(true);
     });
-  }
-
-  function handleScroll() {
-    if (isLoadingComments || useManualScroll) return;
-    if (commentData.comments.length === commentData.totalCount) return;
-    const { limit, page } = getQueries;
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setUseInfiniteScroll(true);
-      setQueries((current) => {
-        const newQueries = { ...current };
-        newQueries.page = Math.floor(commentData.comments.length / limit) + 1;
-        return newQueries;
-      });
-    }
   }
 
   if (noComments) {
@@ -120,7 +89,7 @@ export function Comments({
     );
   }
 
-  if (isLoadingAllComments) {
+  if (isLoadingComments && scrollType !== "infinite") {
     return <span className="loader comment-loader"></span>;
   }
 
@@ -140,11 +109,6 @@ export function Comments({
           );
         })}
       </ul>
-      {isLoadingComments && <span className="loader comment-loader"></span>}
-      {commentData.comments.length >= commentData.totalCount &&
-        !isLoadingComments && (
-          <p className="infinite-scroll-end">That's all of them!</p>
-        )}
     </>
   );
 }

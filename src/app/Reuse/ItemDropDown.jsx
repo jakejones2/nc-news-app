@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Comments } from "../Article/Comments";
 
 export function ItemDropDown({ header, image, children }) {
   const [showItems, setShowItems] = useState(false);
