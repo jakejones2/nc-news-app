@@ -78,7 +78,7 @@ export function InfiniteScrollVotes({
   if (type === "articles") {
     return (
       <div>
-        <ul className="cards liked-articles">
+        <ul className="cards cards--liked-articles">
           {data.map((article) => {
             return (
               <li className="article-preview" key={article.article_id}>
@@ -93,7 +93,7 @@ export function InfiniteScrollVotes({
         </ul>
         {isLoading && <span className="loader"></span>}
         {data.length === votes.length && !isLoading && (
-          <p className="infinite-scroll-end">That's all of them!</p>
+          <p className="scroll-end">That's all of them!</p>
         )}
       </div>
     );
@@ -108,7 +108,7 @@ export function InfiniteScrollVotes({
 
   return (
     <>
-      <ul className="comment-list starred-comments">
+      <ul className="comments comments--starred-comments">
         {data.map((comment) => {
           console.log(userVotes[comment.comment_id]);
           return (
@@ -125,7 +125,7 @@ export function InfiniteScrollVotes({
       </ul>
       {isLoading && <span className="loader"></span>}
       {data.length === votes.length && !isLoading && (
-        <p className="infinite-scroll-end">That's all of them!</p>
+        <p className="scroll-end">That's all of them!</p>
       )}
     </>
   );

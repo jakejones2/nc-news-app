@@ -116,7 +116,7 @@ export function SignUp() {
   }
 
   if (errorSigningIn) {
-    return <div className="articles-error">Something went wrong - sorry!</div>;
+    return <div className="error">Something went wrong - sorry!</div>;
   }
 
   if (signingIn) {
@@ -129,10 +129,10 @@ export function SignUp() {
 
   return (
     <>
-      <form onSubmit={signIn} id="sign-up-form">
-        <label className="form-label" htmlFor="username">
+      <form onSubmit={signIn} className="form">
+        <label className="form__label" htmlFor="username">
           Username
-          <span className="form-help">
+          <span className="form__help">
             Must be unique, try adding some numbers!
           </span>
         </label>
@@ -141,25 +141,21 @@ export function SignUp() {
           onChange={handleUsername}
           onBlur={validateUsername}
           id="username"
-          className="form-input"
+          className="form__input"
         />
-        {usernameTaken && (
-          <span className="form-validator" id="password-validator">
-            ❌
-          </span>
-        )}
-        <label className="form-label" htmlFor="name">
+        {usernameTaken && <span className="form__validator">❌</span>}
+        <label className="form__label" htmlFor="name">
           Name
         </label>
         <input
           value={signInData.name}
           onChange={handleName}
           id="name"
-          className="form-input"
+          className="form__input"
         />
-        <label className="form-label" htmlFor="password">
-          Enter Password{" "}
-          <span className="form-help">
+        <label className="form__label" htmlFor="password">
+          Enter Password
+          <span className="form__help">
             Passwords must be longer than 8 characters, and include uppercase,
             lowercase, digits and special characters.
           </span>
@@ -169,14 +165,10 @@ export function SignUp() {
           onChange={handlePassword}
           type="password"
           id="password"
-          className="form-input"
+          className="form__input"
         />
-        {passwordIncorrect && (
-          <span className="form-validator" id="password-validator">
-            ❌
-          </span>
-        )}
-        <label className="form-label" htmlFor="password2">
+        {passwordIncorrect && <span className="form__validator">❌</span>}
+        <label className="form__label" htmlFor="password2">
           Enter Password Again
         </label>
         <input
@@ -184,24 +176,20 @@ export function SignUp() {
           onChange={handlePassword2}
           type="password"
           id="password2"
-          className="form-input"
+          className="form__input"
         />
-        {password2Incorrect && (
-          <span className="form-validator" id="password-validator">
-            ❌
-          </span>
-        )}
-        <label className="form-label" htmlFor="password">
+        {password2Incorrect && <span className="form__validator">❌</span>}
+        <label className="form__label" htmlFor="password">
           Avatar URL (Optional)
         </label>
         <input
           value={signInData.avatar_url}
           onChange={handleAvatarUrl}
           id="url"
-          className="form-input"
+          className="form__input"
         />
         {!submitDeactivated && (
-          <button className="login-button">Create User</button>
+          <button className="form__button">Create User</button>
         )}
       </form>
     </>

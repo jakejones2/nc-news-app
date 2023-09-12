@@ -22,7 +22,7 @@ export function UserData({ username }) {
 
   if (errorLoading) {
     return (
-      <div className="articles-error">
+      <div className="error">
         Can't find {username}'s data, do they even exist?'
       </div>
     );
@@ -33,10 +33,10 @@ export function UserData({ username }) {
   }
 
   return (
-    <div id="user-data">
-      <h2 id="user-title">{userData.username}</h2>
-      <h3 id="user-name">{userData.name}</h3>
-      <img id="profile-pic" src={userData.avatar_url} />
+    <div className="user">
+      <h2 className="user__title">{userData.username}</h2>
+      <h3 className="user__name">{userData.name}</h3>
+      <img className="user__img" src={userData.avatar_url} />
     </div>
   );
 }

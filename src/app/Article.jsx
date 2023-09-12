@@ -1,20 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext, logoutUser } from "../contexts";
+import { UserContext } from "../contexts";
 import { Link, useParams, Navigate, useSearchParams } from "react-router-dom";
-import {
-  getArticle,
-  getUserArticleVotes,
-  patchArticle,
-  tryAgainWithRefresh,
-} from "../api";
-import { Comments } from "./Article/Comments";
+import { getArticle, getUserArticleVotes, patchArticle } from "../api";
 import { Star } from "./Reuse/Star";
 import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 
 export function Article() {
   const { id } = useParams();
-  const { setUser, user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [article, setArticle] = useState({});
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
   const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
@@ -62,9 +56,7 @@ export function Article() {
 
   if (errorLoadingArticle) {
     return (
-      <div className="articles-error">
-        Can't fetch this article right now - sorry!
-      </div>
+      <div className="error">Can't fetch this article right now - sorry!</div>
     );
   }
 
@@ -73,51 +65,55 @@ export function Article() {
   }
 
   return (
-    <article id="article">
-      <div id="title-topic">
-        <h2 id="article-title">{article.title}</h2>
-        <Topic topic={article.topic} type="preview-topic article-topic" />
+    <article className="article">
+      <div className="article__topic">
+        <h2 className="article__title">{article.title}</h2>
+        <Topic topic={article.topic} type="topic topic--article" />
       </div>
-      <div id="article-info">
-        <Link to={`/profile/${article.author}`} className="article-link">
-          <h3 id="article-author">{article.author}</h3>
+      <div className="article__info">
+        <Link to={`/profile/${article.author}`}>
+          <h3 className="article__author">{article.author}</h3>
         </Link>
-        <p id="article-created-at">
+        <p className="article__created-at">
           {new Date(article.created_at).toDateString()}
         </p>
       </div>
-      <div id="article-content">
-        <p className={`article-body article-body-comments-${commentsQuery}`}>
+      <div className="article__content">
+        <p className={`article__body article__body--comments-${commentsQuery}`}>
           {article.body}
         </p>
         {commentsQuery === "hide" && (
           <img
-            id="article-image"
+            className="article__img"
             src={article.article_img_url}
             alt="article image"
           ></img>
         )}
       </div>
-      <div id="article-stats">
+      <div className="info-bar">
         {user.username !== "guest" && (
           <Star
-            type="article"
+            type="info-bar"
             patchFunction={patchArticle}
             id={article.article_id}
             votes={article.votes}
             userVotes={starred}
           />
         )}
-        <div className="article-stat" onClick={toggleCommentsView}>
+        <div className="info-bar__stat" onClick={toggleCommentsView}>
           <img
-            className="article-logo comments-logo"
+            className="info-bar__logo info-bar__logo--comments"
             src="../../../comments.png"
           ></img>
-          <p className="article-stat-text">{article.comment_count}</p>
+          <p className="info-bar__stat-text">{article.comment_count}</p>
         </div>
-        <button id="drop-down-comments" onClick={toggleCommentsView}>
+        <button onClick={toggleCommentsView}>
           <div
-            className={commentsQuery === "show" ? "drop-down" : "drop-up"}
+            className={
+              commentsQuery === "show"
+                ? "dropdown dropdown--down"
+                : "dropdown dropdown--up"
+            }
           ></div>
         </button>
       </div>

@@ -31,44 +31,37 @@ export function ArticlePreview({
 
   return (
     <>
-      <div className="article-preview-top">
-        <div className="article-preview-header">
-          <Link
-            to={`/article/${article.article_id}?comments=hide`}
-            className="article-link"
-          >
-            <h2 className="article-preview-title">{article.title}</h2>
+      <div className="article-preview__header-container">
+        <div className="article-preview__header">
+          <Link to={`/article/${article.article_id}?comments=hide`}>
+            <h2 className="article-preview__title">{article.title}</h2>
           </Link>
-          <Link to={`/profile/${article.author}`} className="article-link">
-            <div className="article-preview-profile">
-              <h4 className="article-preview-author">{article.author}</h4>
-            </div>
+          <Link to={`/profile/${article.author}`}>
+            <h4 className="article-preview__author">{article.author}</h4>
           </Link>
         </div>
-        <Topic
-          topic={article.topic}
-          type="preview-topic"
-          setQueries={setQueries}
-        />
+        <Topic topic={article.topic} type="topic" setQueries={setQueries} />
       </div>
-      <div className="image-container">
+      <div className="article-preview__img-container">
         <Link to={`/article/${article.article_id}?comments=hide`}>
           <img
-            className="article-preview-img"
+            className="article-preview__img"
             src={article.article_img_url}
             alt="article-image"
           ></img>
         </Link>
       </div>
-      <div className="article-preview-stats">
+      <div className="article-preview__stats">
         <Link to={`/article/${article.article_id}?comments=show`}>
-          <div className="article-preview-stat">
+          <div className="article-preview__stat">
             <img
-              className="article-preview-logo comments-logo"
+              className="article-preview__logo article-preview__logo--coments"
               src="../../../comments.png"
               alt="number of comments"
             ></img>
-            <p className="article-preview-stat-text">{article.comment_count}</p>
+            <p className="article-preview__stat-text">
+              {article.comment_count}
+            </p>
           </div>
         </Link>
         <Star
@@ -79,21 +72,21 @@ export function ArticlePreview({
           votes={article.votes}
         />
         {user.username === article.author ? (
-          <div className="article-preview-stat">
+          <div className="article-preview__stat">
             <img
               onClick={() => {
                 setShowDeleteModal(true);
               }}
               src="../../../bin.png"
-              className="article-preview-logo article-bin"
-              alt="bin"
+              className="article-preview__logo bin--article"
+              alt="delete article"
             ></img>
           </div>
         ) : (
           <div className="space"></div>
         )}
       </div>
-      <h5 className="article-preview-datetime">
+      <h5 className="article-preview__datetime">
         {new Date(article.created_at).toDateString()}&nbsp;
       </h5>
       {showDeleteModal && (

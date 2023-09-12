@@ -23,29 +23,29 @@ export function Nav() {
 
   return (
     <>
-      <nav id="nav-main">
-        <a href="/" className="nav-link">
+      <nav className="nav">
+        <a href="/" className="nav__link">
           Feed
         </a>
         {user.username !== "guest" && (
-          <div className="logged-in-nav-items">
-            <Link to="/post" className="nav-link" id="post">
+          <div className="nav__container">
+            <Link to="/post" className="nav__link" id="post">
               Post
             </Link>
             <Link
               to={`/profile/${user.username}`}
-              className="nav-link"
+              className="nav__link"
               id="profile"
             >
               Profile
             </Link>
             {loggingOut ? (
-              <span className="loader logout-loader"></span>
+              <span className="loader loader--tiny"></span>
             ) : (
               <button
                 onClick={() => setShowLogoutModal(true)}
                 id="logout"
-                className="nav-link end"
+                className="nav__link nav__link--end nav__link--logout"
               >
                 Log Out
               </button>
@@ -61,21 +61,21 @@ export function Nav() {
           </div>
         )}
         {user.username === "guest" && (
-          <div className="guest-nav-items">
-            <Link to="/login" className="nav-link" id="login">
+          <div className="nav__container">
+            <Link to="/login" className="nav__link" id="login">
               Log In
             </Link>
-            <Link to="/signup" className="nav-link end" id="signup">
+            <Link to="/signup" className="nav__link nav__link--end" id="signup">
               Sign Up
             </Link>
           </div>
         )}
       </nav>
       {user.username !== "guest" && (
-        <p id="welcome-user">
+        <p className="greet">
           Logged in as{" "}
           <Link to={`/profile/${user.username}`}>
-            <span id="user">{user.username}</span>
+            <span className="greet__user">{user.username}</span>
           </Link>
         </p>
       )}

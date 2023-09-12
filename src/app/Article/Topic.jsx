@@ -51,7 +51,6 @@ export function Topic({ topic = "abc", type, setQueries }) {
         style={{
           color: `rgba(${rgbColours[0]}, ${rgbColours[1]}, ${rgbColours[2]}`,
         }}
-        className={type}
       >
         {topic}
       </span>

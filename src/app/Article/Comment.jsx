@@ -30,33 +30,28 @@ export function Comment({
 
   return (
     <article className="comment">
-      <div className="comment-info">
-        <Link to={`/profile/${comment.author}`} className="article-link">
-          <h4 className="comment-author">{comment.author}</h4>
+      <div className="comment__info">
+        <Link to={`/profile/${comment.author}`}>
+          <h4 className="comment__author">{comment.author}</h4>
         </Link>
-        <p className="comment-datetime">
+        <p className="comment__datetime">
           {showArticleLink && (
             <span>
-              <Link
-                to={`/article/${comment.article_id}`}
-                className="article-link"
-              >
-                Go To Article
-              </Link>
+              <Link to={`/article/${comment.article_id}`}>Go To Article</Link>
               <span> | </span>
             </span>
           )}
           {new Date(comment.created_at).toDateString()}
         </p>
       </div>
-      <p className="comment-body">{comment.body}</p>
+      <p className="comment__body">{comment.body}</p>
       {user.username === comment.author ? (
         <img
           onClick={() => {
             setShowDeleteModal(true);
           }}
           src="../../../bin.png"
-          className="comment-logo bin"
+          className="comment__logo bin"
           alt="bin"
         ></img>
       ) : (

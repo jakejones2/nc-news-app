@@ -58,39 +58,44 @@ export function Filters({
 
   return (
     <>
-      <nav className={`filters ${type}-filters`}>
-        {scrollType === "infinite" || type === "user-comments" ? (
-          <div className="pages">
-            <p id="page-num">Infinite scroll</p>
-          </div>
-        ) : (
-          <div className="pages">
-            <p id="page-num">
-              Page {queries.page} of {totalPages}
-            </p>
-            {showPagination && queries.page > 1 && (
-              <button className="page-nav" onClick={() => changePage(-1)}>
-                previous
-              </button>
-            )}
-            {showPagination && queries.page < totalPages && (
-              <button className="page-nav" onClick={() => changePage(1)}>
-                next
-              </button>
-            )}
-          </div>
-        )}
-        <div className="order">
+      <nav className={`filter filter--${type}`}>
+        <div className="filter__page">
+          {scrollType === "infinite" || type === "user-comments" ? (
+            <p className="filter__page-num">Infinite scroll</p>
+          ) : (
+            <>
+              <p className="filter__page-num">
+                Page {queries.page} of {totalPages}
+              </p>
+              {showPagination && queries.page > 1 && (
+                <button
+                  className="filter__button btn btn--page"
+                  onClick={() => changePage(-1)}
+                >
+                  previous
+                </button>
+              )}
+              {showPagination && queries.page < totalPages && (
+                <button className="btn btn--page" onClick={() => changePage(1)}>
+                  next
+                </button>
+              )}
+            </>
+          )}
+        </div>
+        <div className="filter__menu">
           {queries.order && (
-            <button className="page-nav" onClick={changeOrder}>
+            <button className="btn btn--page" onClick={changeOrder}>
               {queries.order}
             </button>
           )}
-          <button className="page-nav" onClick={setFilters}>
+          <button className="btn btn--page" onClick={setFilters}>
             filters
             <span
               className={
-                isChoosingFilters ? "drop-down-filter" : "drop-up-filter"
+                "dropdown " + isChoosingFilters
+                  ? "dropdown--down-small"
+                  : "dropdown--up-small"
               }
             ></span>
           </button>

@@ -38,7 +38,7 @@ export function Login() {
   }
 
   if (errorLoggingIn) {
-    return <div className="articles-error">Something went wrong - sorry!</div>;
+    return <div className="error">Something went wrong - sorry!</div>;
   }
 
   if (loggingIn) {
@@ -46,20 +46,20 @@ export function Login() {
   }
 
   return (
-    <form onSubmit={login} id="login-form">
-      <label className="form-label" htmlFor="username">
+    <form onSubmit={login} className="form">
+      <label className="form__label" htmlFor="username">
         Username
       </label>
-      <p className="form-help login-help">
+      <p className="form__help form__help--login">
         Mr tickle122 is our guest profile for exploring the site.
       </p>
       <input
         value={username}
         onChange={handleUsername}
         id="username"
-        className="form-input"
+        className="form__input"
       ></input>
-      <label className="form-label" htmlFor="password">
+      <label className="form__label" htmlFor="password">
         Password
       </label>
       <input
@@ -67,9 +67,9 @@ export function Login() {
         onChange={handlePassword}
         type="password"
         id="password"
-        className="form-input"
+        className="form__input"
       ></input>
-      <button className="login-button">Log In</button>
+      <button className="form__button">Log In</button>
     </form>
   );
 }

@@ -75,27 +75,23 @@ export function Comments({
 
   if (noComments) {
     return (
-      <div className="articles-error no-comments">
+      <div className="error error--no-comments">
         Be the first to comment on this post!
       </div>
     );
   }
 
   if (errorLoadingComments) {
-    return (
-      <div className="articles-error">
-        Can't fetch comments right now - sorry!
-      </div>
-    );
+    return <div className="error">Can't fetch comments right now - sorry!</div>;
   }
 
   if (isLoadingComments && scrollType !== "infinite") {
-    return <span className="loader comment-loader"></span>;
+    return <span className="loader loader--comment"></span>;
   }
 
   return (
     <>
-      <ul className="comment-list">
+      <ul className="comments">
         {commentData.comments.map((comment) => {
           return (
             <Comment

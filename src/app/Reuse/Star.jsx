@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
+import { useNavigate } from "react-router-dom";
 
 export function Star({ patchFunction, type, userVotes, id, votes }) {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [starred, setStarred] = useState(userVotes);
   const [errorVoting, setErrorVoting] = useState("");
   const [newTotal, setNewTotal] = useState(votes);
+  const navigate = useNavigate();
 
   function handlePatchError(err, num) {
     console.log(err);
@@ -18,7 +20,7 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
     if ([401, 403].includes(err.response.status)) {
       // tryAgainWithRefresh(patchFunction, setUser, id, -num)
       logoutUser(setUser);
-      setRedirect(true);
+      navigate("/login");
     } else {
       setErrorVoting("Voting offline - sorry!");
     }
@@ -53,17 +55,19 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
   }
 
   if (errorVoting) {
-    return <p className={`${type}-vote-error`}>{errorVoting}</p>;
+    return (
+      <p className={`${type}__vote ${type}__vote--error`}>{errorVoting}</p>
+    );
   }
 
   return (
-    <div className={`${type}-stat`}>
+    <div className={`${type}__stat`}>
       <img
         onClick={handleVote}
-        className={`${type}-logo star-logo ` + (starred ? "star" : "")}
+        className={`${type}__logo star ` + (starred ? "star--shine" : "")}
         src="../../../star.png"
       ></img>
-      <p className={`${type}-stat-text`}>{newTotal}</p>{" "}
+      <p className={`${type}__stat-text`}>{newTotal}</p>
     </div>
   );
 }

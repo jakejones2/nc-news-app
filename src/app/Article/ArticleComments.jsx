@@ -23,16 +23,16 @@ export function ArticleComments({ articleId }) {
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [scrollType, setScrollType] = useState("");
   return (
-    <div id="article-comments">
+    <div className="article-comments">
       {user.username !== "guest" ? (
         <NewComment setCommentData={setCommentData} articleId={articleId} />
       ) : (
-        <p className="comments-header">
-          <Link to="/login" className="comments-link" id="login">
+        <p className="article-comments__header">
+          <Link to="/login" className="article-comments__link" id="login">
             Log In
           </Link>{" "}
           or{" "}
-          <Link to="/signup" className="comments-link" id="signup">
+          <Link to="/signup" className="article-comments__link" id="signup">
             Sign Up
           </Link>{" "}
           to post comments

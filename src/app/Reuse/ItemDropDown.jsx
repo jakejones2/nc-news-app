@@ -8,17 +8,21 @@ export function ItemDropDown({ header, image, children }) {
   }
 
   return (
-    <div className="user-content-bar">
-      <div id="article-stats">
-        <div className="article-stat" onClick={toggleItemView}>
-          <p className="history-text">{header}</p>
-          <img className="article-logo" src={image}></img>
+    <>
+      <div className="info-bar info-bar--margin">
+        <div className="info-bar__stat" onClick={toggleItemView}>
+          <p className="info-bar__header">{header}</p>
+          <img className="info-bar__logo" src={image}></img>
         </div>
-        <button id="drop-down-comments" onClick={toggleItemView}>
-          <div className={showItems ? "drop-down" : "drop-up"}></div>
+        <button onClick={toggleItemView}>
+          <div
+            className={
+              showItems ? "dropdown dropdown--down" : "dropdown dropdown--up"
+            }
+          ></div>
         </button>
       </div>
       {showItems && children}
-    </div>
+    </>
   );
 }

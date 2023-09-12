@@ -69,7 +69,7 @@ export function ArticlePreviews({
   }, [queries.order, queries.sortBy, queries.topic]);
 
   if (errorLoadingArticles) {
-    return <div className="articles-error">{errorLoadingArticles}</div>;
+    return <div className="error">{errorLoadingArticles}</div>;
   }
 
   if (isLoadingArticles && scrollType !== "infinite") {
@@ -79,15 +79,15 @@ export function ArticlePreviews({
   return (
     <>
       {topicDescription && (
-        <div id="community-info">
-          <span id="community-header">
-            Welcome to the{" "}
-            <Topic topic={queries.topic} type="inline community" /> community!
+        <div className="community">
+          <span className="community__header">
+            Welcome to the <Topic topic={queries.topic} type="inline" />{" "}
+            community!
           </span>
-          <p id="community-description">{topicDescription}</p>
+          <p className="community__description">{topicDescription}</p>
         </div>
       )}
-      <p id="total-articles">
+      <p className="total-articles">
         Showing{" "}
         {scrollType === "infinite" ? 1 : 1 + (queries.page - 1) * queries.limit}
         -

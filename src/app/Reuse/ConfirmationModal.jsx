@@ -14,20 +14,18 @@ export function ConfirmationModal({
   }
 
   return (
-    <div id="darken-screen">
-      <div id="modal">
-        <h4 id="modal-title">{message}</h4>
-        <div id="modal-button-container">
+    <div className="darken-screen">
+      <div className="modal">
+        <h4 className="modal__title">{message}</h4>
+        <div className="modal__btn-container">
           <button
-            className="login-button modal-buttons"
-            id="modal-yes-button"
+            className="modal__button modal__button--yes"
             onClick={handleYes}
           >
             Yes
           </button>
           <button
-            className="login-button modal-buttons"
-            id="modal-no-button"
+            className="modal__button modal__button--no"
             onClick={handleNo}
           >
             No

@@ -11,9 +11,9 @@ import { NotFound } from "./app/NotFound";
 
 function App() {
   return (
-    <div id="app">
+    <div>
       <a href="/">
-        <h1 id="app-title">Daily Express.js</h1>
+        <h1 className="header">Daily Express.js</h1>
       </a>
       <Nav />
       <Routes>

@@ -39,10 +39,10 @@ export function InfiniteScroll({
     <>
       {children}
       {isLoading && scrollType === "infinite" && (
-        <span className="loader comment-loader"></span>
+        <span className="loader loader--comment"></span>
       )}
       {data[dataKey].length >= data.totalCount && !isLoading && (
-        <p className="infinite-scroll-end">That's all of them!</p>
+        <p className="scroll-end">That's all of them!</p>
       )}
     </>
   );

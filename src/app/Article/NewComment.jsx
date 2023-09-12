@@ -69,20 +69,20 @@ export function NewComment({ setCommentData, articleId }) {
 
   return (
     <div>
-      <h3 id="post-comment-title">Have your say!</h3>
-      <form id="new-comment-form" onSubmit={handleCommentForm}>
+      <h3 className="post-comment-title">Have your say!</h3>
+      <form className="comment-form" onSubmit={handleCommentForm}>
         <textarea
           id="body"
-          className="input-body"
+          className="comment-form__body"
           value={commentBody}
           placeholder="What do you think of this article?"
           onChange={handleCommentBody}
         ></textarea>
-        <button disabled={!commentBody} className="submit-button">
+        <button disabled={!commentBody} className="comment-form__button">
           Post Comment
         </button>
         {errorPostingComment && (
-          <p className="articles-error post-comment-error">
+          <p className="error error--post-comment">
             Can't post comments right now - sorry!
           </p>
         )}

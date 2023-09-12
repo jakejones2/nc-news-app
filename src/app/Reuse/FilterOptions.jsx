@@ -41,18 +41,18 @@ export function FilterOptions({ queries, setQueries, type }) {
   const showTopics = Boolean(topics.length);
 
   if (isLoading) {
-    return <span className="loader topic-loader"></span>;
+    return <span className="loader loader--topic"></span>;
   }
 
   return (
-    <form id="filter-form">
+    <form className="filter-options">
       {showTopics && (
-        <div id="topic-filter" className="filter">
-          <label className="filter-label" htmlFor="topic">
+        <div className="filter-options__option">
+          <label className="filter-options__label" htmlFor="topic">
             Topic
           </label>
           <select
-            className="filter-dropdown"
+            className="select select--filter"
             id="topic"
             value={queries.topic}
             onChange={(event) => handleQuery(event, "topic")}
@@ -70,12 +70,12 @@ export function FilterOptions({ queries, setQueries, type }) {
           </select>
         </div>
       )}
-      <div id="sort-by-filter" className="filter">
-        <label className="filter-label" htmlFor="sort-by">
+      <div className="filter-options__option">
+        <label className="filter-options__label" htmlFor="sort-by">
           Sort By
         </label>
         <select
-          className="filter-dropdown"
+          className="select select--filter"
           id="sort-by"
           value={queries.sortBy}
           onChange={(event) => handleQuery(event, "sortBy")}
