@@ -1,0 +1,44 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.nav {
+  @include flexRow(nowrap, space-between);
+  width: 100%;
+  background: $bg1;
+  padding: 13px, 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: $fsNav;
+
+  &__container {
+    @include flexRow(nowrap, flex-start);
+  }
+
+  &__link {
+    color: $accent1;
+    min-width: none;
+    padding-left: 20px;
+
+    &--end {
+      margin-right: 20px;
+    }
+
+    &--logout {
+      font: {
+        weight: 600;
+        size: $fsNav;
+        family: 'Inter', sans-serif;
+      }
+      padding: 0, inherit;
+      height: fit-content;
+
+      &:hover {
+        color: $hover1
+      }
+    }
+  }
+}
+
+
+
+

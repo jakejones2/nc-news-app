@@ -40,3 +40,5 @@ In the end I decided on a hybrid **pagination** and **infinite scrolling** syste
 - Built a test suite
 - Research custom hooks and break up some larger components
 - Get better at React!
+- The modals look very old fashioned. Make them smaller, and appearing by the click. Maybe no need to dim the page?
+- check usage of 'fit-content' vs 'auto' in CSS.

@@ -1,0 +1,25 @@
+@mixin breakpoint($type) {
+  @if $type == desktop {
+    @media only screen and (min-width: 1000px) {
+      @content
+    }
+  } @else if $type == largeDesktop {
+    @media only screen and (min-width: 1500px) {
+      @content
+    }
+  }
+}
+
+@mixin flexRow($wrap, $justify) {
+  display: flex;
+  flex-flow: row $wrap;
+  justify-content: $justify;
+  align-items: center;
+}
+
+@mixin customFlex($direction, $wrap, $justify, $align) {
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $justify;
+  align-items: $align;
+}

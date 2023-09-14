@@ -1,0 +1,9 @@
+@use '../mixins' as *;
+
+.cards {
+  @include flexRow(wrap, space-around);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}

@@ -1,0 +1,22 @@
+@use '../vars' as *;
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+a {
+  color: $text1;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $hover1;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}

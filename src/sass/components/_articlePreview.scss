@@ -1,0 +1,72 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.article-preview {
+  @include customFlex(column, nowrap, flex-start, flex-start);
+  position: relative;
+  width: 90%;
+  min-width: none;
+  margin: 2.5% 5%;
+  border-radius: 12px;
+  background: $accent2;
+
+  &__header {
+    height: fit-content;
+    // check this usage, is it neccessary, and is it different to auto?
+  }
+
+  &__header-container {
+    @include customFlex(row, nowrap, space-between, top);
+    height: fit-content;
+    // see above
+  }
+
+  &__title {
+    padding-right: 2px;
+  }
+
+  &__title,
+  &__author {
+    margin: 0;
+    margin-left: 20px;
+    padding-bottom: 5px;
+  }
+
+  &__author {
+    font-weight: 300;
+    color: $text2;
+
+    &:hover {
+      font-weight: 500;
+    }
+  }
+
+  &__img-container {
+    margin: 5px 20px 10px 20px;
+    min-width: 0;
+    min-height: 0;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__stats {
+    @include customFlex(row, nowrap, flex-start, bottom);
+    margin-left: 20px;
+  }
+
+  &__stat {
+    @include customFlex(row, nowrap, space-between, baseline);
+    cursor: pointer;
+    margin-right: 5px;
+
+    &:hover {
+      border-bottom: solid 3px $accent1;
+    }
+  }
+  
+}
