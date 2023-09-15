@@ -55,7 +55,7 @@ export function ArticlePreview({
         <Link to={`/article/${article.article_id}?comments=show`}>
           <div className="article-preview__stat">
             <img
-              className="article-preview__logo article-preview__logo--coments"
+              className="article-preview__logo article-preview__logo--comments"
               src="../../../comments.png"
               alt="number of comments"
             ></img>
@@ -78,7 +78,7 @@ export function ArticlePreview({
                 setShowDeleteModal(true);
               }}
               src="../../../bin.png"
-              className="article-preview__logo bin--article"
+              className="article-preview__logo bin bin--article"
               alt="delete article"
             ></img>
           </div>

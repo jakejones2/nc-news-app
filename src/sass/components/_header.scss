@@ -1,9 +1,0 @@
-@use '../vars' as *;
-
-.header {
-  margin: 20px;
-  width: calc(8em + 10%);
-  font-weight: 800;
-  font-size: calc(1.2em + 2vw);
-  border-bottom: solid 3px $text1;
-}

@@ -55,9 +55,7 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
   }
 
   if (errorVoting) {
-    return (
-      <p className={`${type}__vote ${type}__vote--error`}>{errorVoting}</p>
-    );
+    return <p className={`${type}__vote-error`}>{errorVoting}</p>;
   }
 
   return (

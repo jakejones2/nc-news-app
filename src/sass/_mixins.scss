@@ -23,3 +23,23 @@
   justify-content: $justify;
   align-items: $align;
 }
+
+@mixin imageHover($type) {
+  filter: brightness(0%);
+
+  &:hover {
+    @if type == comments {
+      filter: brightness(100%) hue-rotate(200deg)
+    } @else {
+      filter: none;
+    }
+  }
+}
+
+@mixin absPos($top, $right, $bottom, $left) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}

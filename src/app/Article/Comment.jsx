@@ -51,8 +51,8 @@ export function Comment({
             setShowDeleteModal(true);
           }}
           src="../../../bin.png"
-          className="comment__logo bin"
-          alt="bin"
+          className="comment__logo bin bin--comment"
+          alt="delete comment"
         ></img>
       ) : (
         <div className="space"></div>

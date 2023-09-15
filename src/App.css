@@ -253,21 +253,6 @@ button {
     filter: brightness(100%) hue-rotate(200deg);
 }
 
-.bin--article {
-    width: 19px;
-    height: 26px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-    filter: brightness(0%);
-    padding: 0;
-    padding-right: 10px;
-    padding-top: 7px;
-}
-
-.bin--article:hover {
-    filter: none;
-}
-
 .article-preview__datetime {
     margin: 0;
     display: block;
@@ -290,7 +275,7 @@ button {
     color: var(--faint-text);
 }
 
-.article-preview__vote--error {
+.article-preview__vote-error {
     color: red;
     font-weight: 600;
     font-size: 0.9em;
@@ -430,7 +415,7 @@ button {
     margin-left: 0;
 }
 
-.article__vote--error {
+.article__vote-error {
     color: red;
     margin-left: 20px;
     font-weight: 600;
@@ -597,11 +582,25 @@ button {
 }
 
 .bin {
+    filter: brightness(0%);
+}
+
+.bin--comment {
+    filter: brightness(70%);
     width: 15px;
     height: 19px;
     margin-left: 5px;
     margin-bottom: 1px;
-    filter: brightness(70%);
+}
+
+.bin--article {
+    width: 19px;
+    height: 26px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+    padding-right: 10px;
+    padding-top: 7px;
 }
 
 .bin:hover {

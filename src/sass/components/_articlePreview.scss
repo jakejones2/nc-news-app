@@ -68,5 +68,42 @@
       border-bottom: solid 3px $accent1;
     }
   }
-  
+
+  &__stat-text {
+    margin: 0;
+    margin-bottom: 5px;
+
+    &:hover {
+      color: $text1
+    }
+  }
+
+  &__logo {
+    width: 30px;
+    height: fit-content;
+    // check use of fit-content
+    padding: 5px;
+    cursor: pointer;
+
+    &--comments {
+      @include imageHover(comments)
+    }
+  }
+
+  &__datetime {
+    @include absPos(auto, 0, 0, auto);
+    display: block;    
+    margin: 0;
+    padding: 5px;
+    font-weight: 300;
+    color: $text2;
+  }
+
+  &__vote-error {
+    color: $textErr;
+    font-weight: 600;
+    font-size: $fsText;
+    margin-left: 10px;
+    margin-top: 7px;
+  }
 }
