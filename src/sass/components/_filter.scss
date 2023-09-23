@@ -1,0 +1,31 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.filter {
+  @include customFlex(row, nowrap, space-between, center);
+  margin: 20px;
+  margin-top: 10px;
+  border: solid 2px $accent1;
+  border-radius: 12px;
+  @include breakpoint(desktop) {
+    max-width: 400px;
+    margin: 20px auto;
+  }
+
+  &--comments {
+    margin: 20px 0;
+  }
+
+  &__page,
+  &__menu {
+    @include customFlex(row, nowrap, flex-start, center)
+  }
+
+  &__page-num {
+    margin: 10px;
+    margin-right: 5px;
+    color: $text2;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+}

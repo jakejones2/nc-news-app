@@ -1,0 +1,66 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.info-bar {
+  @include customFlex(row, nowrap, flex-start, center);
+  background-color: $accent2;
+  border-radius: 12px;
+
+  &--margin {
+    margin: 20px;
+  }
+
+  &__stat {
+    @include customFlex(row, wrap, flex-start, center);
+
+    &:hover {
+      border-bottom: solid 3px $accent1
+    }
+  }
+
+  &__logo {
+    width: 30px;
+    height: fit-content;
+    margin: 20px;
+    margin-right: 5px;
+    filter: brightness(0%);
+    cursor: pointer;
+
+    @include breakpoint(desktop) {
+      width: 40px;
+      height: fit-content;
+      margin: 20px;
+      margin-right: 5px;
+    }
+
+    &--comments {
+
+      &:hover {
+        filter: brightness(100%) hue-rotate(200deg);
+      }
+    }
+  }
+
+  &__stat-text {
+    font-size: 1em;
+    font-weight: 600;
+
+    @include breakpoint(desktop) {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin: 18px;
+      margin-left: 5px;
+    }
+  }
+
+  &__header {
+    margin: 20px;
+    margin-right: 0;
+    font-weight: 600;
+    color: $text1;
+  }
+
+
+
+}
+

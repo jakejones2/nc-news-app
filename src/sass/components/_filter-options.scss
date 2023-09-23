@@ -1,0 +1,23 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.filter-options {
+  @include customFlex(row, wrap, flex-start, center);
+  margin-bottom: 10px;
+  margin-right: 20px;
+  @include breakpoint(desktop) {
+    justify-content: center;
+  }
+
+  &__label {
+    margin-left: 20px;
+    padding: 5px;
+    font-size: $fsText;
+    font-weight: 600;
+    color: $text2;
+  }
+
+  &__option {
+    margin-bottom: 10px;
+  }
+}

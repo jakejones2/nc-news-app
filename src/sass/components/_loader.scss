@@ -1,0 +1,43 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 6px solid $accent1;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: block;
+  animation: rotation 1s linear infinite;
+  margin: auto;
+  margin-top: 30px;
+
+  &--comment {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+
+  &--tiny {
+    height: 15px;
+    width: 15px;
+    border-width: 4px;
+    margin: 2px 47px 0 47px;
+  }
+
+  &--topic {
+    height: 15px;
+    width: 15px;
+    border-width: 4px;
+    margin-top: 15px;
+  }
+
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+} 

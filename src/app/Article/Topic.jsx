@@ -63,9 +63,6 @@ export function Topic({ topic = "abc", type, setQueries }) {
         onClick={handleQueryUpdate}
         style={{
           backgroundColor: `rgba(${rgbColours[0]}, ${rgbColours[1]}, ${rgbColours[2]}, 0.8)`,
-          padding: "6px",
-          borderRadius: "12px",
-          height: "fit-content",
         }}
         className={type}
       >

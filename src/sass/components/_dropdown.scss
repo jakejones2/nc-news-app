@@ -1,0 +1,33 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.dropdown {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  cursor: pointer;
+  margin-left: 10px;
+
+  &--down {
+    border-top: 15px solid $text1;    
+  }
+
+  &--up {
+    border-bottom: 15px solid $text1; 
+  }
+
+  &--down-small {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid $text1;
+    margin-left: 2px;
+  }
+
+  &--up-small {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid $text1;
+    margin-left: 2px;
+  }
+}

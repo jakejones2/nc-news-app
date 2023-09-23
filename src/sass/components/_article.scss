@@ -1,0 +1,75 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.article {
+  margin: 20px;
+
+  &__info {
+    @include flexRow(nowrap, space-between);
+    padding-bottom: 5px;
+    border-bottom: solid 1px $text1;
+  }
+
+  &__topic {
+    @include customFlex(row, nowrap, space-between, baseline);
+  }
+
+  &__title {
+    color: $text1;
+    margin-bottom: 0;
+  }
+
+  &__author,
+  &__created-at {
+    color: $text2;
+    font-weight: 400;
+    font-size: 1em;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  &__author:hover {
+    font-weight: 500;
+  }
+
+  &__created-at {
+    display: flex;
+    align-items: flex-end;
+    font-size: 0.8em;
+  }
+
+  &__content {
+    @include flexRow(wrap, space-between);
+    @include breakpoint(desktop) {
+      @include customFlex(row, nowrap, flex-start, flex-start)
+    }
+  }
+
+  &__body {
+    margin: 20px;
+    margin-left: 0;
+    @include breakpoint(desktop) {
+      margin: 20px;
+      margin-left: 0;
+    }
+
+    &--comments-show {
+      @include breakpoint(desktop) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__img {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    margin-left: 0;
+  }
+
+  &__vote-error {
+    color: $textErr;
+    margin-left: 20px;
+    font-weight: 600;
+  }
+}

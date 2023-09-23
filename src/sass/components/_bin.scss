@@ -1,0 +1,23 @@
+.bin {
+  filter: brightness(0%);
+
+  &--comment {
+    filter: brightness(70%);
+    width: 15px;
+    height: 19px;
+    margin-left: 5px;
+    margin-bottom: 1px;
+  }
+
+  &--article {
+    width: 19px;
+    height: 26px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding: 7px, 10px, 0, 0;
+  }
+
+  &:hover {
+    filter: none;
+  }
+}

@@ -1,0 +1,52 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+.modal {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  background-color: white;
+  padding: 20px;
+  z-index: 100;
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  &__btn-container {
+    @include customFlex(row, nowrap, space-evenly, center)
+  }
+
+  &__button {
+    margin-top: 20px;
+    padding: 5px, 20px;
+    border-radius: 8px;
+    background-color: $bg1;
+    font-size: 1em;
+    font-weight: 600;
+
+    &--yes {
+      background-color: rgba(96, 215, 5, 0.812);
+
+      &:hover {
+        background-color: rgb(61, 139, 1);
+      }
+    }
+
+    &--no {
+      background-color: rgba(213, 8, 1, 0.807);
+
+      &:hover {
+        background-color: rgba(155, 7, 2, 0.807);
+      }
+    }
+
+  }
+}
