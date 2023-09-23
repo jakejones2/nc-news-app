@@ -18,7 +18,6 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
       setStarred(false);
     }
     if ([401, 403].includes(err.response.status)) {
-      // tryAgainWithRefresh(patchFunction, setUser, id, -num)
       logoutUser(setUser);
       navigate("/login");
     } else {

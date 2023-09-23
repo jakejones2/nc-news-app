@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { getArticles, postUser } from "../api";
 import { Navigate } from "react-router-dom";
 
+export type SignInState = {
+  username: string,
+  name: string,
+  password: string,
+  password2: string,
+  avatar_url: string
+}
+
 export function SignUp() {
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
   const [password2Incorrect, setPassword2Incorrect] = useState(false);
@@ -10,7 +18,7 @@ export function SignUp() {
   const [errorSigningIn, setErrorSigningIn] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [signInData, setSignInData] = useState({
+  const [signInData, setSignInData] = useState<SignInState>({
     username: "",
     name: "",
     password: "",

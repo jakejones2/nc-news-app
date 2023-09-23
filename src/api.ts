@@ -1,17 +1,27 @@
 import axios from "axios";
+import { SignInState } from "./app/SignUp";
 
 const api = axios.create({
   baseURL: "https://articles-api-zepx.onrender.com/",
 });
 
-export function tryAgainWithRefresh(func, setUser, ...args) {
-  api.get("refresh").then(({ data: { accessToken } }) => {
-    setUser({ username: user.username, token: accessToken });
-    const options = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    };
-    return func(...args, options);
-  });
+// this query type needs to be set in state. See SignUp.tsx This actually needs renaming to SignUp!
+
+type Query = {
+  limit?: number,
+  page?: number,
+  sortBy?: "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url",
+  order?: "asc" | "desc",
+  author?: string,
+  topic?: string
+}
+
+type headers = {
+  Authorization?: string
+}
+
+type axiosOptions = {
+  headers?: headers
 }
 
 export function getArticles({
@@ -21,7 +31,7 @@ export function getArticles({
   sortBy = "created_at",
   order = "asc",
   topic,
-}) {
+}: Query) {
   let url = `api/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
   if (author) url += `&author=${author}`;
   if (topic) url += `&topic=${topic}`;
@@ -30,15 +40,15 @@ export function getArticles({
   });
 }
 
-export function getArticle(id) {
+export function getArticle(id: number) {
   return api.get(`api/articles/${id}`).then((response) => {
     return response.data.article;
   });
 }
 
 export function getCommentsByArticle(
-  id,
-  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }
+  id: number,
+  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
 ) {
   return api
     .get(
@@ -49,7 +59,7 @@ export function getCommentsByArticle(
     });
 }
 
-export function patchArticle(id, num, options) {
+export function patchArticle(id: number, num: number, options: axiosOptions) {
   return api
     .patch(`api/articles/${id}`, { inc_votes: num }, options)
     .then((response) => {
@@ -57,7 +67,7 @@ export function patchArticle(id, num, options) {
     });
 }
 
-export function postComment(id, body, options) {
+export function postComment(id: number, body, options: axiosOptions) {
   return api
     .post(`api/articles/${id}/comments`, body, options)
     .then((response) => {
@@ -65,7 +75,7 @@ export function postComment(id, body, options) {
     });
 }
 
-export function patchComment(id, num, options) {
+export function patchComment(id: number, num: number, options: axiosOptions) {
   return api
     .patch(`api/comments/${id}`, { inc_votes: num }, options)
     .then((response) => {
@@ -79,15 +89,15 @@ export function getTopics() {
   });
 }
 
-export function deleteComment(id, options) {
+export function deleteComment(id: number, options: axiosOptions) {
   return api.delete(`api/comments/${id}`, options);
 }
 
-export function deleteArticle(id, options) {
+export function deleteArticle(id: number, options: axiosOptions) {
   return api.delete(`api/articles/${id}`, options);
 }
 
-export function postUser(body) {
+export function postUser(body: SignInState) {
   return api.post(`api/users`, body).then((response) => {
     return response.data;
   });
@@ -103,7 +113,7 @@ export function getLogout() {
   return api.get(`logout`);
 }
 
-export function getUserArticleVotes(username) {
+export function getUserArticleVotes(username: string) {
   if (username === "guest") {
     return [];
   }
@@ -112,7 +122,7 @@ export function getUserArticleVotes(username) {
   });
 }
 
-export function getUserCommentVotes(username) {
+export function getUserCommentVotes(username: string) {
   if (username === "guest") {
     return [];
   }
@@ -121,7 +131,7 @@ export function getUserCommentVotes(username) {
   });
 }
 
-export function postArticle(body, options) {
+export function postArticle(body, options: axiosOptions) {
   return api.post(`api/articles`, body, options);
 }
 
@@ -129,15 +139,15 @@ export function postTopic(topic) {
   return api.post("api/topics", topic);
 }
 
-export function getUser(username) {
+export function getUser(username: string) {
   return api.get(`api/users/${username}`).then((response) => {
     return response.data.user;
   });
 }
 
 export function getCommentsByUser(
-  username,
-  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }
+  username: string,
+  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
 ) {
   return api
     .get(
@@ -148,7 +158,7 @@ export function getCommentsByUser(
     });
 }
 
-export function getTopic(topicTarget) {
+export function getTopic(topicTarget: string) {
   return api.get("api/topics").then((response) => {
     return response.data.topics.find((topic) => {
       return topic.slug === topicTarget;
@@ -156,7 +166,7 @@ export function getTopic(topicTarget) {
   });
 }
 
-export function getComment(id) {
+export function getComment(id: number) {
   return api.get(`api/comments/${id}`).then(({ data }) => {
     return data.comment;
   });

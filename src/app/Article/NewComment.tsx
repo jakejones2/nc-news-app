@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
-import { postComment, tryAgainWithRefresh } from "../../api";
+import { postComment } from "../../api";
 
 export function NewComment({ setCommentData, articleId }) {
   const [commentBody, setCommentBody] = useState("");
@@ -41,28 +41,13 @@ export function NewComment({ setCommentData, articleId }) {
     };
     const options = { headers: { Authorization: `Bearer ${user.token}` } };
     postComment(articleId, newComment, options).catch((err) => {
-      if (err.response.status === "403 once refresh tokens are working") {
-        tryAgainWithRefresh(postComment, setUser, articleId, newComment).catch(
-          (err) => {
-            if (err.response.status === 403) {
-              logoutUser();
-              removeLastComment();
-            } else {
-              console.log(err);
-              setErrorPostingComments(true);
-              removeLastComment();
-            }
-          }
-        );
+      if (err.response.status === 403) {
+        logoutUser(setUser);
+        removeLastComment();
       } else {
-        if (err.response.status === 403) {
-          logoutUser(setUser);
-          removeLastComment();
-        } else {
-          console.log(err);
-          setErrorPostingComments(true);
-          removeLastComment();
-        }
+        console.log(err);
+        setErrorPostingComments(true);
+        removeLastComment();
       }
     });
   }
