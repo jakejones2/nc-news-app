@@ -41,7 +41,7 @@
   &__content {
     @include flexRow(wrap, space-between);
     @include breakpoint(desktop) {
-      @include customFlex(row, nowrap, flex-start, flex-start)
+      @include customFlex(row, nowrap, space-between, flex-start)
     }
   }
 

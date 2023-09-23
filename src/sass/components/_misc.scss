@@ -67,6 +67,7 @@
 
   &--no-comments {
     color: $text2;
+    margin-left: 0;
   }
 
   &--post-comment {
@@ -158,7 +159,9 @@
 .scroll-end {
   display: block;
   width: fit-content;
-  margin: 20px, auto, 60px, auto;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 60px;
   font-weight: 600;
   color: $text2;
 }

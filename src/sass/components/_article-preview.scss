@@ -81,9 +81,9 @@
   &__logo {
     width: 30px;
     height: fit-content;
-    // check use of fit-content
     padding: 5px;
     cursor: pointer;
+    filter: brightness(0%);
 
     &--comments {
       @include imageHover(comments)

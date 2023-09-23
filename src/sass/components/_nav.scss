@@ -5,7 +5,7 @@
   @include flexRow(nowrap, space-between);
   width: 100%;
   background: $bg1;
-  padding: 13px, 0;
+  padding: 13px 0;
   margin-bottom: 10px;
   font-weight: 600;
   font-size: $fsNav;
@@ -26,11 +26,12 @@
     &--logout {
       font: {
         weight: 600;
-        size: $fsNav;
+        size: 1em;
         family: 'Inter', sans-serif;
       }
-      padding: 0, inherit;
+      padding: 0 20px;
       height: fit-content;
+      margin-right: 0;
 
       &:hover {
         color: $hover1

@@ -40,6 +40,7 @@ export function Topic({ topic = "abc", type, setQueries }) {
       setQueries((queries) => {
         const newQueries = { ...queries };
         newQueries.topic = topic;
+        newQueries.page = 1;
         return newQueries;
       });
     }
