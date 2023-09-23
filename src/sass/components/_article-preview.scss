@@ -21,15 +21,16 @@
     // see above
   }
 
-  &__title {
-    padding-right: 2px;
-  }
-
   &__title,
   &__author {
     margin: 0;
     margin-left: 20px;
     padding-bottom: 5px;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 20px 10px 5px 20px;
   }
 
   &__author {

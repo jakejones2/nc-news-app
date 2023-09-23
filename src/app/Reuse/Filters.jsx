@@ -93,9 +93,9 @@ export function Filters({
             filters
             <span
               className={
-                "dropdown " + isChoosingFilters
-                  ? "dropdown--down-small"
-                  : "dropdown--up-small"
+                isChoosingFilters
+                  ? "dropdown dropdown--down-small"
+                  : "dropdown dropdown--up-small"
               }
             ></span>
           </button>
