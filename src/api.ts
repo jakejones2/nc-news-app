@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignInState } from "./app/SignUp";
+import { SignUpState } from "./app/SignUp";
 
 const api = axios.create({
   baseURL: "https://articles-api-zepx.onrender.com/",
@@ -97,7 +97,7 @@ export function deleteArticle(id: number, options: axiosOptions) {
   return api.delete(`api/articles/${id}`, options);
 }
 
-export function postUser(body: SignInState) {
+export function postUser(body: SignUpState) {
   return api.post(`api/users`, body).then((response) => {
     return response.data;
   });

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getArticles, postUser } from "../api";
 import { Navigate } from "react-router-dom";
 
-export type SignInState = {
+export interface SignUpState {
   username: string,
   name: string,
   password: string,
@@ -18,7 +18,7 @@ export function SignUp() {
   const [errorSigningIn, setErrorSigningIn] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [signInData, setSignInData] = useState<SignInState>({
+  const [signUpData, setSignUpData] = useState<SignUpState>({
     username: "",
     name: "",
     password: "",
@@ -28,19 +28,19 @@ export function SignUp() {
 
   useEffect(() => {
     revealSubmit();
-  }, [signInData, password2Incorrect, passwordIncorrect, usernameTaken]);
+  }, [signUpData, password2Incorrect, passwordIncorrect, usernameTaken]);
 
-  function handleUsername(event) {
+  function handleUsername(event: React.ChangeEvent<HTMLInputElement>): void {
     setUsernameTaken(false);
     setSubmitDeactivated(true);
-    setSignInData((data) => {
+    setSignUpData((data) => {
       const newData = { ...data };
       newData.username = event.target.value;
       return newData;
     });
   }
 
-  function validateUsername(event) {
+  function validateUsername(event: React.ChangeEvent<HTMLInputElement>): void {
     getArticles({ author: event.target.value })
       .then(() => {
         setUsernameTaken(true);
@@ -50,15 +50,15 @@ export function SignUp() {
       });
   }
 
-  function handleName(event) {
-    setSignInData((data) => {
+  function handleName(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSignUpData((data) => {
       const newData = { ...data };
       newData.name = event.target.value;
       return newData;
     });
   }
 
-  function handlePassword(event) {
+  function handlePassword(event: React.ChangeEvent<HTMLInputElement>): void {
     const regex =
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
     if (!regex.test(event.target.value)) {
@@ -66,40 +66,40 @@ export function SignUp() {
     } else {
       setPasswordIncorrect(false);
     }
-    setSignInData((data) => {
+    setSignUpData((data) => {
       const newData = { ...data };
       newData.password = event.target.value;
       return newData;
     });
   }
 
-  function handlePassword2(event) {
-    if (event.target.value !== signInData.password) {
+  function handlePassword2(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (event.target.value !== signUpData.password) {
       setPassword2Incorrect(true);
     } else {
       setPassword2Incorrect(false);
     }
-    setSignInData((data) => {
+    setSignUpData((data) => {
       const newData = { ...data };
       newData.password2 = event.target.value;
       return newData;
     });
   }
 
-  function handleAvatarUrl(event) {
-    setSignInData((data) => {
+  function handleAvatarUrl(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSignUpData((data) => {
       const newData = { ...data };
       newData.avatar_url = event.target.value;
       return newData;
     });
   }
 
-  function revealSubmit() {
+  function revealSubmit(): void {
     if (
-      signInData.username &&
-      signInData.name &&
-      signInData.password &&
-      signInData.password2 &&
+      signUpData.username &&
+      signUpData.name &&
+      signUpData.password &&
+      signUpData.password2 &&
       !usernameTaken &&
       !password2Incorrect &&
       !passwordIncorrect
@@ -108,11 +108,11 @@ export function SignUp() {
     } else setSubmitDeactivated(true);
   }
 
-  function signIn(event) {
+  function signUp(event: React.ChangeEvent<HTMLFormElement>): void {
     setSigningIn(true);
     event.preventDefault();
     setSubmitDeactivated(true);
-    postUser(signInData)
+    postUser(signUpData)
       .then(() => {
         setRedirect(true);
       })
@@ -137,7 +137,7 @@ export function SignUp() {
 
   return (
     <>
-      <form onSubmit={signIn} className="form">
+      <form onSubmit={signUp} className="form">
         <label className="form__label" htmlFor="username">
           Username
           <span className="form__help">
@@ -145,7 +145,7 @@ export function SignUp() {
           </span>
         </label>
         <input
-          value={signInData.username}
+          value={signUpData.username}
           onChange={handleUsername}
           onBlur={validateUsername}
           id="username"
@@ -156,7 +156,7 @@ export function SignUp() {
           Name
         </label>
         <input
-          value={signInData.name}
+          value={signUpData.name}
           onChange={handleName}
           id="name"
           className="form__input"
@@ -169,7 +169,7 @@ export function SignUp() {
           </span>
         </label>
         <input
-          value={signInData.password}
+          value={signUpData.password}
           onChange={handlePassword}
           type="password"
           id="password"
@@ -180,7 +180,7 @@ export function SignUp() {
           Enter Password Again
         </label>
         <input
-          value={signInData.password2}
+          value={signUpData.password2}
           onChange={handlePassword2}
           type="password"
           id="password2"
@@ -191,7 +191,7 @@ export function SignUp() {
           Avatar URL (Optional)
         </label>
         <input
-          value={signInData.avatar_url}
+          value={signUpData.avatar_url}
           onChange={handleAvatarUrl}
           id="url"
           className="form__input"

@@ -1,10 +1,20 @@
 import { createContext, useState } from "react";
 import Cookies from "js-cookie";
 
-export const UserContext = createContext();
+export interface UserState {
+  username: string,
+  token: string
+}
+
+export interface UserContextInterface {
+  user: UserState,
+  setUser: React.Dispatch<React.SetStateAction<UserState>>
+}
+
+export const UserContext = createContext<UserContextInterface | null>(null);
 
 export const UserProvider = ({ children }) => {
-  function findCookie() {
+  function findCookie(): UserState {
     const username = Cookies.get("username") || "guest";
     const token = Cookies.get("jwt") || "";
     return { username, token };
