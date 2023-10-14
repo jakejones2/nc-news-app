@@ -13,7 +13,7 @@ export interface UserContextInterface {
 
 export const UserContext = createContext<UserContextInterface | null>(null);
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }: { children: React.ReactNode}) => {
   function findCookie(): UserState {
     const username = Cookies.get("username") || "guest";
     const token = Cookies.get("jwt") || "";
@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-export function logoutUser(setUser) {
+export function logoutUser(setUser: React.Dispatch<React.SetStateAction<UserState>>) {
   setUser({ username: "guest", token: "" });
   Cookies.remove("username");
   Cookies.remove("jwt");

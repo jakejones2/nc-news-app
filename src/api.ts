@@ -7,10 +7,10 @@ const api = axios.create({
 
 // this query type needs to be set in state. See SignUp.tsx This actually needs renaming to SignUp!
 
-type Query = {
+export type Query = {
   limit?: number,
   page?: number,
-  sortBy?: "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url",
+  sortBy?: "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes",
   order?: "asc" | "desc",
   author?: string,
   topic?: string

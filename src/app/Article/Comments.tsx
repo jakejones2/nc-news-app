@@ -1,20 +1,37 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
-import { deleteComment, getUserCommentVotes } from "../../api";
+import { Query, deleteComment, getUserCommentVotes } from "../../api";
 import { Comment } from "./Comment";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
+import { ArticleCommentsState } from "./ArticleComments";
+import { ScrollTypeType } from "../Reuse/Filters";
+
+type GetCommentsFunction = {
+  (key: number, query: Query): Promise<ArticleCommentsState>
+}
 
 export function Comments({
-  commentData,
-  setCommentData,
-  isLoadingComments,
-  setIsLoadingComments,
-  getFunction,
-  getKey,
-  getQueries,
-  scrollType,
-  setScrollType,
-  showArticleLinks,
+  commentData, 
+  setCommentData, 
+  isLoadingComments, 
+  setIsLoadingComments, 
+  getFunction, 
+  getKey, 
+  getQueries, 
+  scrollType, 
+  setScrollType, 
+  showArticleLinks
+}: {
+  commentData: ArticleCommentsState,
+  setCommentData: React.Dispatch<React.SetStateAction<ArticleCommentsState>>,
+  isLoadingComments: boolean,
+  setIsLoadingComments: React.Dispatch<React.SetStateAction<boolean>>,
+  getFunction: GetCommentsFunction,
+  getKey: number,
+  getQueries: Query,
+  scrollType: ScrollTypeType,
+  setScrollType: React.Dispatch<React.SetStateAction<ScrollTypeType>>,
+  showArticleLinks: boolean,
 }) {
   const { user } = useContext(UserContext);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);

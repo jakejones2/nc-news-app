@@ -5,12 +5,22 @@ import { patchComment } from "../../api";
 import { Star } from "../Reuse/Star";
 import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 
+export interface CommentInterface {
+  author: string,
+  article_id: number,
+  body: string,
+  votes: number,
+  created_at: string
+}
+
 export function Comment({
   setCommentData,
   comment,
   removeComment,
   userVotes,
   showArticleLink,
+}: {
+  React.Dispatch<React.SetStateAction<>>
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
