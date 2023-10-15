@@ -8,10 +8,15 @@ export interface UserState {
 
 export interface UserContextInterface {
   user: UserState,
-  setUser: React.Dispatch<React.SetStateAction<UserState>>
+  setUser: React.Dispatch<React.SetStateAction<UserState>> | ((state: UserState) => {})
 }
 
-export const UserContext = createContext<UserContextInterface | null>(null);
+const defaultUser = {
+  user: {username: "guest", token: ""}, 
+  setUser: () => {}
+}
+
+export const UserContext = createContext<UserContextInterface>(defaultUser);
 
 export const UserProvider = ({ children }: { children: React.ReactNode}) => {
   function findCookie(): UserState {
@@ -19,7 +24,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode}) => {
     const token = Cookies.get("jwt") || "";
     return { username, token };
   }
-  const [user, setUser] = useState(findCookie());
+  const [user, setUser] = useState<UserState>(findCookie());
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

@@ -6,6 +6,16 @@ import { Star } from "./Reuse/Star";
 import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 
+export interface Article {
+  title: string,
+  topic: string,
+  author: string,
+  body: string,
+  created_at: string,
+  votes: number,
+  comment_count: number
+}
+
 export function Article() {
   const { id } = useParams();
   const { user } = useContext(UserContext);

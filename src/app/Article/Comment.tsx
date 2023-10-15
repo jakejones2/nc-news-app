@@ -1,11 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts";
 import { patchComment } from "../../api";
 import { Star } from "../Reuse/Star";
 import { ConfirmationModal } from "../Reuse/ConfirmationModal";
+import { ArticleCommentsState } from "./ArticleComments";
+import { RemoveCommentFunction, UserCommentVotes } from "./Comments";
 
 export interface CommentInterface {
+  comment_id: number,
   author: string,
   article_id: number,
   body: string,
@@ -20,22 +23,27 @@ export function Comment({
   userVotes,
   showArticleLink,
 }: {
-  React.Dispatch<React.SetStateAction<>>
+  setCommentData: React.Dispatch<React.SetStateAction<ArticleCommentsState>>,
+  comment: CommentInterface,
+  removeComment: RemoveCommentFunction,
+  userVotes: number,
+  showArticleLink: boolean 
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleCommentDelete() {
-    setCommentData(({ comments }) => {
+    setCommentData(({ comments, totalCount }) => {
       return {
+        totalCount: totalCount--,
         comments: comments.filter((item) => {
           return item.comment_id !== comment.comment_id;
         }),
       };
     });
     removeComment(comment.comment_id);
-    // need to do this properly - what if delete fails?
-    // need an error message state etc.
+    // need to finish this - what if delete fails?
+    // need an error state and message. reincrement total count etc.
   }
 
   return (

@@ -1,13 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { Query, deleteComment, getUserCommentVotes } from "../../api";
-import { Comment } from "./Comment";
+import { Comment, CommentInterface } from "./Comment";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 import { ArticleCommentsState } from "./ArticleComments";
 import { ScrollTypeType } from "../Reuse/Filters";
 
-type GetCommentsFunction = {
+export type GetCommentsFunction = {
   (key: number, query: Query): Promise<ArticleCommentsState>
+}
+
+export type RemoveCommentFunction = {
+  (id: number): void
+}
+
+export interface UserCommentVotes {
+  [comment_id: number]: number
 }
 
 export function Comments({
@@ -33,10 +41,10 @@ export function Comments({
   setScrollType: React.Dispatch<React.SetStateAction<ScrollTypeType>>,
   showArticleLinks: boolean,
 }) {
-  const { user } = useContext(UserContext);
+  const {user} = useContext(UserContext);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
   const [noComments, setNoComments] = useState(false);
-  const [commentVotes, setCommentVotes] = useState({});
+  const [commentVotes, setCommentVotes] = useState<UserCommentVotes>({});
 
   useEffect(() => {
     setIsLoadingComments(true);
@@ -44,19 +52,19 @@ export function Comments({
     getFunction(getKey, getQueries)
       .then((commentData) => {
         if (scrollType === "infinite") {
-          setCommentData((current) => {
-            return appendInfiniteScrollData(
-              current,
-              commentData,
-              "comments",
-              "comment_id"
-            );
+          setCommentData((current): ArticleCommentsState => {
+            return {
+              totalCount: commentData.totalCount,
+              comments: appendInfiniteScrollData<CommentInterface>(
+                current.comments,
+                commentData.comments,
+            )};
           });
         } else setCommentData(commentData);
         return getUserCommentVotes(user.username);
       })
       .then((commentVotes) => {
-        const votes = {};
+        const votes: UserCommentVotes = {};
         commentVotes.forEach((comment) => {
           votes[comment.comment_id] = comment.votes;
         });
@@ -81,7 +89,7 @@ export function Comments({
     if (scrollType === "infinite") setScrollType("");
   }, [getQueries.order, getQueries.sortBy]);
 
-  function removeComment(id) {
+  function removeComment(id: number): void {
     setErrorLoadingComments(false);
     const options = { headers: { Authorization: `Bearer ${user.token}` } };
     deleteComment(id, options).catch((err) => {

@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { CommentInterface } from "../Article/Comment";
+import { Article } from "../Article";
 
 export function InfiniteScroll({
   isLoading,
@@ -52,16 +54,16 @@ export function InfiniteScroll({
   );
 }
 
-export function appendInfiniteScrollData(current, data, dataKey, dataIdKey) {
-  const newData = { totalCount: data.totalCount };
-  newData[dataKey] = [
-    ...current[dataKey],
-    ...data[dataKey].filter((newItem) => {
-      const match = current[dataKey].find((currentItem) => {
-        return currentItem[dataIdKey] === newItem[dataIdKey];
-      });
-      return !match;
-    }),
-  ];
-  return newData;
+// cannot type this function... 
+export function appendInfiniteScrollData<Type extends CommentInterface | Article>(current: Type[], incoming: Type[]): Type[] {
+  if (!current.length) return incoming
+  const key = Object.keys(current[0]).find((key) => key.endsWith('_id'))
+  if (!key) return incoming
+  const newItems = incoming.filter((newItem) => {
+    const match = current.find((currentItem) => {
+      return currentItem[key as keyof Type] === newItem[key as keyof Type]
+    });
+    return !match;
+  })
+  return current.concat(newItems)
 }

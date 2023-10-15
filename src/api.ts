@@ -89,7 +89,7 @@ export function getTopics() {
   });
 }
 
-export function deleteComment(id: number, options: axiosOptions) {
+export function deleteComment(id: number, options: axiosOptions): Promise<void> {
   return api.delete(`api/comments/${id}`, options);
 }
 
@@ -122,9 +122,15 @@ export function getUserArticleVotes(username: string) {
   });
 }
 
-export function getUserCommentVotes(username: string) {
+export interface UserCommentVoteData {
+  username: string,
+  comment_id: number,
+  votes: number
+}
+
+export function getUserCommentVotes(username: string): Promise<UserCommentVoteData[]> {
   if (username === "guest") {
-    return [];
+    return Promise.resolve([]);
   }
   return api.get(`api/users/${username}/votes/comments`).then((response) => {
     return response.data.commentVotes;

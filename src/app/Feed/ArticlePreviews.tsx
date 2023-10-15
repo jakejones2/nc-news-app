@@ -4,6 +4,12 @@ import { getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 import { Topic } from "../Article/Topic";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
+import { Article } from "../Article";
+
+export interface Articles {
+  totalCount: number,
+  articles: Article[]
+}
 
 export function ArticlePreviews({
   articleData,
@@ -33,13 +39,13 @@ export function ArticlePreviews({
       .then((articleData) => {
         if (scrollType === "infinite") {
           setArticleData((current) => {
-            return appendInfiniteScrollData(
-              current,
-              articleData,
-              "articles",
-              "article_id"
-            );
-          });
+            return {
+              totalCount: articleData.totalCount,
+              articles: appendInfiniteScrollData<Article>(
+                current.articles,
+                articleData.articles,
+              )
+          }});
         } else setArticleData(articleData);
         return getUserArticleVotes(user.username);
       })
