@@ -5,6 +5,7 @@ import { Comment, CommentInterface } from "./Comment";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 import { ArticleCommentsState } from "./ArticleComments";
 import { ScrollOptions } from "../Reuse/Filters";
+import { ArticleInterface } from "../Article";
 
 export type GetCommentsFunction = {
   (key: number | string, query: Query): Promise<ArticleCommentsState>
@@ -51,6 +52,7 @@ export function Comments({
     setErrorLoadingComments(false);
     getFunction(getKey, getQueries)
       .then((commentData) => {
+        console.log('raw', commentData)
         if (scrollType === "infinite") {
           setCommentData((current): ArticleCommentsState => {
             return {

@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { UserContext, logoutUser } from "../../contexts";
+import { UserContext } from "../../contexts";
 import { UserArticleVoteData, UserCommentVoteData, deleteComment } from "../../api";
 import { ArticlePreview } from "../Feed/ArticlePreview";
 import { Comment, CommentInterface } from "../Article/Comment";
-import { Article, ArticleInterface } from "../Article";
+import { ArticleInterface } from "../Article";
 import { ArticlesState } from "../Feed";
 import { ArticleCommentsState } from "../Article/ArticleComments";
 
@@ -70,7 +70,7 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
       })
       .then((newData) => {
         setData((oldDataState): DataState => {
-          const currentData = oldDataState.articles || oldDataState.comments || []
+          const currentData = oldDataState.articles || (oldDataState.comments || [])
           const mergedData = [
             ...currentData,
             ...newData.filter((newItem) => {
@@ -81,7 +81,7 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
           ];
           const output: DataState = {...oldDataState}
           output.totalCount = mergedData.length
-          if (output.articles) {
+          if (type === 'articles') {
             output.articles = mergedData as ArticleInterface[]
             return output
           } else {
@@ -122,7 +122,7 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
     return <span className="loader"></span>;
   }
 
-  if (data.articles) {
+  if (data.articles && type === 'articles') {
     return (
       <div>
         <ul className="cards cards--liked-articles">
@@ -145,12 +145,11 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
       </div>
     );
   }
-  else if (data.comments) {
+  else if (data.comments && type === 'comments') {
     return (
       <>
         <ul className="comments comments--starred-comments">
           {data.comments.map((comment) => {
-            console.log(userVotes[comment.comment_id]);
             return (
               <Comment
                 key={comment.comment_id}

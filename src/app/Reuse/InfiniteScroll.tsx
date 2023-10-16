@@ -3,8 +3,6 @@ import { CommentInterface } from "../Article/Comment";
 import { ArticleInterface } from "../Article";
 import { ScrollOptions } from "./Filters";
 import { Query } from "../../api";
-import { ArticlesState } from "../Feed";
-import { ArticleCommentsState } from "../Article/ArticleComments";
 
 export function InfiniteScroll({
   isLoading,

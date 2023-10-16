@@ -9,11 +9,12 @@ export function Topic({ topic = "abc", type, setQueries = null }: {
 }) {
   const [rgbColours, setRgbColours] = useState([0, 0, 0]);
 
+
   useEffect(() => {
     topic = topic.toLowerCase();
-    const firstLetter = topic[0];
-    const secondLetter = topic[1] || "a";
-    const thirdLetter = topic[2] || "b";
+    const firstLetter = topic[0] || "a"
+    const secondLetter = topic[1] || "b";
+    const thirdLetter = topic[2] || "c";
 
     const firstNum = firstLetter.charCodeAt(0) - 96;
     const secondNum = secondLetter.charCodeAt(0) - 96;

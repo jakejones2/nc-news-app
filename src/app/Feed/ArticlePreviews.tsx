@@ -105,7 +105,7 @@ export function ArticlePreviews({
       {topicDescription && (
         <div className="community">
           <span className="community__header">
-            Welcome to the <Topic topic={queries.topic || "all"} type="inline"/>{" "}
+            Welcome to the <Topic topic={queries.topic || ""} type="inline"/>{" "}
             community!
           </span>
           <p className="community__description">{topicDescription}</p>

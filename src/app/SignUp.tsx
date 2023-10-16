@@ -1,6 +1,8 @@
-import { useState, useEffect, ChangeEvent } from "react";
-import { getArticles, postUser } from "../api";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect, ChangeEvent, useContext } from "react";
+import { getArticles, postAuth, postUser } from "../api";
+import { Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts";
+import Cookies from "js-cookie";
 
 export interface SignUpState {
   username: string,
@@ -11,13 +13,14 @@ export interface SignUpState {
 }
 
 export function SignUp() {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
   const [password2Incorrect, setPassword2Incorrect] = useState(false);
   const [usernameTaken, setUsernameTaken] = useState(false);
   const [submitDeactivated, setSubmitDeactivated] = useState(true);
   const [errorSigningIn, setErrorSigningIn] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [signUpData, setSignUpData] = useState<SignUpState>({
     username: "",
     name: "",
@@ -114,7 +117,16 @@ export function SignUp() {
     setSubmitDeactivated(true);
     postUser(signUpData)
       .then(() => {
-        setRedirect(true);
+        const username = signUpData.username
+        const password = signUpData.password
+        return postAuth({ username, password })
+      })
+      .then((accessToken) => {
+        setUser({ username: signUpData.username, token: accessToken });
+        Cookies.set("username", signUpData.username, { expires: 7 });
+        Cookies.set("jwt", accessToken, { expires: 1 });
+        navigate(-1);
+        setSigningIn(false)
       })
       .catch((err) => {
         console.log(err);
@@ -129,10 +141,6 @@ export function SignUp() {
 
   if (signingIn) {
     return <span className="loader"></span>;
-  }
-
-  if (redirect) {
-    return <Navigate to="/articles" />;
   }
 
   return (

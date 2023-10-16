@@ -199,7 +199,7 @@ export function getCommentsByUser(
       `api/users/${key}/comments?p=${page}&limit=${limit}&sort_by=${sortBy}&order=${order}`
     )
     .then((response) => {
-      return {totalCount: response.data.length, comments: response.data};
+      return response.data;
     });
 }
 

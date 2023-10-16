@@ -23,7 +23,7 @@ export function Feed() {
     page: +(url.get("page") || 1),
     author: url.get("author") || "",
     sortBy: url.get("sort_by") as validSorts || "created_at",
-    topic: url.get("topic") || "all",
+    topic: url.get("topic") || "",
     order: url.get("order") as validOrders || "desc",
   };
   const [searchParams, setSearchParams] = useSearchParams();

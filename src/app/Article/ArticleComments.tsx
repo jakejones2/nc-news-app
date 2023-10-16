@@ -63,8 +63,8 @@ export function ArticleComments({articleId}: {articleId: number}) {
       </Filters>
       <InfiniteScroll
         isLoading={isLoadingComments}
-        data={commentData}
-        dataKey={"comments"}
+        data={commentData.comments}
+        totalCount={commentData.totalCount}
         getQueries={commentQueries}
         setQueries={setCommentQueries}
         scrollType={scrollType}

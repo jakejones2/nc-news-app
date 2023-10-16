@@ -17,14 +17,19 @@ export function FilterOptions({ queries, setQueries, type }: {
       switch (query) {
         case "limit":
           newQueries.limit = +value
+          break
         case "page":
           newQueries.page = +value
+          break
         case "sortBy":
           newQueries.sortBy = value as validSorts
+          break
         case "order":
           newQueries.order = value as validOrders
+          break
         case "author":
           newQueries.author = value
+          break
         case "topic":
           newQueries.topic = value
       }
