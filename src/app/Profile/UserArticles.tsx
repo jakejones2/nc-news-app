@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemDropDown } from "../Reuse/ItemDropDown";
 import { Filters, ScrollOptions } from "../Reuse/Filters";
 import { FilterOptions } from "../Reuse/FilterOptions";
@@ -22,6 +22,17 @@ export function UserArticles({ username }: {username: string}) {
   });
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const [scrollType, setScrollType] = useState<ScrollOptions>("");
+
+  useEffect(() => {
+    setQueries({
+      limit: 12,
+      page: 1,
+      author: username,
+      sortBy: "created_at",
+      topic: "",
+      order: "desc",
+    })
+  }, [username])
 
   return (
     <ItemDropDown image="../../../book.png" header="Articles">

@@ -32,11 +32,9 @@ In the end I decided on a hybrid **pagination** and **infinite scrolling** syste
 
 ### Code
 
-- If on profile page of user with no starred/authored articles or comments, display a custom message rather than an infinite spinner or generic error
 - Improve SEO
 - Sort order of h tags for better accessibility
 - Manage 404s better
-- Improve error handling on the Profile page
 - Built a test suite
 - Research custom hooks and break up some larger components
 - The modals look old fashioned. Make them smaller, and appearing by the click. Maybe no need to dim the page?

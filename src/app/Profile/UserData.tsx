@@ -18,7 +18,7 @@ export function UserData({ username }: {username: string}) {
         console.log(err);
         setErrorLoading(true);
       });
-  }, []);
+  }, [username]);
 
   if (errorLoading) {
     return (
