@@ -111,7 +111,7 @@ export function ArticlePreviews({
           <p className="community__description">{topicDescription}</p>
         </div>
       )}
-      <p className="total-articles">
+      {articleData.articles.length > 0 && <p className="total-articles">
         Showing{" "}
         {scrollType === "infinite" ? 1 : 1 + (page - 1) * limit}
         -
@@ -119,7 +119,8 @@ export function ArticlePreviews({
           ? articleData.totalCount
           : page * limit}{" "}
         of {articleData.totalCount}
-      </p>
+      </p>}
+      {articleData.articles.length === 0 && <span className="error error--no-articles">Nothing to see here :(</span>}
       <ul className="cards">
         {articleData.articles.map((article) => {
           return (

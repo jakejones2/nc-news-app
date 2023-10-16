@@ -47,18 +47,21 @@ export function UserComments({ username }: {username: string}) {
         scrollType={scrollType}
         setScrollType={setScrollType}
       >
-        <Comments
-          commentData={commentData}
-          setCommentData={setCommentData}
-          isLoadingComments={isLoadingComments}
-          setIsLoadingComments={setIsLoadingComments}
-          getFunction={getCommentsByUser}
-          getKey={username}
-          getQueries={commentQueries}
-          scrollType={scrollType}
-          setScrollType={setScrollType}
-          showArticleLinks
-        />
+        <div className='profile-comments'>
+          <Comments
+            commentData={commentData}
+            setCommentData={setCommentData}
+            isLoadingComments={isLoadingComments}
+            setIsLoadingComments={setIsLoadingComments}
+            getFunction={getCommentsByUser}
+            getKey={username}
+            getQueries={commentQueries}
+            scrollType={scrollType}
+            setScrollType={setScrollType}
+            showArticleLinks
+            emptyMsg='Nothing yet - this user needs to get commenting!'
+          />
+        </div>
       </InfiniteScroll>
     </ItemDropDown>
   );

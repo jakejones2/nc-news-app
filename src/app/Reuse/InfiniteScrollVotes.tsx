@@ -46,6 +46,8 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
   const [renderStart, setRenderStart] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [userVotes, setUserVotes] = useState<UserVotes>({});
+  const [errorLoadingData, setErrorLoadingData] = useState("");
+  const [firstLoading, setFirstLoading] = useState(true)
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -58,11 +60,13 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
 
   useEffect(() => {
     setIsLoading(true);
+    setErrorLoadingData("");
     getVotesFunction(username)
       .then((voteData) => {
         setVotes(voteData);
         const promises: Promise<DataType>[] = []; 
         const slicedVoteData: VoteType[] = voteData.slice(renderStart, renderStart + 6)
+        if (!slicedVoteData.length) return Promise.reject()
         for (const vote of slicedVoteData) {
           promises.push(getDataFunction(+vote[getKey]) as Promise<DataType>);
         }
@@ -92,12 +96,19 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
         return getVotesFunction(user.username);
       })
       .then((userVoteData) => {
+        console.log(userVoteData)
         const newUserVotes: UserVotes = {};
         userVoteData.forEach((vote) => {
           newUserVotes[vote[getKey as keyof typeof vote] as keyof typeof newUserVotes] = vote.votes;
         });
         setUserVotes(newUserVotes);
         setIsLoading(false);
+        setFirstLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsLoading(false)
+        if (!data.totalCount) setErrorLoadingData("Nothing here!")
       });
   }, [renderStart]);
 
@@ -118,7 +129,11 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
     });
   }
 
-  if (!Object.keys(userVotes).length) {
+  if (errorLoadingData) {
+    return <span className={`error error--no-${type}`}>{errorLoadingData}</span>
+  }
+
+  if (firstLoading) {
     return <span className="loader"></span>;
   }
 

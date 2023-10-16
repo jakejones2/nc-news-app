@@ -629,9 +629,12 @@ button {
   margin-left: 20px;
   font-weight: 600;
 }
-.error--no-comments {
+.error--no-comments, .error--no-articles {
   color: rgb(99, 99, 99);
   margin-left: 0;
+}
+.error--no-articles {
+  margin-left: 20px;
 }
 .error--post-comment {
   margin: 10px;
@@ -659,7 +662,12 @@ button {
   padding: 0;
 }
 .comments--starred-comments {
+  margin-top: 20px;
+}
+
+.profile-comments {
   margin: 20px;
+  margin-top: 0;
 }
 
 .space {

@@ -65,9 +65,14 @@
   margin-left: 20px;
   font-weight: 600;
 
-  &--no-comments {
+  &--no-comments,
+  &--no-articles {
     color: $text2;
     margin-left: 0;
+  }
+
+  &--no-articles {
+    margin-left: 20px;
   }
 
   &--post-comment {
@@ -99,8 +104,13 @@
   padding: 0;
 
   &--starred-comments {
-    margin: 20px;
+    margin-top: 20px;
   }
+}
+
+.profile-comments {
+  margin: 20px;
+  margin-top: 0;
 }
 
 .space {

@@ -5,7 +5,6 @@ import { Comment, CommentInterface } from "./Comment";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 import { ArticleCommentsState } from "./ArticleComments";
 import { ScrollOptions } from "../Reuse/Filters";
-import { ArticleInterface } from "../Article";
 
 export type GetCommentsFunction = {
   (key: number | string, query: Query): Promise<ArticleCommentsState>
@@ -29,7 +28,8 @@ export function Comments({
   getQueries, 
   scrollType, 
   setScrollType, 
-  showArticleLinks
+  showArticleLinks,
+  emptyMsg = 'Be the first to comment on this post!',
 }: {
   commentData: ArticleCommentsState,
   setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>,
@@ -41,6 +41,7 @@ export function Comments({
   scrollType: ScrollOptions,
   setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
   showArticleLinks: boolean,
+  emptyMsg?: string
 }) {
   const {user} = useContext(UserContext);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
@@ -103,7 +104,7 @@ export function Comments({
   if (noComments) {
     return (
       <div className="error error--no-comments">
-        Be the first to comment on this post!
+        {emptyMsg}
       </div>
     );
   }

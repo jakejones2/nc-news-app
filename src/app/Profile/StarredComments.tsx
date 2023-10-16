@@ -5,12 +5,14 @@ import { InfiniteScrollVotes } from "../Reuse/InfiniteScrollVotes";
 export function StarredComments({ username }: {username: string}) {
   return (
     <ItemDropDown image="../../../comments.png" header="Starred Comments">
-      <InfiniteScrollVotes
-        getVotesFunction={getUserCommentVotes}
-        getDataFunction={getComment}
-        username={username}
-        type="comments"
-      />
+      <div className='profile-comments'>
+        <InfiniteScrollVotes
+          getVotesFunction={getUserCommentVotes}
+          getDataFunction={getComment}
+          username={username}
+          type="comments"
+        />
+      </div>
     </ItemDropDown>
   );
 }
