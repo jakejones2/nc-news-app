@@ -5,6 +5,7 @@ import { ArticleInterface } from "./app/Article";
 import { CommentInterface } from "./app/Article/Comment";
 import { ArticleCommentsState } from "./app/Article/ArticleComments";
 import { NewArticleContent } from "./app/Post";
+import { NewCommentInterface } from "./app/Article/NewComment";
 
 export type validSorts = "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes"
 export type validOrders = "asc" | "desc"
@@ -91,7 +92,7 @@ export function getArticle(id: number): Promise<ArticleInterface> {
 }
 
 export function getCommentsByArticle(
-  id: number,
+  id: number | string,
   { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
 ): Promise<ArticleCommentsState> {
   return api
@@ -111,7 +112,7 @@ export function patchArticle(id: number, num: number, options: axiosOptions): Pr
     });
 }
 
-export function postComment(id: number, body: CommentInterface, options: axiosOptions): Promise<CommentInterface> {
+export function postComment(id: number, body: NewCommentInterface, options: axiosOptions): Promise<CommentInterface> {
   return api
     .post(`api/articles/${id}/comments`, body, options as AxiosRequestConfig)
     .then((response) => {

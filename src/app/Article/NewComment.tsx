@@ -3,6 +3,11 @@ import { UserContext, logoutUser } from "../../contexts";
 import { postComment } from "../../api";
 import { ArticleCommentsState } from "./ArticleComments";
 
+export interface NewCommentInterface {
+  body: string,
+  username: string
+}
+
 export function NewComment({ setCommentData, articleId }: {
   setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>, 
   articleId: number
@@ -43,7 +48,7 @@ export function NewComment({ setCommentData, articleId }: {
         comments: [newComment, ...commentData.comments] 
       };
     });
-    const newComment = {
+    const newComment: NewCommentInterface = {
       body: commentBody,
       username: user.username,
     };

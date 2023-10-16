@@ -74,7 +74,7 @@ export function ArticlePreview({
         <Star
           patchFunction={patchArticle}
           type="article-preview"
-          userVotes={userVotes}
+          userVotes={Boolean(userVotes)}
           id={article.article_id}
           votes={article.votes}
         />
