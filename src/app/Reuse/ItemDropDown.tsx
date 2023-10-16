@@ -1,9 +1,13 @@
 import { ReactNode, useState } from "react";
 
-export function ItemDropDown({ header, image, children }: {
-  header: string,
-  image: string,
-  children: ReactNode
+export function ItemDropDown({
+  header,
+  image,
+  children,
+}: {
+  header: string;
+  image: string;
+  children: ReactNode;
 }) {
   const [showItems, setShowItems] = useState(false);
 

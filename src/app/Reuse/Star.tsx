@@ -3,12 +3,18 @@ import { UserContext, logoutUser } from "../../contexts";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
-export function Star({ patchFunction, type, userVotes, id, votes }: {
-  patchFunction: Function,
-  type: string,
-  userVotes: boolean,
-  id: number,
-  votes: number
+export function Star({
+  patchFunction,
+  type,
+  userVotes,
+  id,
+  votes,
+}: {
+  patchFunction: Function;
+  type: string;
+  userVotes: boolean;
+  id: number;
+  votes: number;
 }) {
   const { user, setUser } = useContext(UserContext);
   const [starred, setStarred] = useState(userVotes);
@@ -24,7 +30,7 @@ export function Star({ patchFunction, type, userVotes, id, votes }: {
       setStarred(false);
     }
     setErrorVoting("Voting offline - sorry!");
-    if (!status) return
+    if (!status) return;
     if ([401, 403].includes(status)) {
       logoutUser(setUser);
       navigate("/login");

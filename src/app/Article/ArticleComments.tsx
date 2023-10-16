@@ -10,11 +10,11 @@ import { InfiniteScroll } from "../Reuse/InfiniteScroll";
 import { CommentInterface } from "./Comment";
 
 export interface ArticleCommentsState {
-  comments: CommentInterface[]
-  totalCount: number
+  comments: CommentInterface[];
+  totalCount: number;
 }
 
-export function ArticleComments({articleId}: {articleId: number}) {
+export function ArticleComments({ articleId }: { articleId: number }) {
   const user = useContext(UserContext)?.user;
   const [commentData, setCommentData] = useState<ArticleCommentsState>({
     comments: [],
@@ -28,7 +28,7 @@ export function ArticleComments({articleId}: {articleId: number}) {
   });
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [scrollType, setScrollType] = useState<ScrollOptions>("");
-  
+
   return (
     <div className="article-comments">
       {user?.username !== "guest" ? (

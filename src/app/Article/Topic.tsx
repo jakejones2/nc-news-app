@@ -2,17 +2,20 @@ import { Link } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Query } from "../../api";
 
-export function Topic({ topic = "abc", type, setQueries = null }: {
-  topic: string,
-  type: string,
-  setQueries?: Dispatch<SetStateAction<Query>> | null
+export function Topic({
+  topic = "abc",
+  type,
+  setQueries = null,
+}: {
+  topic: string;
+  type: string;
+  setQueries?: Dispatch<SetStateAction<Query>> | null;
 }) {
   const [rgbColours, setRgbColours] = useState([0, 0, 0]);
 
-
   useEffect(() => {
     topic = topic.toLowerCase();
-    const firstLetter = topic[0] || "a"
+    const firstLetter = topic[0] || "a";
     const secondLetter = topic[1] || "b";
     const thirdLetter = topic[2] || "c";
 

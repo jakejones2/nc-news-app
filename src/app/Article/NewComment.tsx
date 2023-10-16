@@ -1,16 +1,26 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useContext, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import { UserContext, logoutUser } from "../../contexts";
 import { postComment } from "../../api";
 import { ArticleCommentsState } from "./ArticleComments";
 
 export interface NewCommentInterface {
-  body: string,
-  username: string
+  body: string;
+  username: string;
 }
 
-export function NewComment({ setCommentData, articleId }: {
-  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>, 
-  articleId: number
+export function NewComment({
+  setCommentData,
+  articleId,
+}: {
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>;
+  articleId: number;
 }) {
   const [commentBody, setCommentBody] = useState("");
   const { setUser, user } = useContext(UserContext);
@@ -43,9 +53,9 @@ export function NewComment({ setCommentData, articleId }: {
         votes: 0,
         created_at: new Date().toISOString(),
       };
-      return { 
-        totalCount: commentData.totalCount + 1, 
-        comments: [newComment, ...commentData.comments] 
+      return {
+        totalCount: commentData.totalCount + 1,
+        comments: [newComment, ...commentData.comments],
       };
     });
     const newComment: NewCommentInterface = {

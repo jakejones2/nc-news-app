@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { UserInterface, getUser } from "../../api";
 
-export function UserData({ username }: {username: string}) {
-  const [userData, setUserData] = useState<UserInterface>({username: "", name: "", avatar_url: ""});
+export function UserData({ username }: { username: string }) {
+  const [userData, setUserData] = useState<UserInterface>({
+    username: "",
+    name: "",
+    avatar_url: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [errorLoading, setErrorLoading] = useState(false);
 

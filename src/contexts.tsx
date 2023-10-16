@@ -2,25 +2,27 @@ import { createContext, useState } from "react";
 import Cookies from "js-cookie";
 
 export interface UserState {
-  username: string,
-  token: string
+  username: string;
+  token: string;
 }
 
-type SetUserType = React.Dispatch<React.SetStateAction<UserState>> | ((state: UserState) => {})
+type SetUserType =
+  | React.Dispatch<React.SetStateAction<UserState>>
+  | ((state: UserState) => {});
 
 export interface UserContextInterface {
-  user: UserState,
-  setUser: SetUserType
+  user: UserState;
+  setUser: SetUserType;
 }
 
 const defaultUser = {
-  user: {username: "guest", token: ""}, 
-  setUser: () => {}
-}
+  user: { username: "guest", token: "" },
+  setUser: () => {},
+};
 
 export const UserContext = createContext<UserContextInterface>(defaultUser);
 
-export const UserProvider = ({ children }: { children: React.ReactNode}) => {
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   function findCookie(): UserState {
     const username = Cookies.get("username") || "guest";
     const token = Cookies.get("jwt") || "";

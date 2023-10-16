@@ -8,12 +8,12 @@ import { ArticleCommentsState } from "./ArticleComments";
 import { RemoveCommentFunction, UserCommentVotes } from "./Comments";
 
 export interface CommentInterface {
-  comment_id: number,
-  author: string,
-  article_id: number,
-  body: string,
-  votes: number,
-  created_at: string
+  comment_id: number;
+  author: string;
+  article_id: number;
+  body: string;
+  votes: number;
+  created_at: string;
 }
 
 export function Comment({
@@ -23,11 +23,11 @@ export function Comment({
   userVotes,
   showArticleLink,
 }: {
-  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>,
-  comment: CommentInterface,
-  removeComment: RemoveCommentFunction,
-  userVotes: number,
-  showArticleLink: boolean 
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>;
+  comment: CommentInterface;
+  removeComment: RemoveCommentFunction;
+  userVotes: number;
+  showArticleLink: boolean;
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);

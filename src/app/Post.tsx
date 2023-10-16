@@ -5,11 +5,11 @@ import { getTopics, postArticle, postTopic } from "../api";
 import { logoutUser } from "../contexts";
 
 export interface NewArticleContent {
-  title: string,
-  topic: string,
-  body: string,
-  article_img_url?: string,
-  author?: string,
+  title: string;
+  topic: string;
+  body: string;
+  article_img_url?: string;
+  author?: string;
 }
 
 export function Post() {
@@ -33,7 +33,10 @@ export function Post() {
     }
   }
 
-  function handleInput(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, input: string) {
+  function handleInput(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    input: string,
+  ) {
     setPostForm((form) => {
       const newForm = { ...form };
       newForm[input as keyof typeof newForm] = event.target.value;
@@ -95,7 +98,7 @@ export function Post() {
           setErrorPostingForm(err.response.data.msg);
         } else {
           setErrorPostingForm(
-            "Something is wrong with this form or our servers - sorry!"
+            "Something is wrong with this form or our servers - sorry!",
           );
         }
       });

@@ -7,61 +7,67 @@ import { ArticleCommentsState } from "./app/Article/ArticleComments";
 import { NewArticleContent } from "./app/Post";
 import { NewCommentInterface } from "./app/Article/NewComment";
 
-export type validSorts = "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes"
-export type validOrders = "asc" | "desc"
+export type validSorts =
+  | "created_at"
+  | "author"
+  | "title"
+  | "article_id"
+  | "topic"
+  | "article_img_url"
+  | "votes";
+export type validOrders = "asc" | "desc";
+
+export interface Query {
+  limit?: number;
+  page?: number;
+  sortBy?: validSorts;
+  order?: validOrders;
+  author?: string;
+  topic?: string;
+}
 
 interface headers {
-  Authorization?: string
+  Authorization?: string;
 }
 
 interface axiosOptions {
-  headers?: headers
-}
-
-export interface Query {
-  limit?: number,
-  page?: number,
-  sortBy?: validSorts,
-  order?: validOrders,
-  author?: string,
-  topic?: string
+  headers?: headers;
 }
 
 export interface VoteData {
-  username: string,
-  votes: number
+  username: string;
+  votes: number;
 }
 
-export interface UserArticleVoteData extends VoteData{
-  article_id: number
+export interface UserArticleVoteData extends VoteData {
+  article_id: number;
 }
 
 export interface UserCommentVoteData extends VoteData {
-  comment_id: number,
+  comment_id: number;
 }
 
 export interface UserInterface {
-  username: string,
-  name: string,
-  avatar_url: string
+  username: string;
+  name: string;
+  avatar_url: string;
 }
 
 export interface TopicInterface {
-  slug: string,
-  description: string
+  slug: string;
+  description: string;
 }
 
 export interface NewUser {
-  username: string,
-  name: string,
-  avatar_url: string
+  username: string;
+  name: string;
+  avatar_url: string;
 }
 
 export interface PostAuth {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
-
 
 // api calls
 
@@ -93,26 +99,38 @@ export function getArticle(id: number): Promise<ArticleInterface> {
 
 export function getCommentsByArticle(
   id: number | string,
-  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
+  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query,
 ): Promise<ArticleCommentsState> {
   return api
     .get(
-      `api/articles/${id}/comments?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`
+      `api/articles/${id}/comments?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`,
     )
     .then((response) => {
       return response.data;
     });
 }
 
-export function patchArticle(id: number, num: number, options: axiosOptions): Promise<ArticleInterface> {
+export function patchArticle(
+  id: number,
+  num: number,
+  options: axiosOptions,
+): Promise<ArticleInterface> {
   return api
-    .patch(`api/articles/${id}`, { inc_votes: num }, options as AxiosRequestConfig)
+    .patch(
+      `api/articles/${id}`,
+      { inc_votes: num },
+      options as AxiosRequestConfig,
+    )
     .then((response) => {
       return response.data.article;
     });
 }
 
-export function postComment(id: number, body: NewCommentInterface, options: axiosOptions): Promise<CommentInterface> {
+export function postComment(
+  id: number,
+  body: NewCommentInterface,
+  options: axiosOptions,
+): Promise<CommentInterface> {
   return api
     .post(`api/articles/${id}/comments`, body, options as AxiosRequestConfig)
     .then((response) => {
@@ -120,9 +138,17 @@ export function postComment(id: number, body: NewCommentInterface, options: axio
     });
 }
 
-export function patchComment(id: number, num: number, options: axiosOptions): Promise<CommentInterface> {
+export function patchComment(
+  id: number,
+  num: number,
+  options: axiosOptions,
+): Promise<CommentInterface> {
   return api
-    .patch(`api/comments/${id}`, { inc_votes: num }, options as AxiosRequestConfig)
+    .patch(
+      `api/comments/${id}`,
+      { inc_votes: num },
+      options as AxiosRequestConfig,
+    )
     .then((response) => {
       return response.data.comment;
     });
@@ -134,11 +160,17 @@ export function getTopics(): Promise<TopicInterface[]> {
   });
 }
 
-export function deleteComment(id: number, options: axiosOptions): Promise<void> {
+export function deleteComment(
+  id: number,
+  options: axiosOptions,
+): Promise<void> {
   return api.delete(`api/comments/${id}`, options as AxiosRequestConfig);
 }
 
-export function deleteArticle(id: number, options: axiosOptions): Promise<void> {
+export function deleteArticle(
+  id: number,
+  options: axiosOptions,
+): Promise<void> {
   return api.delete(`api/articles/${id}`, options as AxiosRequestConfig);
 }
 
@@ -158,7 +190,9 @@ export function getLogout(): Promise<void> {
   return api.get(`logout`);
 }
 
-export function getUserArticleVotes(username: string): Promise<UserArticleVoteData[]> {
+export function getUserArticleVotes(
+  username: string,
+): Promise<UserArticleVoteData[]> {
   if (username === "guest") {
     return Promise.resolve([]);
   }
@@ -167,7 +201,9 @@ export function getUserArticleVotes(username: string): Promise<UserArticleVoteDa
   });
 }
 
-export function getUserCommentVotes(username: string): Promise<UserCommentVoteData[]> {
+export function getUserCommentVotes(
+  username: string,
+): Promise<UserCommentVoteData[]> {
   if (username === "guest") {
     return Promise.resolve([]);
   }
@@ -176,7 +212,10 @@ export function getUserCommentVotes(username: string): Promise<UserCommentVoteDa
   });
 }
 
-export function postArticle(body: NewArticleContent, options: axiosOptions): Promise<void> {
+export function postArticle(
+  body: NewArticleContent,
+  options: axiosOptions,
+): Promise<void> {
   return api.post(`api/articles`, body, options as AxiosRequestConfig);
 }
 
@@ -192,11 +231,11 @@ export function getUser(username: string): Promise<UserInterface> {
 
 export function getCommentsByUser(
   key: string | number,
-  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
+  { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query,
 ): Promise<ArticleCommentsState> {
   return api
     .get(
-      `api/users/${key}/comments?p=${page}&limit=${limit}&sort_by=${sortBy}&order=${order}`
+      `api/users/${key}/comments?p=${page}&limit=${limit}&sort_by=${sortBy}&order=${order}`,
     )
     .then((response) => {
       return response.data;

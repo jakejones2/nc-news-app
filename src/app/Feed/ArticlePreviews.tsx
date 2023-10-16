@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UserContext } from "../../contexts";
 import { Query, getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
@@ -9,12 +15,12 @@ import { ArticlesState } from "../Feed";
 import { ScrollOptions } from "../Reuse/Filters";
 
 export interface Articles {
-  totalCount: number,
-  articles: ArticleInterface[]
+  totalCount: number;
+  articles: ArticleInterface[];
 }
 
 export interface UserArticleVotes {
-  [article_id: number]: number
+  [article_id: number]: number;
 }
 
 export function ArticlePreviews({
@@ -27,14 +33,14 @@ export function ArticlePreviews({
   scrollType,
   setScrollType,
 }: {
-  articleData: ArticlesState,
-  setArticleData: Dispatch<SetStateAction<ArticlesState>>,
-  setIsLoadingArticles: Dispatch<SetStateAction<boolean>>,
-  isLoadingArticles: boolean,
-  queries: Query,
-  setQueries: Dispatch<SetStateAction<Query>>,
-  scrollType: ScrollOptions,
-  setScrollType: Dispatch<SetStateAction<ScrollOptions>>
+  articleData: ArticlesState;
+  setArticleData: Dispatch<SetStateAction<ArticlesState>>;
+  setIsLoadingArticles: Dispatch<SetStateAction<boolean>>;
+  isLoadingArticles: boolean;
+  queries: Query;
+  setQueries: Dispatch<SetStateAction<Query>>;
+  scrollType: ScrollOptions;
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>;
 }) {
   const { user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState("");
@@ -58,9 +64,10 @@ export function ArticlePreviews({
               totalCount: articleData.totalCount,
               articles: appendInfiniteScrollData<ArticleInterface>(
                 current.articles,
-                articleData.articles,
-              )
-          }});
+                articleData.articles
+              ),
+            };
+          });
         } else setArticleData(articleData);
         return getUserArticleVotes(user.username);
       })
@@ -97,36 +104,40 @@ export function ArticlePreviews({
     return <span className="loader"></span>;
   }
 
-  const page = queries.page || 1
-  const limit = queries.limit || 12
+  const page = queries.page || 1;
+  const limit = queries.limit || 12;
 
   return (
     <>
       {topicDescription && (
         <div className="community">
           <span className="community__header">
-            Welcome to the <Topic topic={queries.topic || ""} type="inline"/>{" "}
+            Welcome to the <Topic topic={queries.topic || ""} type="inline" />{" "}
             community!
           </span>
           <p className="community__description">{topicDescription}</p>
         </div>
       )}
-      {articleData.articles.length > 0 && <p className="total-articles">
-        Showing{" "}
-        {scrollType === "infinite" ? 1 : 1 + (page - 1) * limit}
-        -
-        {articleData.totalCount < page * limit
-          ? articleData.totalCount
-          : page * limit}{" "}
-        of {articleData.totalCount}
-      </p>}
-      {articleData.articles.length === 0 && <span className="error error--no-articles">Nothing to see here :(</span>}
+      {articleData.articles.length > 0 && (
+        <p className="total-articles">
+          Showing {scrollType === "infinite" ? 1 : 1 + (page - 1) * limit}-
+          {articleData.totalCount < page * limit
+            ? articleData.totalCount
+            : page * limit}{" "}
+          of {articleData.totalCount}
+        </p>
+      )}
+      {articleData.articles.length === 0 && (
+        <span className="error error--no-articles">Nothing to see here...</span>
+      )}
       <ul className="cards">
         {articleData.articles.map((article) => {
           return (
             <li className="article-preview" key={article.article_id}>
               <ArticlePreview
-                userVotes={articleVotes[article.article_id as keyof UserArticleVotes]}
+                userVotes={
+                  articleVotes[article.article_id as keyof UserArticleVotes]
+                }
                 article={article}
                 setArticleData={setArticleData}
                 setQueries={setQueries}

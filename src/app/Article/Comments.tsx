@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UserContext } from "../../contexts";
 import { Query, deleteComment, getUserCommentVotes } from "../../api";
 import { Comment, CommentInterface } from "./Comment";
@@ -7,43 +13,43 @@ import { ArticleCommentsState } from "./ArticleComments";
 import { ScrollOptions } from "../Reuse/Filters";
 
 export type GetCommentsFunction = {
-  (key: number | string, query: Query): Promise<ArticleCommentsState>
-}
+  (key: number | string, query: Query): Promise<ArticleCommentsState>;
+};
 
 export type RemoveCommentFunction = {
-  (id: number): void
-}
+  (id: number): void;
+};
 
 export interface UserCommentVotes {
-  [comment_id: number]: number
+  [comment_id: number]: number;
 }
 
 export function Comments({
-  commentData, 
-  setCommentData, 
-  isLoadingComments, 
-  setIsLoadingComments, 
-  getFunction, 
-  getKey, 
-  getQueries, 
-  scrollType, 
-  setScrollType, 
+  commentData,
+  setCommentData,
+  isLoadingComments,
+  setIsLoadingComments,
+  getFunction,
+  getKey,
+  getQueries,
+  scrollType,
+  setScrollType,
   showArticleLinks,
-  emptyMsg = 'Be the first to comment on this post!',
+  emptyMsg = "Be the first to comment on this post!",
 }: {
-  commentData: ArticleCommentsState,
-  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>,
-  isLoadingComments: boolean,
-  setIsLoadingComments: Dispatch<SetStateAction<boolean>>,
-  getFunction: GetCommentsFunction,
-  getKey: number | string,
-  getQueries: Query,
-  scrollType: ScrollOptions,
-  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
-  showArticleLinks: boolean,
-  emptyMsg?: string
+  commentData: ArticleCommentsState;
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>;
+  isLoadingComments: boolean;
+  setIsLoadingComments: Dispatch<SetStateAction<boolean>>;
+  getFunction: GetCommentsFunction;
+  getKey: number | string;
+  getQueries: Query;
+  scrollType: ScrollOptions;
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>;
+  showArticleLinks: boolean;
+  emptyMsg?: string;
 }) {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [errorLoadingComments, setErrorLoadingComments] = useState(false);
   const [noComments, setNoComments] = useState(false);
   const [commentVotes, setCommentVotes] = useState<UserCommentVotes>({});
@@ -53,7 +59,7 @@ export function Comments({
     setErrorLoadingComments(false);
     getFunction(getKey, getQueries)
       .then((commentData) => {
-        console.log('raw', commentData)
+        console.log("raw", commentData);
         if (scrollType === "infinite") {
           setCommentData((current): ArticleCommentsState => {
             return {
@@ -61,7 +67,8 @@ export function Comments({
               comments: appendInfiniteScrollData<CommentInterface>(
                 current.comments,
                 commentData.comments,
-            )};
+              ),
+            };
           });
         } else setCommentData(commentData);
         return getUserCommentVotes(user.username);
@@ -102,11 +109,7 @@ export function Comments({
   }
 
   if (noComments) {
-    return (
-      <div className="error error--no-comments">
-        {emptyMsg}
-      </div>
-    );
+    return <div className="error error--no-comments">{emptyMsg}</div>;
   }
 
   if (errorLoadingComments) {

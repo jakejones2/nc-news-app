@@ -7,7 +7,7 @@ import { Query, getCommentsByUser } from "../../api";
 import { Comments } from "../Article/Comments";
 import { ArticleCommentsState } from "../Article/ArticleComments";
 
-export function UserComments({ username }: {username: string}) {
+export function UserComments({ username }: { username: string }) {
   const [commentData, setCommentData] = useState<ArticleCommentsState>({
     comments: [],
     totalCount: 0,
@@ -47,7 +47,7 @@ export function UserComments({ username }: {username: string}) {
         scrollType={scrollType}
         setScrollType={setScrollType}
       >
-        <div className='profile-comments'>
+        <div className="profile-comments">
           <Comments
             commentData={commentData}
             setCommentData={setCommentData}
@@ -59,7 +59,7 @@ export function UserComments({ username }: {username: string}) {
             scrollType={scrollType}
             setScrollType={setScrollType}
             showArticleLinks
-            emptyMsg='Nothing yet - this user needs to get commenting!'
+            emptyMsg="Nothing yet - this user needs to get commenting!"
           />
         </div>
       </InfiniteScroll>

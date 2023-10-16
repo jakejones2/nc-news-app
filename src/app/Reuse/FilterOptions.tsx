@@ -1,39 +1,58 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Query, TopicInterface, getTopics, validOrders, validSorts } from "../../api";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Query,
+  TopicInterface,
+  getTopics,
+  validOrders,
+  validSorts,
+} from "../../api";
 
-export function FilterOptions({ queries, setQueries, type }: {
-  queries: Query,
-  setQueries: Dispatch<SetStateAction<Query>>,
-  type: string
+export function FilterOptions({
+  queries,
+  setQueries,
+  type,
+}: {
+  queries: Query;
+  setQueries: Dispatch<SetStateAction<Query>>;
+  type: string;
 }) {
   const [topics, setTopics] = useState<TopicInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleQuery(event: ChangeEvent<HTMLSelectElement>, query: keyof Query) {
+  function handleQuery(
+    event: ChangeEvent<HTMLSelectElement>,
+    query: keyof Query,
+  ) {
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
       // cannot figure out newQueries[query] in Typescript yet
-      const value = event.target.value
+      const value = event.target.value;
       switch (query) {
         case "limit":
-          newQueries.limit = +value
-          break
+          newQueries.limit = +value;
+          break;
         case "page":
-          newQueries.page = +value
-          break
+          newQueries.page = +value;
+          break;
         case "sortBy":
-          newQueries.sortBy = value as validSorts
-          break
+          newQueries.sortBy = value as validSorts;
+          break;
         case "order":
-          newQueries.order = value as validOrders
-          break
+          newQueries.order = value as validOrders;
+          break;
         case "author":
-          newQueries.author = value
-          break
+          newQueries.author = value;
+          break;
         case "topic":
-          newQueries.topic = value
+          newQueries.topic = value;
       }
-      if (query !== 'page') newQueries.page = 1;
+      if (query !== "page") newQueries.page = 1;
       return newQueries;
     });
   }

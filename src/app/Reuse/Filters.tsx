@@ -1,7 +1,13 @@
-import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Query } from "../../api";
 
-export type ScrollOptions = "" | "infinite" | "paginated"
+export type ScrollOptions = "" | "infinite" | "paginated";
 
 export function Filters({
   queries,
@@ -13,16 +19,16 @@ export function Filters({
   setScrollType,
   children,
 }: {
-  queries: Query,
-  setQueries: Dispatch<SetStateAction<Query>>,
-  totalCount: number,
-  type: string,
-  isLoading: boolean,
-  scrollType: ScrollOptions,
-  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
-  children: ReactNode
+  queries: Query;
+  setQueries: Dispatch<SetStateAction<Query>>;
+  totalCount: number;
+  type: string;
+  isLoading: boolean;
+  scrollType: ScrollOptions;
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>;
+  children: ReactNode;
 }) {
-  const page = queries.page || 1
+  const page = queries.page || 1;
   const totalPages = Math.ceil(totalCount / (queries.limit || 12));
   const [isChoosingFilters, setIsChoosingFilters] = useState(false);
   const [showPagination, setShowPagination] = useState(true);

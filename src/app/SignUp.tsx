@@ -5,11 +5,11 @@ import { UserContext } from "../contexts";
 import Cookies from "js-cookie";
 
 export interface SignUpState {
-  username: string,
-  name: string,
-  password: string,
-  password2: string,
-  avatar_url: string
+  username: string;
+  name: string;
+  password: string;
+  password2: string;
+  avatar_url: string;
 }
 
 export function SignUp() {
@@ -117,16 +117,16 @@ export function SignUp() {
     setSubmitDeactivated(true);
     postUser(signUpData)
       .then(() => {
-        const username = signUpData.username
-        const password = signUpData.password
-        return postAuth({ username, password })
+        const username = signUpData.username;
+        const password = signUpData.password;
+        return postAuth({ username, password });
       })
       .then((accessToken) => {
         setUser({ username: signUpData.username, token: accessToken });
         Cookies.set("username", signUpData.username, { expires: 7 });
         Cookies.set("jwt", accessToken, { expires: 1 });
         navigate(-1);
-        setSigningIn(false)
+        setSigningIn(false);
       })
       .catch((err) => {
         console.log(err);

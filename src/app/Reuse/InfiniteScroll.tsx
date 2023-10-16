@@ -14,14 +14,14 @@ export function InfiniteScroll({
   setScrollType,
   children,
 }: {
-  isLoading: boolean,
-  data: ArticleInterface[] | CommentInterface[]
-  totalCount: number,
-  getQueries: Query,
-  setQueries: Dispatch<SetStateAction<Query>>,
-  scrollType: ScrollOptions,
-  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
-  children: ReactNode
+  isLoading: boolean;
+  data: ArticleInterface[] | CommentInterface[];
+  totalCount: number;
+  getQueries: Query;
+  setQueries: Dispatch<SetStateAction<Query>>;
+  scrollType: ScrollOptions;
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>;
+  children: ReactNode;
 }) {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -54,9 +54,7 @@ export function InfiniteScroll({
       {isLoading && scrollType === "infinite" && (
         <span className="loader loader--comment"></span>
       )}
-      {data.length >= totalCount &&
-      !isLoading &&
-      data.length ? (
+      {data.length >= totalCount && !isLoading && data.length ? (
         <p className="scroll-end">That's all of them!</p>
       ) : (
         ""
@@ -65,15 +63,17 @@ export function InfiniteScroll({
   );
 }
 
-export function appendInfiniteScrollData<Type extends CommentInterface | ArticleInterface>(current: Type[], incoming: Type[]): Type[] {
-  if (!current.length) return incoming
-  const key = Object.keys(current[0]).find((key) => key.endsWith('_id'))
-  if (!key) return incoming
+export function appendInfiniteScrollData<
+  Type extends CommentInterface | ArticleInterface,
+>(current: Type[], incoming: Type[]): Type[] {
+  if (!current.length) return incoming;
+  const key = Object.keys(current[0]).find((key) => key.endsWith("_id"));
+  if (!key) return incoming;
   const newItems = incoming.filter((newItem) => {
     const match = current.find((currentItem) => {
-      return currentItem[key as keyof Type] === newItem[key as keyof Type]
+      return currentItem[key as keyof Type] === newItem[key as keyof Type];
     });
     return !match;
-  })
-  return current.concat(newItems)
+  });
+  return current.concat(newItems);
 }

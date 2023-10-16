@@ -1,6 +1,16 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UserContext } from "../../contexts";
-import { UserArticleVoteData, UserCommentVoteData, deleteComment } from "../../api";
+import {
+  UserArticleVoteData,
+  UserCommentVoteData,
+  deleteComment,
+} from "../../api";
 import { ArticlePreview } from "../Feed/ArticlePreview";
 import { Comment, CommentInterface } from "../Article/Comment";
 import { ArticleInterface } from "../Article";
@@ -8,46 +18,49 @@ import { ArticlesState } from "../Feed";
 import { ArticleCommentsState } from "../Article/ArticleComments";
 
 export type GetVotesFunction = {
-  (username: string): Promise<UserArticleVoteData[] | UserCommentVoteData[]>
-}
+  (username: string): Promise<UserArticleVoteData[] | UserCommentVoteData[]>;
+};
 
 export type GetDataFunction = {
-  (id: number): Promise<CommentInterface | ArticleInterface>
-}
+  (id: number): Promise<CommentInterface | ArticleInterface>;
+};
 
 interface UserVotes {
-  [key: number]: number
+  [key: number]: number;
 }
 
 interface DataState {
-  articles?: ArticleInterface[],
-  comments?: CommentInterface[],
-  totalCount: number
+  articles?: ArticleInterface[];
+  comments?: CommentInterface[];
+  totalCount: number;
 }
 
-export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, DataFunction extends GetDataFunction>({
+export function InfiniteScrollVotes<
+  VotesFunction extends GetVotesFunction,
+  DataFunction extends GetDataFunction,
+>({
   getVotesFunction,
   getDataFunction,
   username,
   type,
 }: {
-  getVotesFunction: VotesFunction,
-  getDataFunction: DataFunction,
-  username: string,
-  type: "comments" | "articles"
+  getVotesFunction: VotesFunction;
+  getDataFunction: DataFunction;
+  username: string;
+  type: "comments" | "articles";
 }) {
-  type VoteType = Awaited<ReturnType<VotesFunction>>[0]
-  type DataType = Awaited<ReturnType<DataFunction>>
-  const getKey = type.slice(0, -1) + '_id' as keyof VoteType
+  type VoteType = Awaited<ReturnType<VotesFunction>>[0];
+  type DataType = Awaited<ReturnType<DataFunction>>;
+  const getKey = (type.slice(0, -1) + "_id") as keyof VoteType;
 
   const { user } = useContext(UserContext);
   const [votes, setVotes] = useState<VoteType[]>([]);
-  const [data, setData] = useState<DataState>({totalCount: 0});
+  const [data, setData] = useState<DataState>({ totalCount: 0 });
   const [renderStart, setRenderStart] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [userVotes, setUserVotes] = useState<UserVotes>({});
   const [errorLoadingData, setErrorLoadingData] = useState("");
-  const [firstLoading, setFirstLoading] = useState(true)
+  const [firstLoading, setFirstLoading] = useState(true);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -64,9 +77,12 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
     getVotesFunction(username)
       .then((voteData) => {
         setVotes(voteData);
-        const promises: Promise<DataType>[] = []; 
-        const slicedVoteData: VoteType[] = voteData.slice(renderStart, renderStart + 6)
-        if (!slicedVoteData.length) return Promise.reject()
+        const promises: Promise<DataType>[] = [];
+        const slicedVoteData: VoteType[] = voteData.slice(
+          renderStart,
+          renderStart + 6,
+        );
+        if (!slicedVoteData.length) return Promise.reject();
         for (const vote of slicedVoteData) {
           promises.push(getDataFunction(+vote[getKey]) as Promise<DataType>);
         }
@@ -74,41 +90,47 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
       })
       .then((newData) => {
         setData((oldDataState): DataState => {
-          const currentData = oldDataState.articles || (oldDataState.comments || [])
+          const currentData =
+            oldDataState.articles || oldDataState.comments || [];
           const mergedData = [
             ...currentData,
             ...newData.filter((newItem) => {
               return !currentData.find((currentItem) => {
-                return currentItem[getKey as keyof typeof currentItem] === newItem[getKey as keyof typeof newItem ];
+                return (
+                  currentItem[getKey as keyof typeof currentItem] ===
+                  newItem[getKey as keyof typeof newItem]
+                );
               });
             }),
           ];
-          const output: DataState = {...oldDataState}
-          output.totalCount = mergedData.length
-          if (type === 'articles') {
-            output.articles = mergedData as ArticleInterface[]
-            return output
+          const output: DataState = { ...oldDataState };
+          output.totalCount = mergedData.length;
+          if (type === "articles") {
+            output.articles = mergedData as ArticleInterface[];
+            return output;
           } else {
-            output.comments = mergedData as CommentInterface[]
-            return output
+            output.comments = mergedData as CommentInterface[];
+            return output;
           }
         });
         return getVotesFunction(user.username);
       })
       .then((userVoteData) => {
-        console.log(userVoteData)
+        console.log(userVoteData);
         const newUserVotes: UserVotes = {};
         userVoteData.forEach((vote) => {
-          newUserVotes[vote[getKey as keyof typeof vote] as keyof typeof newUserVotes] = vote.votes;
+          newUserVotes[
+            vote[getKey as keyof typeof vote] as keyof typeof newUserVotes
+          ] = vote.votes;
         });
         setUserVotes(newUserVotes);
         setIsLoading(false);
-        setFirstLoading(false)
+        setFirstLoading(false);
       })
       .catch((err) => {
-        console.log(err)
-        setIsLoading(false)
-        if (!data.totalCount) setErrorLoadingData("Nothing here!")
+        console.log(err);
+        setIsLoading(false);
+        if (!data.totalCount) setErrorLoadingData("Nothing here!");
       });
   }, [renderStart]);
 
@@ -130,14 +152,16 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
   }
 
   if (errorLoadingData) {
-    return <span className={`error error--no-${type}`}>{errorLoadingData}</span>
+    return (
+      <span className={`error error--no-${type}`}>{errorLoadingData}</span>
+    );
   }
 
   if (firstLoading) {
     return <span className="loader"></span>;
   }
 
-  if (data.articles && type === 'articles') {
+  if (data.articles && type === "articles") {
     return (
       <div>
         <ul className="cards cards--liked-articles">
@@ -147,7 +171,9 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
                 <ArticlePreview
                   userVotes={userVotes[article.article_id as keyof UserVotes]}
                   article={article as ArticleInterface}
-                  setArticleData={setData as Dispatch<SetStateAction<ArticlesState>>}
+                  setArticleData={
+                    setData as Dispatch<SetStateAction<ArticlesState>>
+                  }
                 ></ArticlePreview>
               </li>
             );
@@ -159,8 +185,7 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
         )}
       </div>
     );
-  }
-  else if (data.comments && type === 'comments') {
+  } else if (data.comments && type === "comments") {
     return (
       <>
         <ul className="comments comments--starred-comments">
@@ -170,7 +195,9 @@ export function InfiniteScrollVotes<VotesFunction extends GetVotesFunction, Data
                 key={comment.comment_id}
                 comment={comment}
                 removeComment={removeComment}
-                setCommentData={setData as Dispatch<SetStateAction<ArticleCommentsState>>}
+                setCommentData={
+                  setData as Dispatch<SetStateAction<ArticleCommentsState>>
+                }
                 userVotes={userVotes[comment.comment_id]}
                 showArticleLink
               />

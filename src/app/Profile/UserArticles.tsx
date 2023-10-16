@@ -7,7 +7,7 @@ import { InfiniteScroll } from "../Reuse/InfiniteScroll";
 import { ArticlesState } from "../Feed";
 import { Query } from "../../api";
 
-export function UserArticles({ username }: {username: string}) {
+export function UserArticles({ username }: { username: string }) {
   const [articleData, setArticleData] = useState<ArticlesState>({
     totalCount: 0,
     articles: [],
@@ -31,8 +31,8 @@ export function UserArticles({ username }: {username: string}) {
       sortBy: "created_at",
       topic: "",
       order: "desc",
-    })
-  }, [username])
+    });
+  }, [username]);
 
   return (
     <ItemDropDown image="../../../book.png" header="Articles">

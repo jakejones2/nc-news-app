@@ -7,15 +7,15 @@ import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 
 export interface ArticleInterface {
-  article_id: number,
-  title: string,
-  topic: string,
-  author: string,
-  body: string,
-  article_img_url: string,
-  created_at: string,
-  votes: number,
-  comment_count: number
+  article_id: number;
+  title: string;
+  topic: string;
+  author: string;
+  body: string;
+  article_img_url: string;
+  created_at: string;
+  votes: number;
+  comment_count: number;
 }
 
 export function Article() {
@@ -30,7 +30,7 @@ export function Article() {
     article_img_url: "",
     created_at: "",
     votes: 0,
-    comment_count: 0
+    comment_count: 0,
   });
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
   const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
@@ -38,7 +38,7 @@ export function Article() {
   const [redirect, setRedirect] = useState(false);
   const [showComments, setShowComments] = useSearchParams();
   const commentsQuery = new URLSearchParams(window.location.search).get(
-    "comments"
+    "comments",
   );
 
   useEffect(() => {
@@ -137,7 +137,9 @@ export function Article() {
           ></div>
         </button>
       </div>
-      {commentsQuery === "show" && <ArticleComments articleId={Number(id || 1)} />}
+      {commentsQuery === "show" && (
+        <ArticleComments articleId={Number(id || 1)} />
+      )}
     </article>
   );
 }

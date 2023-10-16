@@ -8,12 +8,12 @@ import { Query, validOrders, validSorts } from "../api";
 import { Article, ArticleInterface } from "./Article";
 
 export interface ArticlesState {
-  totalCount: number,
-  articles: ArticleInterface[]
+  totalCount: number;
+  articles: ArticleInterface[];
 }
 
 export interface UrlParams {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export function Feed() {
@@ -22,9 +22,9 @@ export function Feed() {
     limit: +(url.get("limit") || 12),
     page: +(url.get("page") || 1),
     author: url.get("author") || "",
-    sortBy: url.get("sort_by") as validSorts || "created_at",
+    sortBy: (url.get("sort_by") as validSorts) || "created_at",
     topic: url.get("topic") || "",
-    order: url.get("order") as validOrders || "desc",
+    order: (url.get("order") as validOrders) || "desc",
   };
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleData, setArticleData] = useState<ArticlesState>({
@@ -34,14 +34,14 @@ export function Feed() {
   const [queries, setQueries] = useState<Query>(urlQueries);
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const [scrollType, setScrollType] = useState<ScrollOptions>(
-    +(queries.page || 1) > 1 ? "paginated" : ""
+    +(queries.page || 1) > 1 ? "paginated" : "",
   );
 
   useEffect(() => {
-    const params: UrlParams = {}
+    const params: UrlParams = {};
     for (const param in queries) {
-      const value = queries[param as keyof Query]
-      if (value) params[param] = value.toString()
+      const value = queries[param as keyof Query];
+      if (value) params[param] = value.toString();
     }
     setSearchParams(params);
   }, [queries]);

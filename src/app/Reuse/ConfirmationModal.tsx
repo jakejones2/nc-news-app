@@ -6,10 +6,10 @@ export function ConfirmationModal({
   confirmFunction,
   args,
 }: {
-  message: string,
-  setShowState: Dispatch<SetStateAction<boolean>>,
-  confirmFunction: Function,
-  args: any
+  message: string;
+  setShowState: Dispatch<SetStateAction<boolean>>;
+  confirmFunction: Function;
+  args: any;
 }) {
   function handleYes() {
     confirmFunction(...args);

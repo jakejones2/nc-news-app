@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UserContext } from "../../contexts";
 import { Link } from "react-router-dom";
 import { Star } from "../Reuse/Star";
@@ -14,10 +20,10 @@ export function ArticlePreview({
   setArticleData,
   setQueries,
 }: {
-  article: ArticleInterface,
-  userVotes: number,
-  setArticleData: Dispatch<SetStateAction<ArticlesState>>,
-  setQueries?: Dispatch<SetStateAction<Query>>
+  article: ArticleInterface;
+  userVotes: number;
+  setArticleData: Dispatch<SetStateAction<ArticlesState>>;
+  setQueries?: Dispatch<SetStateAction<Query>>;
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
