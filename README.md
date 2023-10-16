@@ -32,13 +32,12 @@ In the end I decided on a hybrid **pagination** and **infinite scrolling** syste
 
 ### Code
 
-- Apply a CSS naming convention
+- If on profile page of user with no starred/authored articles or comments, display a custom message rather than an infinite spinner or generic error
 - Improve SEO
 - Sort order of h tags for better accessibility
 - Manage 404s better
 - Improve error handling on the Profile page
 - Built a test suite
 - Research custom hooks and break up some larger components
-- Get better at React!
-- The modals look very old fashioned. Make them smaller, and appearing by the click. Maybe no need to dim the page?
+- The modals look old fashioned. Make them smaller, and appearing by the click. Maybe no need to dim the page?
 - check usage of 'fit-content' vs 'auto' in CSS.
