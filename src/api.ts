@@ -1,13 +1,10 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { SignUpState } from "./app/SignUp";
 import { ArticlesState } from "./app/Feed";
-import { Article } from "./app/Article";
+import { ArticleInterface } from "./app/Article";
 import { CommentInterface } from "./app/Article/Comment";
 import { ArticleCommentsState } from "./app/Article/ArticleComments";
-
-const api = axios.create({
-  baseURL: "https://articles-api-zepx.onrender.com/",
-});
+import { NewArticleContent } from "./app/Post";
 
 export type validSorts = "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes"
 export type validOrders = "asc" | "desc"
@@ -53,6 +50,24 @@ export interface TopicInterface {
   description: string
 }
 
+export interface NewUser {
+  username: string,
+  name: string,
+  avatar_url: string
+}
+
+export interface PostAuth {
+  username: string,
+  password: string
+}
+
+
+// api calls
+
+const api = axios.create({
+  baseURL: "https://articles-api-zepx.onrender.com/",
+});
+
 export function getArticles({
   limit = 12,
   page = 1,
@@ -69,7 +84,7 @@ export function getArticles({
   });
 }
 
-export function getArticle(id: number): Promise<Article> {
+export function getArticle(id: number): Promise<ArticleInterface> {
   return api.get(`api/articles/${id}`).then((response) => {
     return response.data.article;
   });
@@ -78,7 +93,7 @@ export function getArticle(id: number): Promise<Article> {
 export function getCommentsByArticle(
   id: number,
   { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
-) {
+): Promise<ArticleCommentsState> {
   return api
     .get(
       `api/articles/${id}/comments?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`
@@ -88,27 +103,27 @@ export function getCommentsByArticle(
     });
 }
 
-export function patchArticle(id: number, num: number, options: axiosOptions) {
+export function patchArticle(id: number, num: number, options: axiosOptions): Promise<ArticleInterface> {
   return api
-    .patch(`api/articles/${id}`, { inc_votes: num }, options)
+    .patch(`api/articles/${id}`, { inc_votes: num }, options as AxiosRequestConfig)
     .then((response) => {
-      return response.data;
+      return response.data.article;
     });
 }
 
-export function postComment(id: number, body, options: axiosOptions) {
+export function postComment(id: number, body: CommentInterface, options: axiosOptions): Promise<CommentInterface> {
   return api
-    .post(`api/articles/${id}/comments`, body, options)
+    .post(`api/articles/${id}/comments`, body, options as AxiosRequestConfig)
     .then((response) => {
-      return response.data;
+      return response.data.comment;
     });
 }
 
-export function patchComment(id: number, num: number, options: axiosOptions) {
+export function patchComment(id: number, num: number, options: axiosOptions): Promise<CommentInterface> {
   return api
-    .patch(`api/comments/${id}`, { inc_votes: num }, options)
+    .patch(`api/comments/${id}`, { inc_votes: num }, options as AxiosRequestConfig)
     .then((response) => {
-      return response.data;
+      return response.data.comment;
     });
 }
 
@@ -119,26 +134,26 @@ export function getTopics(): Promise<TopicInterface[]> {
 }
 
 export function deleteComment(id: number, options: axiosOptions): Promise<void> {
-  return api.delete(`api/comments/${id}`, options);
+  return api.delete(`api/comments/${id}`, options as AxiosRequestConfig);
 }
 
-export function deleteArticle(id: number, options: axiosOptions) {
-  return api.delete(`api/articles/${id}`, options);
+export function deleteArticle(id: number, options: axiosOptions): Promise<void> {
+  return api.delete(`api/articles/${id}`, options as AxiosRequestConfig);
 }
 
-export function postUser(body: SignUpState) {
+export function postUser(body: SignUpState): Promise<NewUser> {
   return api.post(`api/users`, body).then((response) => {
     return response.data;
   });
 }
 
-export function postAuth(body) {
+export function postAuth(body: PostAuth): Promise<string> {
   return api.post(`auth`, body).then((response) => {
     return response.data.accessToken;
   });
 }
 
-export function getLogout() {
+export function getLogout(): Promise<void> {
   return api.get(`logout`);
 }
 
@@ -160,11 +175,11 @@ export function getUserCommentVotes(username: string): Promise<UserCommentVoteDa
   });
 }
 
-export function postArticle(body, options: axiosOptions) {
-  return api.post(`api/articles`, body, options);
+export function postArticle(body: NewArticleContent, options: axiosOptions): Promise<void> {
+  return api.post(`api/articles`, body, options as AxiosRequestConfig);
 }
 
-export function postTopic(topic) {
+export function postTopic(topic: TopicInterface): Promise<void> {
   return api.post("api/topics", topic);
 }
 
@@ -187,9 +202,9 @@ export function getCommentsByUser(
     });
 }
 
-export function getTopic(topicTarget: string) {
+export function getTopic(topicTarget: string): Promise<string> {
   return api.get("api/topics").then((response) => {
-    return response.data.topics.find((topic) => {
+    return response.data.topics.find((topic: TopicInterface) => {
       return topic.slug === topicTarget;
     })?.description;
   });

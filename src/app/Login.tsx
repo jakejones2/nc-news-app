@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postAuth } from "../api";
 import { UserContext } from "../contexts";
@@ -12,14 +12,14 @@ export function Login() {
   const [errorLoggingIn, setErrorLoggingIn] = useState(false);
   const navigate = useNavigate();
 
-  function handleUsername(event) {
+  function handleUsername(event: ChangeEvent<HTMLInputElement>) {
     setUsername(event.target.value);
   }
-  function handlePassword(event) {
+  function handlePassword(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
   }
 
-  function login(event) {
+  function login(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorLoggingIn(false);
     setLoggingIn(true);

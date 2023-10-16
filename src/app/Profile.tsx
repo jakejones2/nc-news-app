@@ -6,7 +6,7 @@ import { StarredArticles } from "./Profile/StarredArticles";
 import { StarredComments } from "./Profile/StarredComments";
 
 export function Profile() {
-  const { username } = useParams();
+  const { username = 'guest' } = useParams();
 
   return (
     <>

@@ -1,16 +1,24 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../contexts";
 import { getTopics, postArticle, postTopic } from "../api";
 import { logoutUser } from "../contexts";
 
+export interface NewArticleContent {
+  title: string,
+  topic: string,
+  body: string,
+  article_img_url?: string,
+  author?: string,
+}
+
 export function Post() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [errorPostingForm, setErrorPostingForm] = useState("");
   const [postingForm, setPostingForm] = useState(false);
   const [formReady, setFormReady] = useState(false);
   const [redirectTo, setRedirectTo] = useState("");
-  const [postForm, setPostForm] = useState({
+  const [postForm, setPostForm] = useState<NewArticleContent>({
     title: "",
     topic: "",
     body: "",
@@ -25,16 +33,16 @@ export function Post() {
     }
   }
 
-  function handleInput(event, input) {
+  function handleInput(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, input: string) {
     setPostForm((form) => {
       const newForm = { ...form };
-      newForm[input] = event.target.value;
+      newForm[input as keyof typeof newForm] = event.target.value;
       return newForm;
     });
     checkIfFormReady();
   }
 
-  function handleUrl(event) {
+  function handleUrl(event: ChangeEvent<HTMLInputElement>) {
     setPostForm((form) => {
       const newForm = { ...form };
       newForm.article_img_url = event.target.value;
@@ -46,13 +54,13 @@ export function Post() {
     checkIfFormReady();
   }
 
-  function handleTopicDescription(event) {
+  function handleTopicDescription(event: ChangeEvent<HTMLInputElement>) {
     setTopicDescription(event.target.value);
   }
 
-  function handlePost(event) {
+  function handlePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setErrorPostingForm(false);
+    setErrorPostingForm("");
     setPostingForm(true);
     getTopics()
       .then((topics) => {

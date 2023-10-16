@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { getArticles, postUser } from "../api";
 import { Navigate } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export function SignUp() {
     revealSubmit();
   }, [signUpData, password2Incorrect, passwordIncorrect, usernameTaken]);
 
-  function handleUsername(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleUsername(event: ChangeEvent<HTMLInputElement>): void {
     setUsernameTaken(false);
     setSubmitDeactivated(true);
     setSignUpData((data) => {
@@ -40,7 +40,7 @@ export function SignUp() {
     });
   }
 
-  function validateUsername(event: React.ChangeEvent<HTMLInputElement>): void {
+  function validateUsername(event: ChangeEvent<HTMLInputElement>): void {
     getArticles({ author: event.target.value })
       .then(() => {
         setUsernameTaken(true);
@@ -50,7 +50,7 @@ export function SignUp() {
       });
   }
 
-  function handleName(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleName(event: ChangeEvent<HTMLInputElement>): void {
     setSignUpData((data) => {
       const newData = { ...data };
       newData.name = event.target.value;
@@ -58,7 +58,7 @@ export function SignUp() {
     });
   }
 
-  function handlePassword(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handlePassword(event: ChangeEvent<HTMLInputElement>): void {
     const regex =
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
     if (!regex.test(event.target.value)) {
@@ -73,7 +73,7 @@ export function SignUp() {
     });
   }
 
-  function handlePassword2(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handlePassword2(event: ChangeEvent<HTMLInputElement>): void {
     if (event.target.value !== signUpData.password) {
       setPassword2Incorrect(true);
     } else {
@@ -86,7 +86,7 @@ export function SignUp() {
     });
   }
 
-  function handleAvatarUrl(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleAvatarUrl(event: ChangeEvent<HTMLInputElement>): void {
     setSignUpData((data) => {
       const newData = { ...data };
       newData.avatar_url = event.target.value;
@@ -108,7 +108,7 @@ export function SignUp() {
     } else setSubmitDeactivated(true);
   }
 
-  function signUp(event: React.ChangeEvent<HTMLFormElement>): void {
+  function signUp(event: ChangeEvent<HTMLFormElement>): void {
     setSigningIn(true);
     event.preventDefault();
     setSubmitDeactivated(true);

@@ -5,11 +5,11 @@ import { ArticlePreviews } from "./Feed/ArticlePreviews";
 import { FilterOptions } from "./Reuse/FilterOptions";
 import { InfiniteScroll } from "./Reuse/InfiniteScroll";
 import { Query, validOrders, validSorts } from "../api";
-import { Article } from "./Article";
+import { Article, ArticleInterface } from "./Article";
 
 export interface ArticlesState {
   totalCount: number,
-  articles: Article[]
+  articles: ArticleInterface[]
 }
 
 export interface UrlParams {
