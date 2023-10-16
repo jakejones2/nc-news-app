@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <UserProvider>
     <BrowserRouter>
       <React.StrictMode>
