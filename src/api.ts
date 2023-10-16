@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SignUpState } from "./app/SignUp";
+import { ArticlesState } from "./app/Feed";
 
 const api = axios.create({
   baseURL: "https://articles-api-zepx.onrender.com/",
@@ -7,21 +8,37 @@ const api = axios.create({
 
 // this query type needs to be set in state. See SignUp.tsx This actually needs renaming to SignUp!
 
-export type Query = {
+export type validSorts = "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes"
+export type validOrders = "asc" | "desc"
+
+interface headers {
+  Authorization?: string
+}
+
+interface axiosOptions {
+  headers?: headers
+}
+
+export interface Query {
   limit?: number,
   page?: number,
-  sortBy?: "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes",
-  order?: "asc" | "desc",
+  sortBy?: validSorts,
+  order?: validOrders,
   author?: string,
   topic?: string
 }
 
-type headers = {
-  Authorization?: string
+export interface VoteData {
+  username: string,
+  votes: number
 }
 
-type axiosOptions = {
-  headers?: headers
+export interface UserArticleVoteData extends VoteData{
+  article_id: number
+}
+
+export interface UserCommentVoteData extends VoteData {
+  comment_id: number,
 }
 
 export function getArticles({
@@ -31,7 +48,7 @@ export function getArticles({
   sortBy = "created_at",
   order = "asc",
   topic,
-}: Query) {
+}: Query): Promise<ArticlesState> {
   let url = `api/articles?limit=${limit}&p=${page}&sort_by=${sortBy}&order=${order}`;
   if (author) url += `&author=${author}`;
   if (topic) url += `&topic=${topic}`;
@@ -113,19 +130,13 @@ export function getLogout() {
   return api.get(`logout`);
 }
 
-export function getUserArticleVotes(username: string) {
+export function getUserArticleVotes(username: string): Promise<UserArticleVoteData[]> {
   if (username === "guest") {
-    return [];
+    return Promise.resolve([]);
   }
   return api.get(`api/users/${username}/votes/articles`).then((response) => {
     return response.data.articleVotes;
   });
-}
-
-export interface UserCommentVoteData {
-  username: string,
-  comment_id: number,
-  votes: number
 }
 
 export function getUserCommentVotes(username: string): Promise<UserCommentVoteData[]> {

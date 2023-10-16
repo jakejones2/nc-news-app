@@ -1,22 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { Link } from "react-router-dom";
 import { Star } from "../Reuse/Star";
-import { deleteArticle, patchArticle } from "../../api";
+import { Query, deleteArticle, patchArticle } from "../../api";
 import { Topic } from "../Article/Topic";
 import { ConfirmationModal } from "../Reuse/ConfirmationModal";
+import { ArticlesState } from "../Feed";
+import { Article } from "../Article";
 
 export function ArticlePreview({
   article,
   userVotes,
-  setArticles,
+  setArticleData,
   setQueries,
+}: {
+  article: Article,
+  userVotes: number,
+  setArticleData: Dispatch<SetStateAction<ArticlesState>>,
+  setQueries: Dispatch<SetStateAction<Query>>
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   function handleArticleDelete() {
-    setArticles(({ articles, totalCount }) => {
+    setArticleData(({ articles, totalCount }) => {
       const filteredArticles = articles.filter((item) => {
         return item.article_id !== article.article_id;
       });

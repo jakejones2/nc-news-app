@@ -7,10 +7,12 @@ import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 
 export interface Article {
+  article_id: number,
   title: string,
   topic: string,
   author: string,
   body: string,
+  article_img_url: string,
   created_at: string,
   votes: number,
   comment_count: number
@@ -19,7 +21,17 @@ export interface Article {
 export function Article() {
   const { id } = useParams();
   const { user } = useContext(UserContext);
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState<Article>({
+    article_id: 0,
+    title: "",
+    topic: "",
+    author: "",
+    body: "",
+    article_img_url: "",
+    created_at: "",
+    votes: 0,
+    comment_count: 0
+  });
   const [isLoadingArticle, setIsLoadingArticle] = useState(false);
   const [errorLoadingArticle, setErrorLoadingArticle] = useState(false);
   const [starred, setStarred] = useState(false);
@@ -30,18 +42,16 @@ export function Article() {
   );
 
   useEffect(() => {
-    let incomingArticle;
     setIsLoadingArticle(true);
     setErrorLoadingArticle(false);
-    getArticle(id)
-      .then((article) => {
-        incomingArticle = article;
-        setArticle(article);
+    getArticle(Number(id || 1))
+      .then((newArticle) => {
+        setArticle(() => newArticle);
         return getUserArticleVotes(user.username);
       })
       .then((articleVotes) => {
         const currentVote = articleVotes.find((vote) => {
-          return vote.article_id === incomingArticle.article_id;
+          return vote.article_id === article.article_id;
         });
         if (currentVote?.votes) setStarred(true);
         setIsLoadingArticle(false);
@@ -127,7 +137,7 @@ export function Article() {
           ></div>
         </button>
       </div>
-      {commentsQuery === "show" && <ArticleComments articleId={id} />}
+      {commentsQuery === "show" && <ArticleComments articleId={Number(id || 1)} />}
     </article>
   );
 }

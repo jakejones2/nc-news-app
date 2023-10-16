@@ -1,14 +1,20 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext, logoutUser } from "../../contexts";
-import { getArticles, getTopic, getUserArticleVotes } from "../../api";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts";
+import { Query, getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 import { Topic } from "../Article/Topic";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 import { Article } from "../Article";
+import { ArticlesState } from "../Feed";
+import { ScrollOptions } from "../Reuse/Filters";
 
 export interface Articles {
   totalCount: number,
   articles: Article[]
+}
+
+export interface UserArticleVotes {
+  [article_id: number]: number
 }
 
 export function ArticlePreviews({
@@ -20,15 +26,24 @@ export function ArticlePreviews({
   setQueries,
   scrollType,
   setScrollType,
+}: {
+  articleData: ArticlesState,
+  setArticleData: Dispatch<SetStateAction<ArticlesState>>,
+  setIsLoadingArticles: Dispatch<SetStateAction<boolean>>,
+  isLoadingArticles: boolean,
+  queries: Query,
+  setQueries: Dispatch<SetStateAction<Query>>,
+  scrollType: ScrollOptions,
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>
 }) {
   const { user } = useContext(UserContext);
   const [errorLoadingArticles, setErrorLoadingArticles] = useState("");
   const [topicDescription, setTopicDescription] = useState("");
-  const [articleVotes, setArticleVotes] = useState({});
+  const [articleVotes, setArticleVotes] = useState<UserArticleVotes>({});
 
   useEffect(() => {
     setIsLoadingArticles(true);
-    setErrorLoadingArticles(false);
+    setErrorLoadingArticles("");
     setTopicDescription("");
     if (queries.topic) {
       getTopic(queries.topic).then((description) => {
@@ -50,7 +65,7 @@ export function ArticlePreviews({
         return getUserArticleVotes(user.username);
       })
       .then((articleVotes) => {
-        const votes = {};
+        const votes: UserArticleVotes = {};
         articleVotes.forEach((vote) => {
           votes[vote.article_id] = vote.votes;
         });
@@ -82,12 +97,15 @@ export function ArticlePreviews({
     return <span className="loader"></span>;
   }
 
+  const page = queries.page || 1
+  const limit = queries.limit || 12
+
   return (
     <>
       {topicDescription && (
         <div className="community">
           <span className="community__header">
-            Welcome to the <Topic topic={queries.topic} type="inline" />{" "}
+            Welcome to the <Topic topic={queries.topic || "all"} type="inline"/>{" "}
             community!
           </span>
           <p className="community__description">{topicDescription}</p>
@@ -95,11 +113,11 @@ export function ArticlePreviews({
       )}
       <p className="total-articles">
         Showing{" "}
-        {scrollType === "infinite" ? 1 : 1 + (queries.page - 1) * queries.limit}
+        {scrollType === "infinite" ? 1 : 1 + (page - 1) * limit}
         -
-        {articleData.totalCount < queries.page * queries.limit
+        {articleData.totalCount < page * limit
           ? articleData.totalCount
-          : queries.page * queries.limit}{" "}
+          : page * limit}{" "}
         of {articleData.totalCount}
       </p>
       <ul className="cards">
@@ -107,9 +125,8 @@ export function ArticlePreviews({
           return (
             <li className="article-preview" key={article.article_id}>
               <ArticlePreview
-                userVotes={articleVotes[article.article_id]}
+                userVotes={articleVotes[article.article_id as keyof UserArticleVotes]}
                 article={article}
-                articleData={articleData}
                 setArticleData={setArticleData}
                 setQueries={setQueries}
               ></ArticlePreview>

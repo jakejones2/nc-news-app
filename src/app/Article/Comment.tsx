@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts";
 import { patchComment } from "../../api";
@@ -23,7 +23,7 @@ export function Comment({
   userVotes,
   showArticleLink,
 }: {
-  setCommentData: React.Dispatch<React.SetStateAction<ArticleCommentsState>>,
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>,
   comment: CommentInterface,
   removeComment: RemoveCommentFunction,
   userVotes: number,

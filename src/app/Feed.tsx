@@ -1,33 +1,49 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Filters } from "./Reuse/Filters";
+import { Filters, ScrollOptions } from "./Reuse/Filters";
 import { ArticlePreviews } from "./Feed/ArticlePreviews";
 import { FilterOptions } from "./Reuse/FilterOptions";
 import { InfiniteScroll } from "./Reuse/InfiniteScroll";
+import { Query, validOrders, validSorts } from "../api";
+import { Article } from "./Article";
+
+export interface ArticlesState {
+  totalCount: number,
+  articles: Article[]
+}
+
+export interface UrlParams {
+  [key: string]: string
+}
 
 export function Feed() {
   const url = new URLSearchParams(window.location.search);
-  const urlQueries = {
-    limit: url.get("limit") || 12,
-    page: url.get("page") || 1,
+  const urlQueries: Query = {
+    limit: +(url.get("limit") || 12),
+    page: +(url.get("page") || 1),
     author: url.get("author") || "",
-    sortBy: url.get("sort_by") || "created_at",
-    topic: url.get("topic") || "",
-    order: url.get("order") || "desc",
+    sortBy: url.get("sort_by") as validSorts || "created_at",
+    topic: url.get("topic") || "all",
+    order: url.get("order") as validOrders || "desc",
   };
   const [searchParams, setSearchParams] = useSearchParams();
-  const [articleData, setArticleData] = useState({
+  const [articleData, setArticleData] = useState<ArticlesState>({
     totalCount: 0,
     articles: [],
   });
-  const [queries, setQueries] = useState(urlQueries);
+  const [queries, setQueries] = useState<Query>(urlQueries);
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
-  const [scrollType, setScrollType] = useState(
-    queries.page > 1 ? "paginated" : ""
+  const [scrollType, setScrollType] = useState<ScrollOptions>(
+    +(queries.page || 1) > 1 ? "paginated" : ""
   );
 
   useEffect(() => {
-    setSearchParams(queries);
+    const params: UrlParams = {}
+    for (const param in queries) {
+      const value = queries[param as keyof Query]
+      if (value) params[param] = value.toString()
+    }
+    setSearchParams(params);
   }, [queries]);
 
   return (
