@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FilterOptions } from "./FilterOptions";
 import { getTopics } from "../../api";
 
-export type ScrollTypeType = "" | "infinite" | "paginated"
+export type ScrollOptions = "" | "infinite" | "paginated"
 
 export function Filters({
   queries,

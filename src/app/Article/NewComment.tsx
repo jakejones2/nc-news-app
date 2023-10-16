@@ -1,39 +1,47 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useContext, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
 import { postComment } from "../../api";
+import { ArticleCommentsState } from "./ArticleComments";
 
-export function NewComment({ setCommentData, articleId }) {
+export function NewComment({ setCommentData, articleId }: {
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>, 
+  articleId: number
+}) {
   const [commentBody, setCommentBody] = useState("");
   const { setUser, user } = useContext(UserContext);
   const [errorPostingComment, setErrorPostingComments] = useState(false);
 
-  function handleCommentBody(event) {
+  function handleCommentBody(event: ChangeEvent<HTMLTextAreaElement>) {
     setCommentBody(event.target.value);
   }
 
   function removeLastComment() {
-    setCommentData(({ comments }) => {
+    setCommentData((commentData) => {
       return {
-        comments: comments.filter((comment) => {
-          return comment.comment_id < comments.length - 1;
+        totalCount: commentData.totalCount - 1,
+        comments: commentData.comments.filter((comment) => {
+          return comment.comment_id < commentData.totalCount - 1;
         }),
       };
     });
   }
 
-  function handleCommentForm(event) {
+  function handleCommentForm(event: FormEvent<HTMLFormElement>) {
     setErrorPostingComments(false);
     event.preventDefault();
-    setCommentData(({ comments }) => {
+    setCommentData((commentData) => {
       const newComment = {
-        comment_id: comments.length + 1,
+        comment_id: commentData.totalCount + 1,
         body: commentBody,
         article_id: articleId,
         author: user.username,
         votes: 0,
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       };
-      return { comments: [newComment, ...comments] };
+      return { 
+        totalCount: commentData.totalCount + 1, 
+        comments: [newComment, ...commentData.comments] 
+      };
     });
     const newComment = {
       body: commentBody,

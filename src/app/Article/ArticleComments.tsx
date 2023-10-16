@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Comments } from "./Comments";
 import { NewComment } from "./NewComment";
 import { Query, getCommentsByArticle } from "../../api";
-import { Filters, ScrollTypeType } from "../Reuse/Filters";
+import { Filters, ScrollOptions } from "../Reuse/Filters";
 import { FilterOptions } from "../Reuse/FilterOptions";
 import { InfiniteScroll } from "../Reuse/InfiniteScroll";
 import { CommentInterface } from "./Comment";
@@ -27,7 +27,8 @@ export function ArticleComments({articleId}: {articleId: number}) {
     order: "desc",
   });
   const [isLoadingComments, setIsLoadingComments] = useState(false);
-  const [scrollType, setScrollType] = useState<ScrollTypeType>("");
+  const [scrollType, setScrollType] = useState<ScrollOptions>("");
+  
   return (
     <div className="article-comments">
       {user?.username !== "guest" ? (

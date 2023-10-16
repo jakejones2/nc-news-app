@@ -6,9 +6,11 @@ export interface UserState {
   token: string
 }
 
+type SetUserType = React.Dispatch<React.SetStateAction<UserState>> | ((state: UserState) => {})
+
 export interface UserContextInterface {
   user: UserState,
-  setUser: React.Dispatch<React.SetStateAction<UserState>> | ((state: UserState) => {})
+  setUser: SetUserType
 }
 
 const defaultUser = {
@@ -32,7 +34,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode}) => {
   );
 };
 
-export function logoutUser(setUser: React.Dispatch<React.SetStateAction<UserState>>) {
+export function logoutUser(setUser: SetUserType) {
   setUser({ username: "guest", token: "" });
   Cookies.remove("username");
   Cookies.remove("jwt");

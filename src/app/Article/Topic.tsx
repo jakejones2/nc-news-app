@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Query } from "../../api";
 
-export function Topic({ topic = "abc", type, setQueries }) {
+export function Topic({ topic = "abc", type, setQueries }: {
+  topic: string,
+  type: string,
+  setQueries: Dispatch<SetStateAction<Query>>
+}) {
   const [rgbColours, setRgbColours] = useState([0, 0, 0]);
 
   useEffect(() => {

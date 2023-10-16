@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts";
 import { Query, deleteComment, getUserCommentVotes } from "../../api";
 import { Comment, CommentInterface } from "./Comment";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
 import { ArticleCommentsState } from "./ArticleComments";
-import { ScrollTypeType } from "../Reuse/Filters";
+import { ScrollOptions } from "../Reuse/Filters";
 
 export type GetCommentsFunction = {
   (key: number, query: Query): Promise<ArticleCommentsState>
@@ -31,14 +31,14 @@ export function Comments({
   showArticleLinks
 }: {
   commentData: ArticleCommentsState,
-  setCommentData: React.Dispatch<React.SetStateAction<ArticleCommentsState>>,
+  setCommentData: Dispatch<SetStateAction<ArticleCommentsState>>,
   isLoadingComments: boolean,
-  setIsLoadingComments: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsLoadingComments: Dispatch<SetStateAction<boolean>>,
   getFunction: GetCommentsFunction,
   getKey: number,
   getQueries: Query,
-  scrollType: ScrollTypeType,
-  setScrollType: React.Dispatch<React.SetStateAction<ScrollTypeType>>,
+  scrollType: ScrollOptions,
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
   showArticleLinks: boolean,
 }) {
   const {user} = useContext(UserContext);
