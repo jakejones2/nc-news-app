@@ -1,16 +1,29 @@
-import { useEffect } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import { CommentInterface } from "../Article/Comment";
 import { ArticleInterface } from "../Article";
+import { ScrollOptions } from "./Filters";
+import { Query } from "../../api";
+import { ArticlesState } from "../Feed";
+import { ArticleCommentsState } from "../Article/ArticleComments";
 
 export function InfiniteScroll({
   isLoading,
   data,
-  dataKey,
+  totalCount,
   getQueries,
   setQueries,
   scrollType,
   setScrollType,
   children,
+}: {
+  isLoading: boolean,
+  data: ArticleInterface[] | CommentInterface[]
+  totalCount: number,
+  getQueries: Query,
+  setQueries: Dispatch<SetStateAction<Query>>,
+  scrollType: ScrollOptions,
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
+  children: ReactNode
 }) {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -23,7 +36,7 @@ export function InfiniteScroll({
 
   function handleScroll() {
     if (isLoading || scrollType === "paginated") return;
-    if (data[dataKey].length === data.totalCount) return;
+    if (data.length === totalCount) return;
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
@@ -32,7 +45,7 @@ export function InfiniteScroll({
       setQueries((current) => {
         const newQueries = { ...current };
         newQueries.page =
-          Math.floor(data[dataKey].length / getQueries.limit) + 1;
+          Math.floor(data.length / (getQueries.limit || 12)) + 1;
         return newQueries;
       });
     }
@@ -43,9 +56,9 @@ export function InfiniteScroll({
       {isLoading && scrollType === "infinite" && (
         <span className="loader loader--comment"></span>
       )}
-      {data[dataKey].length >= data.totalCount &&
+      {data.length >= totalCount &&
       !isLoading &&
-      data[dataKey].length ? (
+      data.length ? (
         <p className="scroll-end">That's all of them!</p>
       ) : (
         ""
@@ -54,7 +67,6 @@ export function InfiniteScroll({
   );
 }
 
-// cannot type this function... 
 export function appendInfiniteScrollData<Type extends CommentInterface | ArticleInterface>(current: Type[], incoming: Type[]): Type[] {
   if (!current.length) return incoming
   const key = Object.keys(current[0]).find((key) => key.endsWith('_id'))

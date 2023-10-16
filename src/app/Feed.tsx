@@ -65,8 +65,8 @@ export function Feed() {
       </Filters>
       <InfiniteScroll
         isLoading={isLoadingArticles}
-        data={articleData}
-        dataKey={"articles"}
+        data={articleData.articles}
+        totalCount={articleData.totalCount}
         getQueries={queries}
         setQueries={setQueries}
         scrollType={scrollType}

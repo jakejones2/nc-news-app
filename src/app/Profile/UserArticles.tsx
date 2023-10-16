@@ -41,13 +41,13 @@ export function UserArticles({ username }: {username: string}) {
         />
       </Filters>
       <InfiniteScroll
-        data={articleData}
+        data={articleData.articles}
+        totalCount={articleData.totalCount}
         isLoading={isLoadingArticles}
         getQueries={queries}
         setQueries={setQueries}
         scrollType={scrollType}
         setScrollType={setScrollType}
-        dataKey={"articles"}
       >
         <ArticlePreviews
           articleData={articleData}
