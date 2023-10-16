@@ -7,7 +7,7 @@ import { ArticleCommentsState } from "./ArticleComments";
 import { ScrollOptions } from "../Reuse/Filters";
 
 export type GetCommentsFunction = {
-  (key: number, query: Query): Promise<ArticleCommentsState>
+  (key: number | string, query: Query): Promise<ArticleCommentsState>
 }
 
 export type RemoveCommentFunction = {
@@ -35,7 +35,7 @@ export function Comments({
   isLoadingComments: boolean,
   setIsLoadingComments: Dispatch<SetStateAction<boolean>>,
   getFunction: GetCommentsFunction,
-  getKey: number,
+  getKey: number | string,
   getQueries: Query,
   scrollType: ScrollOptions,
   setScrollType: Dispatch<SetStateAction<ScrollOptions>>,

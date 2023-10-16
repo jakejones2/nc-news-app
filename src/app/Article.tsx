@@ -6,7 +6,7 @@ import { Star } from "./Reuse/Star";
 import { ArticleComments } from "./Article/ArticleComments";
 import { Topic } from "./Article/Topic";
 
-export interface Article {
+export interface ArticleInterface {
   article_id: number,
   title: string,
   topic: string,
@@ -21,7 +21,7 @@ export interface Article {
 export function Article() {
   const { id } = useParams();
   const { user } = useContext(UserContext);
-  const [article, setArticle] = useState<Article>({
+  const [article, setArticle] = useState<ArticleInterface>({
     article_id: 0,
     title: "",
     topic: "",

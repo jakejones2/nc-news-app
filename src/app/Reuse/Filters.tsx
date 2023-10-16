@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { FilterOptions } from "./FilterOptions";
-import { getTopics } from "../../api";
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { Query } from "../../api";
 
 export type ScrollOptions = "" | "infinite" | "paginated"
 
@@ -13,17 +12,27 @@ export function Filters({
   scrollType,
   setScrollType,
   children,
+}: {
+  queries: Query,
+  setQueries: Dispatch<SetStateAction<Query>>,
+  totalCount: number,
+  type: string,
+  isLoading: boolean,
+  scrollType: ScrollOptions,
+  setScrollType: Dispatch<SetStateAction<ScrollOptions>>,
+  children: ReactNode
 }) {
-  const totalPages = Math.ceil(totalCount / queries.limit);
+  const page = queries.page || 1
+  const totalPages = Math.ceil(totalCount / (queries.limit || 12));
   const [isChoosingFilters, setIsChoosingFilters] = useState(false);
   const [showPagination, setShowPagination] = useState(true);
   const [latestQuery, setLatestQuery] = useState(queries);
 
-  function changePage(num) {
+  function changePage(num: number) {
     setScrollType("paginated");
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
-      newQueries.page = +newQueries.page + num;
+      newQueries.page = +(newQueries.page || 1) + num;
       if (newQueries.page === 1) {
         setScrollType("");
       }
@@ -67,9 +76,9 @@ export function Filters({
           ) : (
             <>
               <p className="filter__page-num">
-                Page {queries.page} of {totalPages}
+                Page {page} of {totalPages}
               </p>
-              {showPagination && queries.page > 1 && (
+              {showPagination && page > 1 && (
                 <button
                   className="filter__button btn btn--page"
                   onClick={() => changePage(-1)}
@@ -77,7 +86,7 @@ export function Filters({
                   previous
                 </button>
               )}
-              {showPagination && queries.page < totalPages && (
+              {showPagination && page < totalPages && (
                 <button className="btn btn--page" onClick={() => changePage(1)}>
                   next
                 </button>

@@ -1,8 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
+
 export function ConfirmationModal({
   message,
   setShowState,
   confirmFunction,
   args,
+}: {
+  message: string,
+  setShowState: Dispatch<SetStateAction<boolean>>,
+  confirmFunction: Function,
+  args: any
 }) {
   function handleYes() {
     confirmFunction(...args);

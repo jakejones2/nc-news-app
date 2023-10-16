@@ -6,7 +6,7 @@ import { Query, deleteArticle, patchArticle } from "../../api";
 import { Topic } from "../Article/Topic";
 import { ConfirmationModal } from "../Reuse/ConfirmationModal";
 import { ArticlesState } from "../Feed";
-import { Article } from "../Article";
+import { ArticleInterface } from "../Article";
 
 export function ArticlePreview({
   article,
@@ -14,10 +14,10 @@ export function ArticlePreview({
   setArticleData,
   setQueries,
 }: {
-  article: Article,
+  article: ArticleInterface,
   userVotes: number,
   setArticleData: Dispatch<SetStateAction<ArticlesState>>,
-  setQueries: Dispatch<SetStateAction<Query>>
+  setQueries?: Dispatch<SetStateAction<Query>>
 }) {
   const { user } = useContext(UserContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);

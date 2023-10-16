@@ -4,13 +4,13 @@ import { Query, getArticles, getTopic, getUserArticleVotes } from "../../api";
 import { ArticlePreview } from "./ArticlePreview";
 import { Topic } from "../Article/Topic";
 import { appendInfiniteScrollData } from "../Reuse/InfiniteScroll";
-import { Article } from "../Article";
+import { ArticleInterface } from "../Article";
 import { ArticlesState } from "../Feed";
 import { ScrollOptions } from "../Reuse/Filters";
 
 export interface Articles {
   totalCount: number,
-  articles: Article[]
+  articles: ArticleInterface[]
 }
 
 export interface UserArticleVotes {
@@ -56,7 +56,7 @@ export function ArticlePreviews({
           setArticleData((current) => {
             return {
               totalCount: articleData.totalCount,
-              articles: appendInfiniteScrollData<Article>(
+              articles: appendInfiniteScrollData<ArticleInterface>(
                 current.articles,
                 articleData.articles,
               )

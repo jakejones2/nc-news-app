@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { ItemDropDown } from "../Reuse/ItemDropDown";
-import { Filters } from "../Reuse/Filters";
+import { Filters, ScrollOptions } from "../Reuse/Filters";
 import { FilterOptions } from "../Reuse/FilterOptions";
 import { ArticlePreviews } from "../Feed/ArticlePreviews";
 import { InfiniteScroll } from "../Reuse/InfiniteScroll";
+import { ArticlesState } from "../Feed";
+import { Query } from "../../api";
 
-export function UserArticles({ username }) {
-  const [articleData, setArticleData] = useState({
+export function UserArticles({ username }: {username: string}) {
+  const [articleData, setArticleData] = useState<ArticlesState>({
     totalCount: 0,
     articles: [],
   });
-  const [queries, setQueries] = useState({
+  const [queries, setQueries] = useState<Query>({
     limit: 12,
     page: 1,
     author: username,
@@ -19,7 +21,7 @@ export function UserArticles({ username }) {
     order: "desc",
   });
   const [isLoadingArticles, setIsLoadingArticles] = useState(false);
-  const [scrollType, setScrollType] = useState("");
+  const [scrollType, setScrollType] = useState<ScrollOptions>("");
 
   return (
     <ItemDropDown image="../../../book.png" header="Articles">
@@ -56,7 +58,6 @@ export function UserArticles({ username }) {
           setQueries={setQueries}
           scrollType={scrollType}
           setScrollType={setScrollType}
-          type="user-articles"
         />
       </InfiniteScroll>
     </ItemDropDown>

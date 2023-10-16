@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { ItemDropDown } from "../Reuse/ItemDropDown";
-import { Filters } from "../Reuse/Filters";
+import { Filters, ScrollOptions } from "../Reuse/Filters";
 import { FilterOptions } from "../Reuse/FilterOptions";
 import { InfiniteScroll } from "../Reuse/InfiniteScroll";
-import { getCommentsByUser } from "../../api";
+import { Query, getCommentsByUser } from "../../api";
 import { Comments } from "../Article/Comments";
+import { ArticleCommentsState } from "../Article/ArticleComments";
 
-export function UserComments({ username }) {
-  const [commentData, setCommentData] = useState({
+export function UserComments({ username }: {username: string}) {
+  const [commentData, setCommentData] = useState<ArticleCommentsState>({
     comments: [],
     totalCount: 0,
   });
-  const [commentQueries, setCommentQueries] = useState({
+  const [commentQueries, setCommentQueries] = useState<Query>({
     page: 1,
     limit: 10,
-    sort_by: "votes",
+    sortBy: "votes",
     order: "desc",
   });
   const [isLoadingComments, setIsLoadingComments] = useState(false);
-  const [scrollType, setScrollType] = useState("infinite");
+  const [scrollType, setScrollType] = useState<ScrollOptions>("infinite");
 
   return (
     <ItemDropDown image="../../../comments.png" header="Comments">
@@ -26,7 +27,7 @@ export function UserComments({ username }) {
         queries={commentQueries}
         setQueries={setCommentQueries}
         isLoading={isLoadingComments}
-        totalCount={commentData.length}
+        totalCount={commentData.comments.length}
         scrollType={scrollType}
         setScrollType={setScrollType}
         type="user-comments"

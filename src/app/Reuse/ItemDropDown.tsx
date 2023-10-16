@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-export function ItemDropDown({ header, image, children }) {
+export function ItemDropDown({ header, image, children }: {
+  header: string,
+  image: string,
+  children: ReactNode
+}) {
   const [showItems, setShowItems] = useState(false);
 
   function toggleItemView() {

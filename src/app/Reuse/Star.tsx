@@ -1,27 +1,33 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, logoutUser } from "../../contexts";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
-export function Star({ patchFunction, type, userVotes, id, votes }) {
+export function Star({ patchFunction, type, userVotes, id, votes }: {
+  patchFunction: Function,
+  type: string,
+  userVotes: boolean,
+  id: number,
+  votes: number
+}) {
   const { user, setUser } = useContext(UserContext);
   const [starred, setStarred] = useState(userVotes);
   const [errorVoting, setErrorVoting] = useState("");
   const [newTotal, setNewTotal] = useState(votes);
   const navigate = useNavigate();
 
-  function handlePatchError(err, num) {
-    console.log(err);
+  function handlePatchError(num: number, status?: number) {
     increaseVoteInState(num);
     if (num > 0) {
       setStarred(true);
     } else {
       setStarred(false);
     }
-    if ([401, 403].includes(err.response.status)) {
+    setErrorVoting("Voting offline - sorry!");
+    if (!status) return
+    if ([401, 403].includes(status)) {
       logoutUser(setUser);
       navigate("/login");
-    } else {
-      setErrorVoting("Voting offline - sorry!");
     }
   }
 
@@ -29,25 +35,27 @@ export function Star({ patchFunction, type, userVotes, id, votes }) {
     if (user.username === "guest") {
       setErrorVoting("Log in to vote!");
     } else {
-      setErrorVoting(false);
+      setErrorVoting("");
       const options = { headers: { Authorization: `Bearer ${user.token}` } };
       if (starred) {
         setStarred(false);
         increaseVoteInState(-1);
-        patchFunction(id, 0, options).catch((err) => {
-          handlePatchError(err, 1);
+        patchFunction(id, 0, options).catch((err: AxiosError) => {
+          console.log(err);
+          handlePatchError(1, err.response?.status);
         });
       } else {
         setStarred(true);
         increaseVoteInState(1);
-        patchFunction(id, 1, options).catch((err) => {
-          handlePatchError(err, 0);
+        patchFunction(id, 1, options).catch((err: AxiosError) => {
+          console.log(err);
+          handlePatchError(0, err.response?.status);
         });
       }
     }
   }
 
-  function increaseVoteInState(num) {
+  function increaseVoteInState(num: number) {
     setNewTotal((total) => {
       return total + num;
     });

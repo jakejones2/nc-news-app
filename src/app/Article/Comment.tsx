@@ -78,7 +78,7 @@ export function Comment({
       <Star
         type="comment"
         patchFunction={patchComment}
-        userVotes={userVotes}
+        userVotes={Boolean(userVotes)}
         id={comment.comment_id}
         votes={comment.votes}
       />

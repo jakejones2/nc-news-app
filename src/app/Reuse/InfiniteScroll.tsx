@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { CommentInterface } from "../Article/Comment";
-import { Article } from "../Article";
+import { ArticleInterface } from "../Article";
 
 export function InfiniteScroll({
   isLoading,
@@ -55,7 +55,7 @@ export function InfiniteScroll({
 }
 
 // cannot type this function... 
-export function appendInfiniteScrollData<Type extends CommentInterface | Article>(current: Type[], incoming: Type[]): Type[] {
+export function appendInfiniteScrollData<Type extends CommentInterface | ArticleInterface>(current: Type[], incoming: Type[]): Type[] {
   if (!current.length) return incoming
   const key = Object.keys(current[0]).find((key) => key.endsWith('_id'))
   if (!key) return incoming

@@ -1,15 +1,34 @@
-import { useEffect, useState } from "react";
-import { getTopics } from "../../api";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Query, TopicInterface, getTopics, validOrders, validSorts } from "../../api";
 
-export function FilterOptions({ queries, setQueries, type }) {
-  const [topics, setTopics] = useState([]);
+export function FilterOptions({ queries, setQueries, type }: {
+  queries: Query,
+  setQueries: Dispatch<SetStateAction<Query>>,
+  type: string
+}) {
+  const [topics, setTopics] = useState<TopicInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleQuery(event, query) {
+  function handleQuery(event: ChangeEvent<HTMLSelectElement>, query: keyof Query) {
     setQueries((oldQueries) => {
       const newQueries = { ...oldQueries };
-      newQueries[query] = event.target.value;
-      newQueries.page = 1;
+      // cannot figure out newQueries[query] in Typescript yet
+      const value = event.target.value
+      switch (query) {
+        case "limit":
+          newQueries.limit = +value
+        case "page":
+          newQueries.page = +value
+        case "sortBy":
+          newQueries.sortBy = value as validSorts
+        case "order":
+          newQueries.order = value as validOrders
+        case "author":
+          newQueries.author = value
+        case "topic":
+          newQueries.topic = value
+      }
+      if (query !== 'page') newQueries.page = 1;
       return newQueries;
     });
   }
@@ -29,9 +48,9 @@ export function FilterOptions({ queries, setQueries, type }) {
     }
   }, []);
 
-  function capitalise(string) {
+  function capitalise(string: string) {
     const words = string.split(" ");
-    const capitalised = [];
+    const capitalised: string[] = [];
     words.forEach((word) => {
       capitalised.push(word[0].toUpperCase() + word.slice(1));
     });

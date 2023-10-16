@@ -1,12 +1,13 @@
 import axios from "axios";
 import { SignUpState } from "./app/SignUp";
 import { ArticlesState } from "./app/Feed";
+import { Article } from "./app/Article";
+import { CommentInterface } from "./app/Article/Comment";
+import { ArticleCommentsState } from "./app/Article/ArticleComments";
 
 const api = axios.create({
   baseURL: "https://articles-api-zepx.onrender.com/",
 });
-
-// this query type needs to be set in state. See SignUp.tsx This actually needs renaming to SignUp!
 
 export type validSorts = "created_at" | "author" | "title" | "article_id" | "topic" | "article_img_url" | "votes"
 export type validOrders = "asc" | "desc"
@@ -41,6 +42,17 @@ export interface UserCommentVoteData extends VoteData {
   comment_id: number,
 }
 
+export interface UserInterface {
+  username: string,
+  name: string,
+  avatar_url: string
+}
+
+export interface TopicInterface {
+  slug: string,
+  description: string
+}
+
 export function getArticles({
   limit = 12,
   page = 1,
@@ -57,7 +69,7 @@ export function getArticles({
   });
 }
 
-export function getArticle(id: number) {
+export function getArticle(id: number): Promise<Article> {
   return api.get(`api/articles/${id}`).then((response) => {
     return response.data.article;
   });
@@ -100,7 +112,7 @@ export function patchComment(id: number, num: number, options: axiosOptions) {
     });
 }
 
-export function getTopics() {
+export function getTopics(): Promise<TopicInterface[]> {
   return api.get("api/topics").then((response) => {
     return response.data.topics;
   });
@@ -156,22 +168,22 @@ export function postTopic(topic) {
   return api.post("api/topics", topic);
 }
 
-export function getUser(username: string) {
+export function getUser(username: string): Promise<UserInterface> {
   return api.get(`api/users/${username}`).then((response) => {
     return response.data.user;
   });
 }
 
 export function getCommentsByUser(
-  username: string,
+  key: string | number,
   { page = 1, limit = 10, sortBy = "created_at", order = "desc" }: Query
-) {
+): Promise<ArticleCommentsState> {
   return api
     .get(
-      `api/users/${username}/comments?p=${page}&limit=${limit}&sort_by=${sortBy}&order=${order}`
+      `api/users/${key}/comments?p=${page}&limit=${limit}&sort_by=${sortBy}&order=${order}`
     )
     .then((response) => {
-      return response.data;
+      return {totalCount: response.data.length, comments: response.data};
     });
 }
 
@@ -183,7 +195,7 @@ export function getTopic(topicTarget: string) {
   });
 }
 
-export function getComment(id: number) {
+export function getComment(id: number): Promise<CommentInterface> {
   return api.get(`api/comments/${id}`).then(({ data }) => {
     return data.comment;
   });
